@@ -1,0 +1,32 @@
+{
+  "name": "@canvas-ui/react",
+  "version": "0.6.26",
+  "description": "Canvas UI React Binding",
+  "author": "Zhang Haocong <kakera@gmail.com>",
+  "license": "MIT",
+  "main": "dist/umd/react.js",
+  "module": "dist/esm/index.js",
+  "files": [
+    "dist",
+    "*.d.ts"
+  ],
+  "types": "dist/esm/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "dev": "tsc --watch",
+    "build": "tsc"
+  },
+  "peerDependencies": {
+    "react": "16.8.6"
+  },
+  "dependencies": {
+    "@canvas-ui/core": "^0.6.26",
+    "@types/assert": "1.5.4",
+    "@types/react-reconciler": "0.18.0",
+    "@types/scheduler": "0.12.1",
+    "assert": "2.0.0",
+    "react-reconciler": "0.20.4",
+    "react-use-measure": "2.0.4",
+    "scheduler": "0.13.3"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "sourceMap": true,
+    "removeComments": false,
+    "strict": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noImplicitOverride": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "experimentalDecorators": true,
+    // "incremental": true,
+    "baseUrl": "./",
+    "jsx": "react",
+    "skipLibCheck": true,
+    // "declaration": true, // 各个 mono 包已经设置了 composite 为 true，所以不用再设置 declaration，如果设了的话 rollup 反而会报错
+  },
+  "exclude": [
+    "node_modules",
+    "**/dist/**",
+    "**/lib/**",
+    "**/test/**",
+    "**/scripts/**",
+    "**/types/**",
+    "bundles/**/*.d.ts",
+    "rollup.config.js"
+  ],
+  "ts-node": {
+    "files": true
+  }
+}
