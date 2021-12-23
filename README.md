@@ -1,8 +1,10 @@
-# Canvas UI
+<img width="248" alt="canvas-ui-logo" src="https://user-images.githubusercontent.com/180445/147241118-4fb09f35-8bc0-449b-8ab1-045caa9eb726.png">
 
 Canvas UI 是一个基于 HTML Canvas 的通用 UI 渲染器。
 
-## 目录结构
+<hr>
+
+# 目录结构
 
 - packages/core
 渲染器的核心，提供了诸如 createElement，事件，渲染管线等能力。
@@ -16,7 +18,7 @@ Canvas UI 的官方 React 绑定，提供 `<View />` `<Text />` 等组件
 - tools/
 一些脚本
 
-## 开始开发
+# 开始开发
 
 ```
 # 启动 core 和 react 的开发模式
