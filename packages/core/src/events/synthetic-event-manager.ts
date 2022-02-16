@@ -152,7 +152,7 @@ export class SyntheticEventManager {
         primaryPointerState.isPointerEnter = true
       }
 
-      if (pointermove && this.primaryPointerState.isPointerEnter) {
+      if (pointermove && primaryPointerState.isPointerEnter) {
         primaryPointerState.position = Point.fromXY(pointermove.offsetX, pointermove.offsetY)
         assert(this.rootNode)
 

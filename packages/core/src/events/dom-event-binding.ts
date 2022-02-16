@@ -1,4 +1,5 @@
 import assert from 'assert'
+import { PointerEventSaveTarget, WheelEventSaveTarget } from './firefox-event-save-target'
 import type { NativeEventBinding, NativePointerEvents } from './types'
 
 export class DOMEventBinding implements NativeEventBinding {
@@ -6,6 +7,8 @@ export class DOMEventBinding implements NativeEventBinding {
   static get supportsPointerEvents() {
     return !!self.PointerEvent
   }
+
+  static isFirefox = typeof (window as any)['InstallTrigger'] !== 'undefined'
 
   onEvents?: () => void
 
@@ -103,10 +106,14 @@ export class DOMEventBinding implements NativeEventBinding {
       type += 'outside'
     }
     if (this.pointerEventsBuffer[event.pointerId]) {
-      this.pointerEventsBuffer[event.pointerId][type] = event
+      this.pointerEventsBuffer[event.pointerId][type] = !DOMEventBinding.isFirefox
+        ? event
+        : new PointerEventSaveTarget(event)
     } else {
       this.pointerEventsBuffer[event.pointerId] = {
-        [type]: event
+        [type]: !DOMEventBinding.isFirefox
+          ? event
+          : new PointerEventSaveTarget(event)
       }
     }
     this.onEvents?.()
@@ -117,7 +124,9 @@ export class DOMEventBinding implements NativeEventBinding {
    */
   handleWheelEvent = (event: WheelEvent) => {
     event.preventDefault()
-    this.wheelEvent = event
+    this.wheelEvent = !DOMEventBinding.isFirefox
+      ? event
+      : new WheelEventSaveTarget(event)
     this.onEvents?.()
   }
 
