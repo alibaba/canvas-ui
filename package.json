@@ -9,9 +9,11 @@
     "distclean": "rimraf \"{packages,out}/*/{.tsbuildinfo,dist}\"",
     "dev": "sh ./tools/dev.sh",
     "dev:examples": "pushd packages/examples && yarn dev; popd",
+    "dev:docs": "pushd packages/docs && yarn dev; popd",
+    "build:docs": "pushd packages/docs && yarn build; popd && rimraf docs && mv packages/docs/dist docs",
     "build:examples": "pushd packages/examples && yarn build-storybook; popd",
     "build": "sh ./tools/build.sh",
-    "lint": "eslint --cache packages/**/src",
+    "lint": "eslint --cache packages/core/src packages/react/src",
     "test": "jest",
     "prepare": "husky install"
   },
