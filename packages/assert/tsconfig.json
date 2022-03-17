@@ -12,14 +12,6 @@
       ]
     }
   },
-  "references": [
-    {
-      "path": "../../packages/core"
-    },
-    {
-      "path": "../../packages/assert"
-    }
-  ],
   "include": [
     "./src"
   ]

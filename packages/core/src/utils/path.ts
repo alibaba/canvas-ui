@@ -1,4 +1,4 @@
-import assert from 'assert'
+import { assert } from '@canvas-ui/assert'
 import { NonConstructiable } from '../foundation'
 import { Point, Rect } from '../math'
 import { PlatformAdapter } from '../platform'

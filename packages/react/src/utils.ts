@@ -2,7 +2,7 @@
 /* eslint eqeqeq: ["error", "smart"] */
 
 import { ElementType, RenderText } from '@canvas-ui/core'
-import assert from 'assert'
+import { assert } from '@canvas-ui/assert'
 
 export type UpdatePayload = any[]
 

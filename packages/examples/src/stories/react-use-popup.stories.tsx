@@ -8,7 +8,7 @@ import {
   usePopup
 } from '@canvas-ui/react'
 import type { Story } from '@storybook/react'
-import assert from 'assert'
+import { assert } from '@canvas-ui/assert'
 import React, {
   CSSProperties,
   ReactNode,

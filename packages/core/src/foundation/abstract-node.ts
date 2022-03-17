@@ -1,4 +1,4 @@
-import assert from 'assert'
+import { assert } from '@canvas-ui/assert'
 
 export abstract class AbstractNode<Owner>  {
 

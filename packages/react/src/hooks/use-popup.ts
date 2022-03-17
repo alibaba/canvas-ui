@@ -1,5 +1,5 @@
 import { Point, Rect, RenderCanvas, RenderObject, SyntheticPointerEvent } from '@canvas-ui/core'
-import assert from 'assert'
+import { assert } from '@canvas-ui/assert'
 import { useEffect, useState } from 'react'
 
 class PopupState<T extends RenderObject, U extends any = any> {

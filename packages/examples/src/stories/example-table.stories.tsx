@@ -2,7 +2,7 @@
 import { DebugFlags, Log, Point, Rect, ScrollAxis, StyleProps, SyntheticEvent, SyntheticPointerEvent } from '@canvas-ui/core'
 import { Canvas, Chunk, Flex, ScrollView, Text, useCanvasState, View } from '@canvas-ui/react'
 import type { Story } from '@storybook/react'
-import assert from 'assert'
+import { assert } from '@canvas-ui/assert'
 import React, { createContext, FC, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { Movie, MovieFields, MovieRepo } from './movie.repo'
 

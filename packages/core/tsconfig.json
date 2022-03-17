@@ -1,6 +1,5 @@
 {
   "extends": "../../tsconfig.json",
-
   "compilerOptions": {
     "outDir": "./dist/esm",
     "rootDir": "./src",
@@ -13,7 +12,11 @@
       ]
     }
   },
-
+  "references": [
+    {
+      "path": "../../packages/assert"
+    }
+  ],
   "include": [
     "./src"
   ]
