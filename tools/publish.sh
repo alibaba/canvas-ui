@@ -10,3 +10,6 @@ popd
 pushd packages/react
 npm publish
 popd
+pushd packages/assert
+npm publish
+popd

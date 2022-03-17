@@ -1,4 +1,4 @@
-import assert from 'assert'
+import { assert } from '@canvas-ui/assert'
 import { NonConstructiable } from '../foundation'
 import { CrossPlatformCanvasElement, CrossPlatformOffscreenCanvas, PlatformAdapter } from '../platform'
 import { FontProps } from './font-props'

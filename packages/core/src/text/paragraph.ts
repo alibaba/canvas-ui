@@ -1,5 +1,5 @@
 
-import assert from 'assert'
+import { assert } from '@canvas-ui/assert'
 import { Property } from 'csstype'
 import { Canvas } from '../canvas'
 import { DebugFlags } from '../debug'

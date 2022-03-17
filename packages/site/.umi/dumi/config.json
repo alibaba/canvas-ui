@@ -1,0 +1,91 @@
+{
+  "menus": {
+    "en-US": {
+      "/getting-started": [
+        {
+          "path": "/getting-started",
+          "title": "Getting Started",
+          "meta": {}
+        }
+      ],
+      "/help": [
+        {
+          "path": "/help",
+          "title": "Help",
+          "meta": {}
+        }
+      ],
+      "*": [
+        {
+          "path": "/",
+          "title": "Hello dumi!",
+          "meta": {}
+        }
+      ]
+    },
+    "zh-CN": {
+      "/zh-CN/getting-started": [
+        {
+          "path": "/zh-CN/getting-started",
+          "title": "快速上手",
+          "meta": {}
+        }
+      ],
+      "/zh-CN/help": [
+        {
+          "path": "/zh-CN/help",
+          "title": "帮助",
+          "meta": {}
+        }
+      ],
+      "*": [
+        {
+          "path": "/zh-CN",
+          "title": "Hello dumi!",
+          "meta": {}
+        }
+      ]
+    }
+  },
+  "locales": [
+    {
+      "name": "en-US",
+      "label": "English"
+    },
+    {
+      "name": "zh-CN",
+      "label": "中文"
+    }
+  ],
+  "navs": {
+    "en-US": [
+      {
+        "title": "Getting Started",
+        "order": 1,
+        "path": "/getting-started"
+      },
+      {
+        "path": "/help",
+        "title": "Help"
+      }
+    ],
+    "zh-CN": [
+      {
+        "title": "快速上手",
+        "order": 1,
+        "path": "/zh-CN/getting-started"
+      },
+      {
+        "title": "帮助",
+        "path": "/zh-CN/help"
+      }
+    ]
+  },
+  "title": "Site Name",
+  "mode": "site",
+  "repository": {
+    "url": "",
+    "branch": "master"
+  },
+  "theme": {}
+}

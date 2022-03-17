@@ -1,4 +1,4 @@
-import assert from 'assert'
+import { assert } from '@canvas-ui/assert'
 import { FontMetrics } from './font-metrics'
 import { Paragraph } from './paragraph'
 import { Tokenizer } from './tokenizer'
@@ -175,7 +175,7 @@ export class TextWrapper {
         return Math.max(i, atLeast)
       }
     }
-    assert.doesNotThrow(() => {
+    assert(() => {
       assert(false, `剩余空间足够容纳整个文本，不需要断词。subTextWidth: ${this.measureWidth(text, font)}, breakWidth: ${breakWidth}`)
     })
     return -1

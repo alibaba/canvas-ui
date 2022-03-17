@@ -1,4 +1,4 @@
-import assert from 'assert'
+import { assert } from '@canvas-ui/assert'
 import { Canvas, Canvas2DCanvas, Image } from '../canvas'
 import { Size } from '../math'
 import { CrossPlatformCanvasElement, CrossPlatformOffscreenCanvas, PlatformAdapter } from '../platform'

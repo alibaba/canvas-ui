@@ -1,4 +1,4 @@
-import assert from 'assert'
+import { assert } from '@canvas-ui/assert'
 import { Rect } from '../math'
 import type { Canvas } from './canvas'
 import { Picture } from './picture'

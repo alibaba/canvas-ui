@@ -20,11 +20,10 @@
     "react": "16.8.6"
   },
   "dependencies": {
+    "@canvas-ui/assert": "^0.6.27-alpha.1",
     "@canvas-ui/core": "^0.6.27-alpha.1",
-    "@types/assert": "1.5.4",
     "@types/react-reconciler": "0.18.0",
     "@types/scheduler": "0.12.1",
-    "assert": "2.0.0",
     "react-reconciler": "0.20.4",
     "react-use-measure": "2.0.4",
     "scheduler": "0.13.3"

@@ -1,7 +1,7 @@
 import { SyntheticPointerEvent } from '@canvas-ui/core'
 import { Canvas, Text } from '@canvas-ui/react'
 import type { Story } from '@storybook/react'
-import assert from 'assert'
+import { assert } from '@canvas-ui/assert'
 import React, { useState } from 'react'
 
 export const TextTest: Story = () => {
