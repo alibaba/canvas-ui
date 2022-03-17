@@ -1,4 +1,4 @@
-import assert from 'assert'
+import { assert } from '@canvas-ui/assert'
 import { Mut } from '../foundation'
 import { Point, Size } from '../math'
 import { Paragraph, ParagraphBuilder } from '../text'

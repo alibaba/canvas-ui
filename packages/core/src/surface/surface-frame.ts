@@ -1,4 +1,4 @@
-import assert from 'assert'
+import { assert } from '@canvas-ui/assert'
 import type { Canvas } from '../canvas'
 import type { Size } from '../math'
 

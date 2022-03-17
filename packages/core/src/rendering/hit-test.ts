@@ -1,4 +1,4 @@
-import assert from 'assert'
+import { assert } from '@canvas-ui/assert'
 import { Matrix, Point } from '../math'
 import type { RenderObject } from './render-object'
 

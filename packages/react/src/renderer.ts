@@ -6,7 +6,7 @@ import {
   RenderText,
   RenderView
 } from '@canvas-ui/core'
-import assert from 'assert'
+import { assert } from '@canvas-ui/assert'
 import type { ReactNode } from 'react'
 import type { FiberRoot } from 'react-reconciler'
 import {

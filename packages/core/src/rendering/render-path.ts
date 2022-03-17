@@ -1,4 +1,4 @@
-import assert from 'assert'
+import { assert } from '@canvas-ui/assert'
 import { Log } from '../foundation'
 import { Paint, PaintStyle } from '../canvas'
 import { DebugFlags } from '../debug'

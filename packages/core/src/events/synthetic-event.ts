@@ -1,4 +1,4 @@
-import assert from 'assert'
+import { assert } from '@canvas-ui/assert'
 import type { SyntheticEventTarget } from './types'
 
 export type SyntheticEventInit<T extends SyntheticEventTarget, N extends Event> = {

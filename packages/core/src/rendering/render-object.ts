@@ -1,4 +1,4 @@
-import assert from 'assert'
+import { assert } from '@canvas-ui/assert'
 import { Paint, PaintStyle } from '../canvas'
 import { ContainerLayer, OffsetLayer, TransformLayer } from '../compositing'
 import { DebugFlags } from '../debug'
@@ -932,7 +932,7 @@ export abstract class RenderObject<ParentDataType extends ParentData = ParentDat
     if (this._layoutDirty) {
       return
     }
-    assert.doesNotThrow(() => {
+    assert(() => {
       if (this._needsCompositingDirty) {
         if (this.parent) {
           let visitedByParent = false
@@ -949,7 +949,7 @@ export abstract class RenderObject<ParentDataType extends ParentData = ParentDat
       }
     })
     let debugLastActivePaint: RenderObject | undefined
-    assert.doesNotThrow(() => {
+    assert(() => {
       this._debugDoingThisPaint = true
       debugLastActivePaint = RenderObject._debugActivePaint
       RenderObject._debugActivePaint = this
@@ -965,7 +965,7 @@ export abstract class RenderObject<ParentDataType extends ParentData = ParentDat
         console.error(err)
       }
     }
-    assert.doesNotThrow(() => {
+    assert(() => {
       this.debugPaint(context, offset)
       RenderObject._debugActivePaint = debugLastActivePaint
       this._debugDoingThisPaint = false

@@ -1,4 +1,4 @@
-import assert from 'assert'
+import { assert } from '@canvas-ui/assert'
 import { Point, Rect, Size } from '../math'
 import { HitTestResult } from './hit-test'
 import { PaintingContext } from './painting-context'

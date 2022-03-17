@@ -1,4 +1,4 @@
-import assert from 'assert'
+import { assert } from '@canvas-ui/assert'
 import {
   Canvas,
   Paint,
@@ -102,7 +102,7 @@ export class PaintingContext {
 
   private get isRecording() {
     const hasCanvas = !!this._canvas
-    assert.doesNotThrow(() => {
+    assert(() => {
       if (hasCanvas) {
         assert(this.pictureLayer)
         assert(this.recorder)
@@ -130,7 +130,7 @@ export class PaintingContext {
     }
 
     const picture = this.recorder!.end()
-    assert.doesNotThrow(() => {
+    assert(() => {
       if (DebugFlags.paintLayerBounds) {
         const paint: Paint = {
           style: PaintStyle.stroke,

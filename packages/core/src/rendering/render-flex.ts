@@ -1,4 +1,4 @@
-import assert from 'assert'
+import { assert } from '@canvas-ui/assert'
 import { RenderObject } from './render-object'
 import { RenderView, ViewParentData } from './render-view'
 import { StyleMap } from './style-map'

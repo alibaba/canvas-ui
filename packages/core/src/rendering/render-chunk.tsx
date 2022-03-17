@@ -1,4 +1,4 @@
-import assert from 'assert'
+import { assert } from '@canvas-ui/assert'
 import { IllegalStateError } from '../error'
 import { Log } from '../foundation'
 import { Point, Rect, Size } from '../math'
