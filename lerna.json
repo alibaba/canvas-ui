@@ -4,5 +4,5 @@
   ],
   "npmClient": "yarn",
   "useWorkspaces": true,
-  "version": "0.6.27-alpha.1"
+  "version": "0.6.28-alpha.0"
 }
