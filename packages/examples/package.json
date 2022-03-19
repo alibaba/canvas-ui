@@ -1,6 +1,6 @@
 {
   "name": "@canvas-ui/examples",
-  "version": "0.6.28-alpha.0",
+  "version": "0.6.28",
   "license": "MIT",
   "private": "true",
   "scripts": {
@@ -24,8 +24,8 @@
     ]
   },
   "devDependencies": {
-    "@canvas-ui/core": "^0.6.28-alpha.0",
-    "@canvas-ui/react": "^0.6.28-alpha.0",
+    "@canvas-ui/core": "^0.6.28",
+    "@canvas-ui/react": "^0.6.28",
     "@storybook/addon-actions": "6.3.4",
     "@storybook/addon-essentials": "6.3.4",
     "@storybook/addon-links": "6.3.4",
