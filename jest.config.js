@@ -6,9 +6,12 @@ module.exports = {
     './jest-setup.ts',
   ],
   timers: 'modern',
-  testMatch: [ '**/?(*.)+(spec|test).[jt]s?(x)' ],
+  testMatch: ['**/?(*.)+(spec|test).[jt]s?(x)'],
   testPathIgnorePatterns: [
     '/node_modules/',
     '/dist/',
-  ]
+  ],
+  'moduleNameMapper': {
+    '^@canvas-ui/assert(.*)$': '<rootDir>/packages/assert/src/$1'
+  }
 }
