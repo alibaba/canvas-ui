@@ -35,11 +35,6 @@ class PointerState {
    */
   isPointerDown = false
 
-  /**
-   * 指示是否已 pointerenter
-   */
-  isPointerEnter = false
-
 }
 
 export class SyntheticEventManager {
@@ -117,7 +112,6 @@ export class SyntheticEventManager {
 
       const {
         pointermove,
-        pointerenter,
         pointerdown,
         pointerup,
         pointerleave,
@@ -125,7 +119,6 @@ export class SyntheticEventManager {
 
       const { primaryPointerState } = this
       if (pointerleave) {
-        primaryPointerState.isPointerEnter = false
         const lastPath = primaryPointerState.path
         // 当 pointerleave 时不需要检测，清空 path 即可
         primaryPointerState.path = undefined
@@ -148,11 +141,7 @@ export class SyntheticEventManager {
         }
       }
 
-      if (pointerenter) {
-        primaryPointerState.isPointerEnter = true
-      }
-
-      if (pointermove && primaryPointerState.isPointerEnter) {
+      if (pointermove) {
         primaryPointerState.position = Point.fromXY(pointermove.offsetX, pointermove.offsetY)
         assert(this.rootNode)
 
