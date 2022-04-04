@@ -79,12 +79,30 @@ type InteractiveStyles = {
   cursor?: StandardProperties['cursor']
 }
 
+type ShapeStyles = {
+  fill?: string
+  stroke?: string
+  strokeWidth?: number
+}
+
+type RRectStyles = {
+  rx?: number
+  ry?: number
+}
+
+type CircleStyles = {
+  radius?: number
+}
+
 export type StyleProps =
   & LayoutStyles
   & PaintStyles
   & InteractiveStyles
   & TextStyles
   & BoxDecorationStyles
+  & ShapeStyles
+  & RRectStyles
+  & CircleStyles
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface StyleMap
