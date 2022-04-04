@@ -13,6 +13,18 @@ export abstract class RenderShape extends RenderObject {
     if (hasOwn(this.style, 'boxShadow')) {
       this.handleBoxShadowChange(this.style.boxShadow)
     }
+    this.style.on('fill', this.handleFillChange, this)
+    if (hasOwn(this.style, 'fill')) {
+      this.handleFillChange(this.style.fill)
+    }
+    this.style.on('stroke', this.handleStrokeChange, this)
+    if (hasOwn(this.style, 'stroke')) {
+      this.handleStrokeChange(this.style.stroke)
+    }
+    this.style.on('strokeWidth', this.handleStrokeWidthChange, this)
+    if (hasOwn(this.style, 'strokeWidth')) {
+      this.handleStrokeWidthChange(this.style.strokeWidth)
+    }
   }
 
   protected handleBoxShadowChange(value: StyleMap['boxShadow']) {
@@ -20,6 +32,30 @@ export abstract class RenderShape extends RenderObject {
       this.boxShadow = BoxShadow.fromCss(value)
     } else {
       this.boxShadow = undefined
+    }
+  }
+
+  protected handleFillChange(value: StyleMap['fill']) {
+    if (value) {
+      this.fill = value
+    } else {
+      this.fill = undefined
+    }
+  }
+
+  protected handleStrokeChange(value: StyleMap['stroke']) {
+    if (value) {
+      this.stroke = value
+    } else {
+      this.stroke = undefined
+    }
+  }
+
+  protected handleStrokeWidthChange(value: StyleMap['strokeWidth']) {
+    if (value) {
+      this.strokeWidth = value
+    } else {
+      this.strokeWidth = undefined
     }
   }
 

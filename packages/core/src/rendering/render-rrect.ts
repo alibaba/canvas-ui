@@ -1,8 +1,38 @@
+import { hasOwn } from '../utils'
 import { Point } from '../math'
 import type { PaintingContext } from './painting-context'
 import { RenderShape } from './render-shape'
+import type { StyleMap } from './style-map'
 
 export class RenderRRect extends RenderShape {
+
+  protected override trackStyle() {
+    super.trackStyle()
+    this.style.on('rx', this.handleRxChange, this)
+    if (hasOwn(this.style, 'rx')) {
+      this.handleRxChange(this.style.rx)
+    }
+    this.style.on('ry', this.handleRyChange, this)
+    if (hasOwn(this.style, 'strokeWidth')) {
+      this.handleRyChange(this.style.ry)
+    }
+  }
+
+  protected handleRxChange(value: StyleMap['rx']) {
+    if (value) {
+      this.rx = value
+    } else {
+      this.rx = 0
+    }
+  }
+
+  protected handleRyChange(value: StyleMap['ry']) {
+    if (value) {
+      this.ry = value
+    } else {
+      this.ry = 0
+    }
+  }
 
   private _rx = 0
   get rx() {

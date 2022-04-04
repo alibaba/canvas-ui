@@ -1,8 +1,27 @@
+import { hasOwn } from '../utils'
 import type { Point } from '../math'
 import type { PaintingContext } from './painting-context'
 import { RenderShape } from './render-shape'
+import { StyleMap } from './style-map'
 
 export class RenderCircle extends RenderShape {
+
+  protected override trackStyle() {
+    super.trackStyle()
+    this.style.on('radius', this.handleRadiusChange, this)
+    if (hasOwn(this.style, 'radius')) {
+      this.handleRadiusChange(this.style.radius)
+    }
+
+  }
+
+  protected handleRadiusChange(value: StyleMap['radius']) {
+    if (value) {
+      this.radius = value
+    } else {
+      this.radius = 0
+    }
+  }
 
   private _radius = 0
   get radius() {
