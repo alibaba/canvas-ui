@@ -1,4 +1,4 @@
-import { createElement, Point, Shader, Size } from '@canvas-ui/core'
+import { createElement, DebugFlags, Point, Shader, Size } from '@canvas-ui/core'
 import type { Story } from '@storybook/react'
 import React, { useEffect, useRef } from 'react'
 
@@ -7,6 +7,17 @@ export const RenderFlexTest: Story = () => {
   const canvasElRef = useRef<HTMLCanvasElement | null>(null)
   const prevFrameButtonRef = useRef<HTMLButtonElement | null>(null)
   const nextFrameButtonRef = useRef<HTMLButtonElement | null>(null)
+
+  useEffect(() => {
+    DebugFlags.set(
+      DebugFlags.NodeBounds
+      | DebugFlags.LayerBounds
+      | DebugFlags.RasterCacheWaterMark
+    )
+    return () => {
+      DebugFlags.set(0)
+    }
+  }, [])
 
   useEffect(() => {
     // 等待布局稳定
@@ -87,11 +98,17 @@ export const RenderFlexTest: Story = () => {
       g.id = 'g'
       g.style.width = 25
       g.style.height = 25
+      g.style.position = 'absolute'
+      g.style.left = 33
+      g.style.top = 33
 
       const h = createElement('View')
       h.id = 'h'
       h.style.width = 25
       h.style.height = 50
+      h.style.position = 'absolute'
+      h.style.right = 10
+      h.style.top = 10
 
       type FrameCallback = () => void
       const frameCallbacks: readonly FrameCallback[] = [
