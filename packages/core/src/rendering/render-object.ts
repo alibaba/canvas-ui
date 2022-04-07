@@ -263,6 +263,15 @@ export abstract class RenderObject<ParentDataType extends ParentData = ParentDat
     if (style.has('display')) {
       this.handleDisplayChange(style.display)
     }
+    if (style.has('position')) {
+      this.handlePositionChange(style.position)
+    }
+    if (style.has('right')) {
+      this.handleRightChange(style.right)
+    }
+    if (style.has('bottom')) {
+      this.handleBottomChange(style.bottom)
+    }
     // 追踪变更
     style.on('flexBasis', this.handleFlexBasisChange, this)
     style.on('flexGrow', this.handleFlexGrowChange, this)
@@ -283,6 +292,9 @@ export abstract class RenderObject<ParentDataType extends ParentData = ParentDat
     style.on('marginLeft', this.handleMarginLeftChange, this)
     style.on('marginRight', this.handleMarginRightChange, this)
     style.on('marginBottom', this.handleMarginBottomChange, this)
+    style.on('position', this.handlePositionChange, this)
+    style.on('right', this.handleRightChange, this)
+    style.on('bottom', this.handleBottomChange, this)
     // style.on('display', this.handleDisplayChange, this)
 
     // let childIndex = 0
@@ -430,16 +442,52 @@ export abstract class RenderObject<ParentDataType extends ParentData = ParentDat
 
   protected handleLeftChange(value: StyleMap['left'] = 0) {
     assert(typeof value === 'number', 'style.left 仅支持 number')
-    this.offset = Point.fromXY(value, this._offset.y)
-    // 仅标记父节点需要重新布局
-    this.parent?.markLayoutDirty(this)
+    if (this.yogaNode) {
+      this.yogaNode.setPosition(Yoga.EDGE_LEFT, value)
+      this.markLayoutDirty()
+    } else {
+      this.offset = Point.fromXY(value, this._offset.y)
+      // 仅标记父节点需要重新布局
+      this.parent?.markLayoutDirty(this)
+    }
   }
 
   protected handleTopChange(value: StyleMap['top'] = 0) {
     assert(typeof value === 'number', 'style.top 仅支持 number')
-    this.offset = Point.fromXY(this._offset.x, value)
-    // 仅标记父节点需要重新布局
-    this.parent?.markLayoutDirty(this)
+    if (this.yogaNode) {
+      this.yogaNode.setPosition(Yoga.EDGE_TOP, value)
+      this.markLayoutDirty()
+    } else {
+      this.offset = Point.fromXY(this._offset.x, value)
+      // 仅标记父节点需要重新布局
+      this.parent?.markLayoutDirty(this)
+    }
+  }
+
+  protected handleRightChange(value: StyleMap['right'] = 0) {
+    assert(typeof value === 'number', 'style.left 仅支持 number')
+    if (this.yogaNode) {
+      this.yogaNode.setPosition(Yoga.EDGE_RIGHT, value)
+      this.markLayoutDirty()
+    }
+  }
+
+  protected handleBottomChange(value: StyleMap['bottom'] = 0) {
+    assert(typeof value === 'number', 'style.bottom 仅支持 number')
+    if (this.yogaNode) {
+      this.yogaNode.setPosition(Yoga.EDGE_BOTTOM, value)
+      this.markLayoutDirty()
+    }
+  }
+
+  protected handlePositionChange(value: StyleMap['position']) {
+    assert(this.yogaNode)
+    this.yogaNode.setPositionType(
+      value === 'absolute'
+        ? Yoga.POSITION_TYPE_ABSOLUTE
+        : Yoga.POSITION_TYPE_RELATIVE
+    )
+    this.markLayoutDirty()
   }
 
   protected updateOffsetAndSizeFromYogaNode() {
