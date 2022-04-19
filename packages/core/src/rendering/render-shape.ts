@@ -54,7 +54,7 @@ export abstract class RenderShape extends RenderObject {
     return this._stroke
   }
   set stroke(value) {
-    if (value === this._fill) {
+    if (value === this._stroke) {
       return
     }
     this._stroke = value
