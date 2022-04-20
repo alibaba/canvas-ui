@@ -4,6 +4,7 @@
   "description": "Canvas UI React Binding",
   "author": "Zhang Haocong <kakera@gmail.com>",
   "license": "MIT",
+  "typedocMain": "src/index.ts",
   "main": "dist/umd/react.js",
   "module": "dist/esm/index.js",
   "files": [

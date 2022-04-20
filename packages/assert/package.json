@@ -4,6 +4,7 @@
   "description": "Canvas UI Assertion Library",
   "author": "Zhang Haocong <kakera@gmail.com>",
   "license": "MIT",
+  "typedocMain": "src/index.ts",
   "main": "dist/umd/assert.js",
   "module": "dist/esm/index.js",
   "files": [
