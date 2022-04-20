@@ -1,6 +1,6 @@
 {
   "name": "@canvas-ui/docs",
-  "version": "0.6.26",
+  "version": "0.7.0",
   "private": true,
   "scripts": {
     "dev": "dumi dev",
