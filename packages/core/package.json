@@ -4,6 +4,7 @@
   "description": "Canvas UI Core",
   "author": "Zhang Haocong <kakera@gmail.com>",
   "license": "MIT",
+  "typedocMain": "src/index.ts",
   "main": "dist/umd/core.js",
   "module": "dist/esm/index.js",
   "files": [
