@@ -1,7 +1,12 @@
+import { assert } from '@canvas-ui/assert'
 import { SyntheticEvent, SyntheticEventListener, SyntheticWheelEvent } from '../events'
 import type { Mut } from '../foundation'
 import { Point, Rect, Size } from '../math'
-import type { RenderObject } from './render-object'
+import { HitTestResult } from './hit-test'
+import type { PaintingContext } from './painting-context'
+import type { RenderObject, Visitor } from './render-object'
+import { RenderPipeline } from './render-pipeline'
+import { RenderHScrollbar, RenderVScrollbar } from './render-scrollbar'
 import { RenderSingleChild } from './render-single-child'
 
 export enum ScrollAxis {
@@ -24,9 +29,23 @@ export enum ScrollBounds {
 
 export class RenderScrollView extends RenderSingleChild<RenderObject> {
 
+  private hScrollbar = new RenderHScrollbar()
+
+  private vScrollbar = new RenderVScrollbar()
+
+  readonly scrollbarMargin = 4
+
   constructor() {
     super()
     this.addEventListener('wheel', this.handleWheel)
+    this.adoptChild(this.hScrollbar)
+    this.hScrollbar.onScroll = scrollPosition => {
+      this.scrollLeft = scrollPosition
+    }
+    this.adoptChild(this.vScrollbar)
+    this.vScrollbar.onScroll = scrollPosition => {
+      this.scrollTop = scrollPosition
+    }
   }
 
   private handleWheel = (event: SyntheticWheelEvent<RenderScrollView>) => {
@@ -62,6 +81,34 @@ export class RenderScrollView extends RenderSingleChild<RenderObject> {
     this._scrollAxis = value
   }
   private _scrollAxis = ScrollAxis.Horizontal | ScrollAxis.Vertical
+
+  /**
+   * 设置或获取是否按需展示滚动条
+   * 
+   * 滚动条是不占位的，他会覆盖在滚动内容上方
+   * 
+   * 默认情况下，当滚动范围大于滚动大小时，展示滚动条
+   * 
+   * 你也可以单独设置滚动条是否展示
+   * 
+   * 例如：
+   * 
+   * ```typescript
+   * // 仅按需展示水平滚动条
+   * myScrollView.scrollbar = ScrollAxis.Horizontal
+   * ```
+   */
+  get scrollbar() {
+    return this._scrollbar
+  }
+  set scrollbar(value) {
+    if (value === this._scrollbar) {
+      return
+    }
+    this._scrollbar = value
+    this.markPaintDirty()
+  }
+  private _scrollbar = ScrollAxis.Horizontal | ScrollAxis.Vertical
 
   /**
    * 滚动边界，修改该属性会导致 relayout，默认 ScrollBounds.FitContent
@@ -108,9 +155,37 @@ export class RenderScrollView extends RenderSingleChild<RenderObject> {
         viewport.width,
         viewport.height,
       )
+
+      // 更新滚动条位置
+      this.hScrollbar.scrollPosition = this._scrollOffset.x
+      this.vScrollbar.scrollPosition = this._scrollOffset.y
     }
     this.markPaintDirty()
     return true
+  }
+
+  override _paint(context: PaintingContext, offset: Point) {
+    super._paint(context, offset)
+    if (this._child) {
+      const viewportOffset = this.viewportOffset
+
+      // 绘制滚动条
+      this.hScrollbar.offstage = this._child.viewport.width >= this._child.size.width
+      if (!this.hScrollbar.offstage
+        && this.scrollbar & ScrollAxis.Horizontal
+        && this.scrollAxis & ScrollAxis.Horizontal
+      ) {
+        context.paintChild(this.hScrollbar, Point.add3(this.hScrollbar.offset, offset, viewportOffset))
+      }
+
+      this.vScrollbar.offstage = this._child.viewport.height >= this._child.size.height
+      if (!this.vScrollbar.offstage
+        && this.scrollbar & ScrollAxis.Vertical
+        && this.scrollAxis & ScrollAxis.Vertical
+      ) {
+        context.paintChild(this.vScrollbar, Point.add3(this.vScrollbar.offset, offset, viewportOffset))
+      }
+    }
   }
 
   private fitIntoScrollBounds(scrollOffset: Point) {
@@ -222,13 +297,32 @@ export class RenderScrollView extends RenderSingleChild<RenderObject> {
   private updateChildViewport(child: RenderObject) {
     const { viewport } = child
     child.viewport = Rect.fromLTWH(viewport.left, viewport.top, this._size.width, this._size.height)
+    this.hScrollbar.viewportLength = child.viewport.width
+    this.vScrollbar.viewportLength = child.viewport.height
   }
 
   protected override setSize(value: Size) {
     if (super.setSize(value)) {
       if (this._child) {
+
+        // 更新子节点的视口
         this.updateChildViewport(this._child)
+
+        // 更新滚动条的大小和位置
+
+        this.hScrollbar.offset = Point.fromXY(
+          this.scrollbarMargin,
+          this._size.height - this.scrollbarMargin - this.hScrollbar.size.height,
+        )
+        this.hScrollbar.length = this._size.width - 2 * this.scrollbarMargin - this.vScrollbar.size.width
+
+        this.vScrollbar.offset = Point.fromXY(
+          this._size.width - this.scrollbarMargin - this.vScrollbar.size.width,
+          this.scrollbarMargin,
+        )
+        this.vScrollbar.length = this._size.height - 2 * this.scrollbarMargin - this.hScrollbar.size.height
       }
+
       return true
     }
     return false
@@ -243,13 +337,72 @@ export class RenderScrollView extends RenderSingleChild<RenderObject> {
         && !this._scrollSize
       this._child.layoutAsChild(parentUsesSize, false)
       this.ensureScrollOffsetValid()
+
+      this.hScrollbar.layoutAsChild(false, false)
+      this.hScrollbar.contentLength = this.scrollWidth
+      this.vScrollbar.layoutAsChild(false, false)
+      this.vScrollbar.contentLength = this.scrollHeight
+
     }
+  }
+
+  override visitChildren(visitor: Visitor<RenderObject>) {
+    if (this._child) {
+      visitor(this._child)
+    }
+    if (this.hScrollbar) {
+      visitor(this.hScrollbar)
+    }
+    if (this.vScrollbar) {
+      visitor(this.vScrollbar)
+    }
+  }
+
+  override attach(owner: RenderPipeline) {
+    super.attach(owner)
+    this.vScrollbar.attach(owner)
+    this.hScrollbar.attach(owner)
+  }
+
+  override detach() {
+    super.detach()
+    this.vScrollbar.detach()
+    this.hScrollbar.detach()
   }
 
   override get repaintBoundary() {
     return true
   }
   override _repaintBoundaryLocked = true
+
+  override hitTestChildren(result: HitTestResult, position: Point): boolean {
+    if (!this._child) {
+      return false
+    }
+
+    const isHitScrollbars =
+      this.hitTestScrollbar(this.vScrollbar, result, position)
+      || this.hitTestScrollbar(this.hScrollbar, result, position)
+    if (isHitScrollbars) {
+      return isHitScrollbars
+    }
+
+    return super.hitTestChildren(result, position)
+  }
+
+  private hitTestScrollbar(
+    scrollbar: RenderObject,
+    result: HitTestResult,
+    position: Point): boolean {
+    return !scrollbar.offstage && result.addWithPaintOffset(
+      Point.add(scrollbar.offset, this.viewportOffset),
+      position,
+      (result, transformed) => {
+        assert(Point.eq(transformed, Point.add(position, Point.invert(Point.add(scrollbar.offset, this.viewportOffset)))))
+        return scrollbar.hitTest(result, transformed)
+      }
+    )
+  }
 
   private dispatchScrollEvent() {
     const event = new SyntheticEvent('scroll', {
