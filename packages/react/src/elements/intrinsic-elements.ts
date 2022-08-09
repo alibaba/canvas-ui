@@ -91,6 +91,7 @@ export type PathProps = RenderObjectProps & ShapeProps & {
 
 export type ScrollViewProps = RenderObjectProps & {
   scrollAxis?: RenderScrollView['scrollAxis']
+  scrollbar?: RenderScrollView['scrollbar']
   scrollBounds?: RenderScrollView['scrollBounds']
   scrollOffset?: RenderScrollView['scrollOffset']
   scrollSize?: RenderScrollView['scrollSize']

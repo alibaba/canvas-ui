@@ -556,9 +556,9 @@ export abstract class RenderObject<ParentDataType extends ParentData = ParentDat
   }
 
   /**
-   * 设置或获取节节点的大小
+   * 设置或获取节节点的逻辑 size
    * 
-   * 默认情况下 `paintBounds` 返回该值，作为参考，指示你不可以超出画面进行绘制
+   * 默认情况下 `paintBounds` 返回该值，作为参考指示你不可以超出画面进行绘制
    * 
    * 设置该属性不会导致重新布局，但是会导致重新绘制
    * 
