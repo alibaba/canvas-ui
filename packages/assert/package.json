@@ -1,6 +1,6 @@
 {
   "name": "@canvas-ui/assert",
-  "version": "0.8.0-alpha.2",
+  "version": "0.8.0",
   "description": "Canvas UI Assertion Library",
   "author": "Zhang Haocong <kakera@gmail.com>",
   "license": "MIT",
