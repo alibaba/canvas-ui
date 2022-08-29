@@ -482,11 +482,19 @@ export abstract class RenderObject<ParentDataType extends ParentData = ParentDat
 
   protected handlePositionChange(value: StyleMap['position']) {
     assert(this.yogaNode)
-    this.yogaNode.setPositionType(
+
+    const positionType =
       value === 'absolute'
         ? Yoga.POSITION_TYPE_ABSOLUTE
-        : Yoga.POSITION_TYPE_RELATIVE
-    )
+        : value === 'relative'
+          ? Yoga.POSITION_TYPE_RELATIVE
+          : null
+
+    if (!positionType) {
+      return
+    }
+
+    this.yogaNode.setPositionType(positionType)
     this.markLayoutDirty()
   }
 
@@ -501,12 +509,17 @@ export abstract class RenderObject<ParentDataType extends ParentData = ParentDat
       this._offset = Point.fromXY(layout.left, layout.top)
     } else {
       const { left, top } = this.style
-      if (typeof left === 'number' && typeof top === 'number') {
-        this.offset = Point.fromXY(left, top)
-      } else if (typeof left === 'number') {
-        this.offset = Point.fromXY(left, this._offset.y)
-      } else if (typeof top === 'number') {
-        this.offset = Point.fromXY(this._offset.x, top)
+      const nextOffset = Point.fromXY(
+        typeof left === 'number'
+          ? left
+          : this._offset.x,
+        typeof top === 'number'
+          ? top
+          : this._offset.y,
+      )
+      if (!Point.eq(nextOffset, this._offset)) {
+        this._offset = nextOffset
+        this.parent?.markLayoutDirty(this)
       }
     }
   }
