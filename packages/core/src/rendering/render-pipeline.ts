@@ -29,6 +29,8 @@ export class RenderPipeline {
 
   private layoutDirtyObjects: RenderObject[] = []
 
+  private enterFrameObjects: RenderObject[] = []
+
   get debugPaintDirtyObjects() {
     return this.paintDirtyObjects
   }
@@ -39,6 +41,12 @@ export class RenderPipeline {
 
   get debugLayoutDirtyObjects() {
     return this.layoutDirtyObjects
+  }
+
+  addEnterFrame(object: RenderObject) {
+    if (this.enterFrameObjects.indexOf(object) === -1) {
+      this.enterFrameObjects.push(object)
+    }
   }
 
   @Log({ disabled: true })
@@ -63,6 +71,16 @@ export class RenderPipeline {
 
   requestVisualUpdate() {
     this.onRequestVisualUpdate()
+  }
+
+  flushEnterFrame() {
+    const enterFrameObjects = this.enterFrameObjects
+    this.enterFrameObjects = []
+    const n = enterFrameObjects.length
+    for (let i = 0; i < n; i++) {
+      const object = enterFrameObjects[i]
+      object.unstable_enterFrame()
+    }
   }
 
   flushLayout() {

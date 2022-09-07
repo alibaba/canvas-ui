@@ -46,6 +46,8 @@ export class RenderScrollView extends RenderSingleChild<RenderObject> {
     this.vScrollbar.onScroll = scrollPosition => {
       this.scrollTop = scrollPosition
     }
+
+    this.scrollbarAutoHideDelay = 1000
   }
 
   private handleWheel = (event: SyntheticWheelEvent<RenderScrollView>) => {
@@ -110,8 +112,23 @@ export class RenderScrollView extends RenderSingleChild<RenderObject> {
   }
   private _scrollbar = ScrollAxis.Horizontal | ScrollAxis.Vertical
 
+
   /**
-   * 滚动边界，修改该属性会导致 relayout，默认 ScrollBounds.FitContent
+   * 滚动条自动消失的延迟 ms，默认 1000
+   */
+  get scrollbarAutoHideDelay() {
+    return this._scrollbarAutoHideDelay
+  }
+  set scrollbarAutoHideDelay(value) {
+    this._scrollbarAutoHideDelay = value
+    this._scrollbarAutoHideDelayFrames = Math.round(this._scrollbarAutoHideDelay / (1000 / 60))
+  }
+  private declare _scrollbarAutoHideDelay: number
+  private declare _scrollbarAutoHideDelayFrames: number
+  private _scrollOffsetUpdateFlag = 0
+
+  /**
+   * 滚动边界，修改该属性会导致 relayout，默认 ScrollBounds.Horizontal | ScrollBounds.Vertical
    */
   get scrollBounds() {
     return this._scrollBounds
@@ -159,9 +176,22 @@ export class RenderScrollView extends RenderSingleChild<RenderObject> {
       // 更新滚动条位置
       this.hScrollbar.scrollPosition = this._scrollOffset.x
       this.vScrollbar.scrollPosition = this._scrollOffset.y
+
+      // 隐藏滚动条
+      this._scrollOffsetUpdateFlag = this._scrollbarAutoHideDelayFrames
+      this.unstable_markEnterFrame()
     }
     this.markPaintDirty()
     return true
+  }
+
+  override unstable_enterFrame() {
+    if (this._scrollOffsetUpdateFlag === 0) {
+      this.markPaintDirty()
+    } else {
+      this._scrollOffsetUpdateFlag--
+      this.unstable_markEnterFrame()
+    }
   }
 
   override _paint(context: PaintingContext, offset: Point) {
@@ -169,21 +199,23 @@ export class RenderScrollView extends RenderSingleChild<RenderObject> {
     if (this._child) {
       const viewportOffset = this.viewportOffset
 
-      // 绘制滚动条
-      this.hScrollbar.offstage = this._child.viewport.width >= this.scrollSize.width
-      if (!this.hScrollbar.offstage
-        && this.scrollbar & ScrollAxis.Horizontal
-        && this.scrollAxis & ScrollAxis.Horizontal
-      ) {
-        context.paintChild(this.hScrollbar, Point.add3(this.hScrollbar.offset, offset, viewportOffset))
-      }
+      if (this._scrollbarAutoHideDelay === 0 || this._scrollOffsetUpdateFlag > 0) {
+        // 绘制滚动条
+        this.hScrollbar.offstage = this._child.viewport.width >= this.scrollSize.width
+        if (!this.hScrollbar.offstage
+          && this.scrollbar & ScrollAxis.Horizontal
+          && this.scrollAxis & ScrollAxis.Horizontal
+        ) {
+          context.paintChild(this.hScrollbar, Point.add3(this.hScrollbar.offset, offset, viewportOffset))
+        }
 
-      this.vScrollbar.offstage = this._child.viewport.height >= this.scrollSize.height
-      if (!this.vScrollbar.offstage
-        && this.scrollbar & ScrollAxis.Vertical
-        && this.scrollAxis & ScrollAxis.Vertical
-      ) {
-        context.paintChild(this.vScrollbar, Point.add3(this.vScrollbar.offset, offset, viewportOffset))
+        this.vScrollbar.offstage = this._child.viewport.height >= this.scrollSize.height
+        if (!this.vScrollbar.offstage
+          && this.scrollbar & ScrollAxis.Vertical
+          && this.scrollAxis & ScrollAxis.Vertical
+        ) {
+          context.paintChild(this.vScrollbar, Point.add3(this.vScrollbar.offset, offset, viewportOffset))
+        }
       }
     }
   }

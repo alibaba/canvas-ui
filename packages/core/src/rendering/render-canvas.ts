@@ -128,9 +128,14 @@ export class RenderCanvas
   private _el?: CrossPlatformCanvasElement
 
   private drawFrame = () => {
+
+    // enterFrame 不受 frameDirty 控制
+    this.pipeline.flushEnterFrame()
+
     if (!this.frameDirty) {
       return
     }
+
     this.pipeline.flushLayout()
     this.pipeline.flushNeedsCompositing()
     this.pipeline.flushPaint()

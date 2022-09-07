@@ -62,6 +62,7 @@ export abstract class RenderObject<ParentDataType extends ParentData = ParentDat
   extends AbstractNode<RenderPipeline>
   implements SyntheticEventTarget {
 
+
   /**
    * `RenderObject` 的 parent，如果没有 parent，则为 undefined
    */
@@ -778,6 +779,19 @@ export abstract class RenderObject<ParentDataType extends ParentData = ParentDat
    */
   performLayout() {
     this.updateOffsetAndSize()
+  }
+
+  /**
+   * 节点调度了 enterFrame 时调用
+   */
+  unstable_enterFrame() { }
+
+  /**
+   * 标记节点需要调度 enterFrame
+   */
+  unstable_markEnterFrame() {
+    this._owner?.addEnterFrame(this)
+    this._owner?.requestVisualUpdate()
   }
 
   /**
