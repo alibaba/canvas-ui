@@ -1,4 +1,4 @@
-import assert from 'assert'
+import { assert } from '@canvas-ui/assert'
 import { PointerEventSaveTarget, WheelEventSaveTarget } from './firefox-event-save-target'
 import type { NativeEventBinding, NativePointerEvents } from './types'
 

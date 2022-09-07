@@ -11,6 +11,7 @@ module.exports = {
     'plugin:react/recommended',
   ],
   rules: {
+    'react-hooks/rules-of-hooks': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/display-name': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
@@ -38,7 +39,7 @@ module.exports = {
         ]
       }
     ],
-    '@typescript-eslint/no-unused-vars': ["error", { "argsIgnorePattern": "^_" }]
+    '@typescript-eslint/no-unused-vars': ["error", { "argsIgnorePattern": "^_" }],
   },
   settings: {
     react: {
