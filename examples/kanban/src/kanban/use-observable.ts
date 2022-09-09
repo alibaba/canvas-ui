@@ -12,3 +12,4 @@ export function useObservable<T>(source: Observable<T>) {
   return ret
 }
 
+export default useObservable

@@ -1,0 +1,11 @@
+.kanban-app {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.kanban-canvas {
+  flex: 1;
+  background-color: #F7F7F7;
+}

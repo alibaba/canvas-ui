@@ -8,6 +8,8 @@ Animated GIFs are not supported.
 
 ```jsx live
 function ImageDemo () {
+  const { Canvas, Flex, Image } = importCanvasUIPackages()
+
   return (
     <div style={{ height: '200px' }}>
       <Canvas>

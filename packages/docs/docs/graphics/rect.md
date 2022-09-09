@@ -1,18 +1,8 @@
----
-group:
-  title: 图形组件
-  order: 2
-order: 1
----
-
 # Rect
 
-使用 `Rect` 可以绘制矩形。
+Use `Rect` to draw rectangles.
 
 ```jsx
-/**
- * defaultShowCode: true
- */
 import React, { useState } from 'react'
 import { Canvas, Rect } from '@canvas-ui/react'
 

@@ -5,6 +5,7 @@ Use `Circle` to draw circles.
 ```tsx live
 
 function CircleDemo () {
+  const { Canvas, Circle } = importCanvasUIPackages()
 
   const style = {
     cursor: 'pointer',

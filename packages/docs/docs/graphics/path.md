@@ -10,6 +10,7 @@ You need to set the correct `pathBounds` and `path` to render SVG in Canvas
 
 ```jsx live
 function PathDemo () {
+  const { Canvas, Path, CanvasUICore } = importCanvasUIPackages()
 
   const style = {
     cursor: 'pointer',

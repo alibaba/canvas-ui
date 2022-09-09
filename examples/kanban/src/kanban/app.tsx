@@ -1,13 +1,12 @@
 import { Canvas } from '@canvas-ui/react'
 import { assert } from '@canvas-ui/assert'
-import React, { createContext, FC, useContext } from 'react'
+import React from 'react'
 import { DebugFlagsUI } from '../common/debug-flags-ui'
 import { Kanban } from './kanban'
 import { Repo } from './repo'
-import styles from './styles.css'
+import './styles.css'
 
-const ctx = createContext<App | null>(null)
-
+const ctx = React.createContext<App | null>(null)
 
 export class App {
 
@@ -17,12 +16,12 @@ export class App {
     return this.repo.query()
   }
 
-  readonly UI: FC = () => {
+  readonly UI: React.FC = () => {
 
     return (
-      <div className={styles['app']}>
+      <div className='kanban-app'>
         <DebugFlagsUI />
-        <div className={styles['app-canvas']}>
+        <div className='kanban-canvas'>
           <Canvas>
             <ctx.Provider value={this}>
               <Kanban />
@@ -35,7 +34,7 @@ export class App {
 }
 
 export function useApp() {
-  const ret = useContext(ctx)
+  const ret = React.useContext(ctx)
   assert(ret, 'use inside App')
   return ret
 }
