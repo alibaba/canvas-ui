@@ -1,6 +1,6 @@
 {
   "name": "@canvas-ui/core",
-  "version": "0.8.0",
+  "version": "0.9.0-alpha.0",
   "description": "Canvas UI Core",
   "author": "Zhang Haocong <kakera@gmail.com>",
   "license": "MIT",
@@ -18,7 +18,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@canvas-ui/assert": "^0.8.0",
+    "@canvas-ui/assert": "^0.9.0-alpha.0",
     "@mapbox/shelf-pack": "^3.2.0",
     "@types/mapbox__shelf-pack": "^3.0.0",
     "csstype": "3.0.8",
