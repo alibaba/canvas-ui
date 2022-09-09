@@ -1,6 +1,5 @@
 import { ScrollBounds, ScrollAxis } from '@canvas-ui/core'
 import { Flex, Text, ScrollView } from '@canvas-ui/react'
-import React, { FC } from 'react'
 import { Card, CardStyle } from './card'
 import type { Task, Tasklist } from './types'
 
@@ -44,7 +43,7 @@ const ListStyle = {
   }
 } as const
 
-export const List: FC<Props> = ({
+export const List: React.FC<Props> = ({
   tasklist,
   tasks,
 }) => {

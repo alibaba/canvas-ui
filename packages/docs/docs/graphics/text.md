@@ -1,9 +1,3 @@
----
-group:
-  title: 图形组件
-order: 5
----
-
 # Text
 
 Use `Text` to draw text.
@@ -29,6 +23,8 @@ If the text exceeds the display area, an ellipsis (`…`) is added after the las
 
 ```jsx live
 function TextExample () {
+  const { Canvas, Text } = importCanvasUIPackages()
+
   const [text, setText] = React.useState('The quick brown 🦊 jumps over the lazy 🐶')
   const [style, setStyle] = React.useState({
     width: 100,

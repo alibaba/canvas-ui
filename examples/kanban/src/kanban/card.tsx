@@ -1,5 +1,5 @@
 import { Flex, Text } from '@canvas-ui/react'
-import React, { FC, useMemo, useState } from 'react'
+import React from 'react'
 import type { Task } from './types'
 
 type Props = {
@@ -28,12 +28,12 @@ export const CardStyle = {
 
 } as const
 
-export const Card: FC<Props> = ({
+export const Card: React.FC<Props> = ({
   task,
 }) => {
-  const [style, setStyle] = useState(CardStyle)
+  const [style, setStyle] = React.useState(CardStyle)
 
-  const hover = useMemo(() => {
+  const hover = React.useMemo(() => {
     return {
       pointerover: () => {
         setStyle(prev => {

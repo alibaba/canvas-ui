@@ -8,6 +8,7 @@ You can also use the low-level <code>createElement</code> to manipulate Canvas U
 
 ```jsx live
 () => {
+  const { CanvasUICore } = importCanvasUIPackages()
 
   const {
     Size,

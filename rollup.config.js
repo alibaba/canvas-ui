@@ -17,7 +17,12 @@ const minify = (name) => {
 const getPlugins = ({ __PROD__ }) => {
   const res = [
     typescript({
-
+      exclude: [
+        'examples/**',
+        'tools/**',
+        'packages/docs/**',
+        'packages/storybook/**',
+      ],
     }),
     resolve({
       browser: true,

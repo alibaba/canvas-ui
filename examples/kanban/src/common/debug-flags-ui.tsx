@@ -1,15 +1,16 @@
 import { assert } from '@canvas-ui/assert'
 import { DebugFlags } from '@canvas-ui/core'
-import React, { ChangeEvent, FC, useEffect, useState } from 'react'
-import styles from './styles.css'
-export const DebugFlagsUI: FC = () => {
+import React from 'react'
+import './styles.css'
+export const DebugFlagsUI: React.FC = () => {
 
-  const [flags, setFlags] = useState<Record<string, boolean>>({})
+  const [flags, setFlags] = React.useState<Record<string, boolean>>({})
 
-  useEffect(() => {
+  React.useEffect(() => {
     const v = Object.entries(flags).reduce((acc, [name, checked]) => {
       if (checked) {
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return acc | (DebugFlags as any)[name]
       }
       return acc
@@ -37,7 +38,7 @@ export const DebugFlagsUI: FC = () => {
   }
 
   return (
-    <div className={styles['debug-flags-ui']}>
+    <div className='debug-flags-ui'>
       {renderCheckbox('NodeBounds')}
       {renderCheckbox('LayerBounds')}
       {renderCheckbox('NodeId')}
@@ -53,8 +54,8 @@ type FlagCheckboxProps = {
   onChange: (flag: string, checked: boolean) => void
   checked: boolean
 }
-const FlagCheckbox: FC<FlagCheckboxProps> = (props) => {
-  const handleChange = (event: ChangeEvent) => {
+const FlagCheckbox: React.FC<FlagCheckboxProps> = props => {
+  const handleChange = (event: React.ChangeEvent) => {
     assert(event.target instanceof HTMLInputElement)
     props.onChange(props.name, event.target.checked)
   }

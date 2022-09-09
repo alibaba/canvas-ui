@@ -2,6 +2,7 @@ prefer-workspace-packages: true
 
 packages:
   - packages/*
+  - examples/*
 
 onlyBuiltDependencies:
   - canvas

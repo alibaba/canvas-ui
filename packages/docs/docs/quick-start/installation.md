@@ -67,6 +67,8 @@ After installation, you can start using Canvas UI components in your React appli
 
 ```tsx live
 function HelloWorld() {
+  const { Canvas, Text } = importCanvasUIPackages()
+
   return (
     <div style={{ height: '150px', border: '1px solid #ddd', borderRadius: '8px' }}>
       <Canvas>
@@ -164,6 +166,8 @@ The Canvas component fills its parent container completely. You must provide exp
 
 ```tsx live
 function SizingExample() {
+  const { Canvas, Text } = importCanvasUIPackages()
+
   return (
     <div style={{
       width: '300px',
@@ -193,6 +197,8 @@ Canvas UI components render to canvas, but you can mix them with regular HTML:
 
 ```tsx live
 function MixedContentExample() {
+  const { Canvas, Flex, Text } = importCanvasUIPackages()
+
   return (
     <div style={{ padding: '20px' }}>
       <h3 style={{ margin: '0 0 10px 0', color: '#333' }}>HTML Header</h3>
@@ -224,6 +230,8 @@ function MixedContentExample() {
 
 ```tsx live
 function HeightIssueDemo() {
+  const { Canvas, Text } = importCanvasUIPackages()
+
   const [hasHeight, setHasHeight] = useState(true)
 
   return (
@@ -274,6 +282,8 @@ function HeightIssueDemo() {
 
 ```tsx live
 function EventsExample() {
+  const { Canvas, Flex, Text } = importCanvasUIPackages()
+
   const [message, setMessage] = useState('Click the blue box')
 
   return (
@@ -303,15 +313,6 @@ function EventsExample() {
   )
 }
 ```
-
-## Next Steps
-
-Now that you have Canvas UI installed and running:
-
-1. **Learn the Basics:** Explore the [Tutorial](../tutorial-basics/create-a-page) to understand core concepts
-2. **Browse Components:** Check out [Containers](../containers/canvas) and [Graphics](../graphics/text) components
-3. **See Examples:** Look at practical examples in the [Storybook](https://canvas-ui-storybook.vercel.app)
-4. **Performance:** Learn about optimizations with [Chunk](../containers/chunk) and rendering best practices
 
 ## TypeScript Support
 
@@ -346,4 +347,3 @@ Canvas UI is optimized for production use:
 - Tree-shaking friendly for smaller bundles
 - No external dependencies beyond React
 
-For bundle analysis and optimization tips, see the [Performance Guide](../tutorial-extras/performance).

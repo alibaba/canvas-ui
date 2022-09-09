@@ -43,6 +43,8 @@ Here's a simple example to get you started:
 
 ```jsx live
 function HelloWorld() {
+  const { Canvas, Flex, Text } = importCanvasUIPackages()
+
   const containerStyle = {
     width: 250,
     flexDirection: 'column'
@@ -57,22 +59,20 @@ function HelloWorld() {
   } as const
 
   const [text, setText] = React.useState('Hello, Canvas UI!')
-  const textRef = React.useRef(null)
+  const setTextRef = (ref) => {
+      console.info('Access underlying RenderText object:', ref)
+  }
 
   const handlePointerDown = () => {
     setText(text === 'Hello, Canvas UI!' ? 'Welcome to Canvas UI! 🎉' : 'Hello, Canvas UI!')
   }
-
-  React.useEffect(() => {
-    console.info('Access underlying RenderText object:', textRef.current)
-  }, [])
 
   return (
     <div style={{ height: '120px', border: '1px solid #ddd', borderRadius: '4px' }}>
       <Canvas>
         <Flex style={containerStyle}>
           <Text
-            ref={textRef}
+            ref={setTextRef}
             onPointerDown={handlePointerDown}
             style={textStyle}
           >
@@ -133,7 +133,5 @@ The `Canvas` component works in all modern browsers that support:
 
 ## Getting Started
 
-Ready to dive in? Check out our [Quick Start Guide](./quick-start/installation) to set up your first Canvas UI project, or explore our [component examples](./tutorial-basics/create-a-page) to see what's possible.
-
-For a comprehensive demo, visit our [interactive kanban example](https://alibaba.github.io/canvas-ui/examples/task) to see Canvas UI in action.
+Ready to dive in? Check out our [Quick Start Guide](./quick-start/installation) to set up your first Canvas UI project
 

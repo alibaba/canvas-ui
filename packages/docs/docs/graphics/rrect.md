@@ -1,21 +1,11 @@
----
-group:
-  title: 图形组件
-order: 2
----
-
 # RRect
 
-使用 `RRect` 可以绘制圆角矩形。
+Use `RRect` to draw rounded rectangles.
 
-```jsx
-/**
- * defaultShowCode: true
- */
-import React, { useState } from 'react'
-import { Canvas, RRect } from '@canvas-ui/react'
+```tsx live
 
-export default () => {
+function RRectDemo () {
+  const { Canvas, RRect } = importCanvasUIPackages()
 
   const style = {
     cursor: 'pointer',

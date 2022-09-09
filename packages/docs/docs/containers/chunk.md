@@ -20,6 +20,8 @@ Key performance optimizations include:
 
 ```jsx live
 function BasicChunkExample() {
+  const { Canvas, ScrollView, Chunk, Text } = importCanvasUIPackages()
+
   const items = Array.from({ length: 50 }, (_, i) => ({
     id: i,
     text: `Item ${i + 1}`
@@ -127,6 +129,8 @@ Here's a demonstration showing the performance difference between regular contai
 
 ```jsx live
 function PerformanceComparison() {
+  const { Canvas, ScrollView, Chunk, View, Flex, Text } = importCanvasUIPackages()
+
   const [useChunk, setUseChunk] = useState(true)
   const items = Array.from({ length: 200 }, (_, i) => ({
     id: i,
@@ -182,6 +186,8 @@ For very large datasets, Chunk provides substantial performance benefits:
 
 ```jsx live
 function LargeDatasetExample() {
+  const { Canvas, ScrollView, Chunk, Flex, Text } = importCanvasUIPackages()
+
   const [itemCount, setItemCount] = useState(500)
 
   const items = React.useMemo(() =>

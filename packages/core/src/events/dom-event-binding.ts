@@ -8,7 +8,7 @@ export class DOMEventBinding implements NativeEventBinding {
     return !!self.PointerEvent
   }
 
-  static isFirefox = typeof (window as any)['InstallTrigger'] !== 'undefined'
+  static isFirefox = navigator.userAgent.toLowerCase().includes('firefox')
 
   onEvents?: () => void
 

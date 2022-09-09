@@ -16,6 +16,10 @@ Unlike traditional HTML elements, `Canvas` operates on a different rendering par
 
 ```jsx live
 function BasicCanvasExample() {
+  const {
+    Canvas,
+    Text,
+  } = importCanvasUIPackages()
   return (
     <div style={{ height: '150px', border: '1px solid #ddd' }}>
       <Canvas>
@@ -116,6 +120,11 @@ The `Canvas` component supports all standard Canvas UI events on its children:
 ```jsx live
 function EventExample() {
   const [status, setStatus] = useState('Ready')
+  const {
+    Canvas,
+    Text,
+    Flex,
+  } = importCanvasUIPackages()
 
   return (
     <div style={{ height: '120px', border: '1px solid #ddd' }}>
@@ -176,6 +185,12 @@ Canvas UI supports sophisticated layouts within the Canvas:
 
 ```jsx live
 function ComplexLayout() {
+  const {
+    Canvas,
+    Text,
+    Flex,
+  } = importCanvasUIPackages()
+
   return (
     <div style={{ height: '200px', border: '1px solid #ddd' }}>
       <Canvas>
