@@ -35,6 +35,13 @@ export default () => {
 }
 ```
 
+# Demo
+
+https://alibaba.github.io/canvas-ui/examples/task
+
+![canvas-ui-kanban-demo](https://user-images.githubusercontent.com/180445/189369038-1a5b5c56-375b-4d5d-801a-9e06421f4a63.png)
+
+
 # 特性
 
 - 像 DOM 一样操作在 Canvas 里的元素
