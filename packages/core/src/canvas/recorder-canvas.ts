@@ -127,14 +127,16 @@ export class RecorderCanvas implements Canvas {
       name: 'clipRRect',
       args: [x, y, w, h, rx, ry]
     })
-    this.clipBoundses.push(Rect.fromLTWH(x, y, w, h))
+    // 暂时禁用 clipBoundses，用于解决 RenderImage 的裁剪绘制缓存问题
+    // this.clipBoundses.push(Rect.fromLTWH(x, y, w, h))
   }
   clipCircle(x: number, y: number, radius: number): void {
     this.drawOps.push({
       name: 'clipCircle',
       args: [x, y, radius]
     })
-    this.clipBoundses.push(Rect.fromLTWH(x - radius, y - radius, radius * 2, radius * 2))
+    // 暂时禁用 clipBoundses，用于解决 RenderImage 的裁剪绘制缓存问题
+    // this.clipBoundses.push(Rect.fromLTWH(x - radius, y - radius, radius * 2, radius * 2))
   }
   debugDrawCheckerboard(scale: number): void {
     this.drawOps.push({
