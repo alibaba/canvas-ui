@@ -40,4 +40,11 @@ describe('Rect.fromLTWH', () => {
     )
   })
 
+  test('expandToInclude', () => {
+    const a = Rect.fromLTRB(0, 0, 100, 100)
+    const b = Rect.fromLTRB(10, 10, 50, 50)
+    const c = Rect.expandToInclude(a, b)
+    expect(c).toEqual(Rect.fromLTRB(0, 0, 100, 100))
+  })
+
 })
