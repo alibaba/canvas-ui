@@ -500,13 +500,15 @@ export abstract class RenderObject<ParentDataType extends ParentData = ParentDat
   }
 
   protected updateOffsetAndSizeFromYogaNode() {
-    assert(this.yogaNode)
-    const layout = this.yogaNode.getComputedLayout()
+    assert(this._yogaNode, 'updateOffsetAndSizeFromYogaNode: _yogaNode 不存在')
+    const layout = this._yogaNode.getComputedLayout()
     this.size = Size.fromWH(layout.width, layout.height)
 
     // 如果自己是布局边界，则不更新 offset，因为 offset 受 parent (例如 View) 控制
     // todo(haocong): 这会导致根节点的 margin 不起作用，需要考虑一个方法解决
-    if (this._relayoutBoundary !== this) {
+    if (this._relayoutBoundary !== this
+      && this._yogaNode.getPositionType() !== Yoga.POSITION_TYPE_ABSOLUTE
+    ) {
       this._offset = Point.fromXY(layout.left, layout.top)
     } else {
       const { left, top } = this.style
