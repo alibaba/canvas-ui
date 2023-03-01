@@ -653,6 +653,7 @@ export abstract class RenderObject<ParentDataType extends ParentData = ParentDat
     }
     this._hidden = value
     this.markLayoutDirty()
+    this.markPaintDirty()
   }
   protected _hidden = false
 
