@@ -157,7 +157,7 @@ export class RenderPath extends RenderShape {
 
       const resizeCenter = Point.fromXY(
         offset.x,
-        offset.y ,
+        offset.y,
       )
 
       const rotateCenter = Point.fromXY(
@@ -232,7 +232,7 @@ export class RenderPath extends RenderShape {
       }
       return pathBounds
     }
-    return super.bounds
+    return Rect.fromLTWH(this._offset.x, this._offset.y, this._size.width, this._size.height)
   }
 
   @Log()
