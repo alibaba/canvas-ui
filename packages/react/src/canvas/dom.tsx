@@ -105,6 +105,10 @@ function Binding({
   useLayoutEffect(() => {
     binding.el = el
     binding.dpr = dpr
+    if (el) {
+      el.style.width = `${width}px`
+      el.style.height = `${height}px`
+    }
     binding.size = Size.fromWH(width, height)
   }, [
     binding,
