@@ -221,4 +221,16 @@ describe('RenderObject', () => {
     expect(c.getBoundingClientRect(canvas)).toEqual(Rect.fromLTWH(40, 80, 20, 20))
   })
 
+  test('onPaint callback', () => {
+    const canvas = new RenderCanvas()
+    canvas.prepareInitialFrame()
+    canvas.dpr = 2
+
+    const root = new RenderSingleChild()
+    const handlePaint = jest.fn()
+    root.onPaint = handlePaint
+    canvas.child = root
+    jest.runAllTimers()
+    expect(handlePaint).toBeCalledWith(Point.fromXY(0, 0))
+  })
 })

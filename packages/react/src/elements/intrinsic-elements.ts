@@ -54,6 +54,7 @@ type RenderObjectProps = {
   onPointerOutCapture?: RenderObject['onPointerOutCapture']
   onPointerLeaveCapture?: RenderObject['onPointerLeaveCapture']
   onWheelCapture?: RenderObject['onWheelCapture']
+  onPaint?: RenderObject['onPaint']
 }
 
 type ShapeProps = {
