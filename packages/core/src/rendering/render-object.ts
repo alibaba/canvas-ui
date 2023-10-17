@@ -52,6 +52,7 @@ export interface RenderObject {
   onPointerOutCapture?: SyntheticEventListener<SyntheticPointerEvent<any>>
   onPointerLeaveCapture?: SyntheticEventListener<SyntheticPointerEvent<any>>
   onWheelCapture?: SyntheticEventListener<SyntheticWheelEvent<any>>
+  onPaint?: (offset: Point) => void
 }
 
 /**
@@ -1037,6 +1038,7 @@ export abstract class RenderObject<ParentDataType extends ParentData = ParentDat
     if (!this._hidden) {
       try {
         this.paint(context, offset)
+        this.onPaint?.(offset)
         assert(!this._layoutDirty, '检测到 paint 方法中重新将 _layoutDirty 标记为 true')
         assert(!this._paintDirty, '检测到 paint 方法中重新将 _paintDirty 标记为 true')
       } catch (err) {
