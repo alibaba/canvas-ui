@@ -1,6 +1,6 @@
 {
   "name": "@canvas-ui/react",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Canvas UI React Binding",
   "author": "Zhang Haocong <kakera@gmail.com>",
   "license": "MIT",
@@ -21,8 +21,8 @@
     "react": "16.8.6"
   },
   "dependencies": {
-    "@canvas-ui/assert": "^1.1.0-alpha.1",
-    "@canvas-ui/core": "^1.1.0",
+    "@canvas-ui/assert": "^1.2.0",
+    "@canvas-ui/core": "^1.2.0",
     "@types/react-reconciler": "0.18.0",
     "@types/scheduler": "0.12.1",
     "react-reconciler": "0.20.4",
