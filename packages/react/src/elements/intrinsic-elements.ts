@@ -99,6 +99,7 @@ export type ScrollViewProps = RenderObjectProps & {
   scrollLeft?: RenderScrollView['scrollLeft']
   scrollTop?: RenderScrollView['scrollTop']
   onScroll?: RenderScrollView['onScroll']
+  scrollbarAutoHideDelay?: RenderScrollView['scrollbarAutoHideDelay']
 }
 
 export type ImageProps = RenderObjectProps & {
