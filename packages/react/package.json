@@ -1,6 +1,6 @@
 {
   "name": "@canvas-ui/react",
-  "version": "1.2.0",
+  "version": "1.2.1-alpha.0",
   "description": "Canvas UI React Binding",
   "author": "Zhang Haocong <kakera@gmail.com>",
   "license": "MIT",
