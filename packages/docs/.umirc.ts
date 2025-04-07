@@ -8,4 +8,5 @@ export default defineConfig({
   base: process.env.NODE_ENV === 'production' ? '/canvas-ui/' : '/',
   publicPath: process.env.NODE_ENV === 'production' ? '/canvas-ui/' : '/',
   // more config: https://d.umijs.org/config
+  webpack5: {},
 })

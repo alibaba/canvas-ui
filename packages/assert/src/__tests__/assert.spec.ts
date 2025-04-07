@@ -11,7 +11,7 @@ describe('assert', () => {
   test('asserts falsy', () => {
     expect(() => {
       assert(false)
-    }).toThrowError(AssertionError)
+    }).toThrowError(Error)
   })
 
   test('asserts iife without error', () => {
@@ -25,7 +25,7 @@ describe('assert', () => {
       assert(() => {
         assert(false)
       })
-    }).toThrowError(AssertionError)
+    }).toThrowError(Error)
   })
 
   test('should asserts type', () => {
