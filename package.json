@@ -1,27 +1,20 @@
 {
   "name": "root",
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
   "scripts": {
-    "lerna": "lerna",
     "distclean": "rimraf \"{packages,out}/*/{.tsbuildinfo,dist}\"",
     "dev": "sh ./tools/dev.sh",
-    "dev:examples": "pushd packages/examples && yarn dev; popd",
-    "dev:docs": "pushd packages/docs && yarn dev; popd",
+    "dev:examples": "pushd packages/examples && pnpm dev; popd",
+    "dev:docs": "pushd packages/docs && pnpm dev; popd",
     "build:docs": "sh ./tools/build-docs.sh",
-    "build:examples": "pushd packages/examples && yarn build-storybook; popd",
+    "build:examples": "pushd packages/examples && pnpm build-storybook; popd",
     "build": "sh ./tools/build.sh",
-    "build:api": "yarn build && mkdir -p docs/api && typedoc --exclude \"dist/\" --out docs/api --entryPointStrategy packages .",
+    "build:api": "pnpm build && mkdir -p docs/api && typedoc --exclude \"dist/\" --out docs/api --entryPointStrategy packages .",
     "lint": "eslint --cache packages/core/src packages/react/src",
     "test": "jest",
     "prepare": "husky install"
   },
   "devDependencies": {
-    "@lerna/batch-packages": "3.16.0",
-    "@lerna/filter-packages": "4.0.0",
-    "@lerna/project": "4.0.0",
     "@rollup/plugin-commonjs": "19.0.0",
     "@rollup/plugin-json": "4.1.0",
     "@rollup/plugin-node-resolve": "13.0.0",
@@ -29,6 +22,7 @@
     "@rollup/plugin-strip": "2.0.1",
     "@rollup/plugin-typescript": "8.2.1",
     "@types/jest": "26.0.23",
+    "@types/node": "16.0.0",
     "@types/react": "17.0.13",
     "@types/react-dom": "17.0.8",
     "@typescript-eslint/eslint-plugin": "4.28.1",
@@ -41,7 +35,6 @@
     "eslint-plugin-react-hooks": "4.2.0",
     "husky": "^7.0.0",
     "jest": "27.0.6",
-    "lerna": "4.0.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "rimraf": "3.0.2",

@@ -1,6 +1,6 @@
 
 pushd packages/docs \
-  && yarn build \
+  && pnpm build \
   && popd \
   && rimraf docs \
   && mv packages/docs/dist docs

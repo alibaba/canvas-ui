@@ -20,7 +20,7 @@ const assertTruthy: Assert = (value: unknown, message?: string) => {
 }
 
 function makeAssertFunction(
-  noAssert = !!process.env.NO_ASSERT
+  noAssert = process.env.NODE_ENV === 'production'
 ): Assert {
   return noAssert ? noop : assertTruthy
 }
