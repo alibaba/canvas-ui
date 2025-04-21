@@ -1,4 +1,4 @@
-import assert from 'assert'
+import { assert } from '@canvas-ui/assert'
 import { DebugFlags } from '@canvas-ui/core'
 import React, { ChangeEvent, FC, useEffect, useState } from 'react'
 import styles from './styles.sass'
