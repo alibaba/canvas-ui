@@ -9,6 +9,5 @@ export class AssertionError extends Error {
     actual,
   }: AssertionErrorOptions) {
     super(message ?? `Expected values to be truthy: actual=${actual}`)
-    Error.captureStackTrace(this, this.constructor)
   }
 }

@@ -1,5 +1,5 @@
 #/bin/sh
 
-yarn distclean \
- && yarn lerna run build --no-private --stream \
- && yarn lerna run dev --no-private --parallel
+pnpm distclean \
+ && pnpm --filter "@canvas-ui/*" run --stream build \
+ && pnpm --filter "@canvas-ui/*" run --parallel dev

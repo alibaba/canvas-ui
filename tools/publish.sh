@@ -1,8 +1,8 @@
 #/bin/sh
 
-yarn build
+pnpm build
 
-yarn lerna version --force-publish
+pnpm lerna version --force-publish
 
 pushd packages/core
 npm publish
