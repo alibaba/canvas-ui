@@ -1,0 +1,14 @@
+{
+  "mode": "pre",
+  "tag": "next",
+  "initialVersions": {
+    "@canvas-ui/assert": "1.2.2-alpha.0",
+    "@canvas-ui/core": "1.2.2-alpha.0",
+    "@canvas-ui/docs": "1.2.2-alpha.0",
+    "@canvas-ui/examples": "1.2.2-alpha.0",
+    "@canvas-ui/react": "1.2.2-alpha.0"
+  },
+  "changesets": [
+    "modern-owls-obey"
+  ]
+}
