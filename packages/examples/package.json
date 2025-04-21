@@ -3,14 +3,7 @@
   "version": "1.2.2-alpha.0",
   "license": "MIT",
   "private": "true",
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "dev": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
-  },
+  "scripts": {},
   "browserslist": {
     "production": [
       ">0.2%",
@@ -24,8 +17,8 @@
     ]
   },
   "devDependencies": {
-    "@canvas-ui/core": "^1.2.2-alpha.0",
-    "@canvas-ui/react": "^1.2.2-alpha.0",
+    "@canvas-ui/core": "workspace:*",
+    "@canvas-ui/react": "workspace:*",
     "@storybook/addon-actions": "6.3.4",
     "@storybook/addon-essentials": "6.3.4",
     "@storybook/addon-links": "6.3.4",

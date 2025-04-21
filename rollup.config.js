@@ -1,7 +1,4 @@
 /* global __dirname */
-import batchPackages from '@lerna/batch-packages'
-import { filterPackages } from '@lerna/filter-packages'
-import { getPackages } from '@lerna/project'
 import commonjs from '@rollup/plugin-commonjs'
 import json from '@rollup/plugin-json'
 import resolve from '@rollup/plugin-node-resolve'
@@ -12,16 +9,6 @@ import { terser } from 'rollup-plugin-terser'
 import analyze from 'rollup-plugin-analyzer'
 import typescript from '@rollup/plugin-typescript'
 import strip from '@rollup/plugin-strip'
-
-/**
- * 获得排序后的 packages
- * https://github.com/lerna/lerna/issues/1848#issuecomment-451762317
- */
-async function getSortedPackages(scope, ignore) {
-  const packages = await getPackages(__dirname)
-  const filtered = filterPackages(packages, scope, ignore, false)
-  return batchPackages(filtered).reduce((arr, batch) => arr.concat(batch), [])
-}
 
 const minify = (name) => {
   return name.replace(/\.(m)?js$/, '.min.$1js')
@@ -68,24 +55,41 @@ const getPlugins = ({ __PROD__ }) => {
 }
 
 const main = async () => {
-  const packages = await getSortedPackages()
+  const packages = [
+    {
+      name: '@canvas-ui/assert',
+      main: 'dist/umd/assert.js',
+      external: [],
+      basePath: 'packages/assert'
+    },
+    {
+      name: '@canvas-ui/core',
+      main: 'dist/umd/core.js',
+      external: ['@canvas-ui/assert'],
+      basePath: 'packages/core'
+    },
+    {
+      name: '@canvas-ui/react',
+      main: 'dist/umd/react.js',
+      external: ['react', '@canvas-ui/core'],
+      basePath: 'packages/react'
+    }
+  ]
+
   return packages
-    .filter(pkg => !!pkg.get('main'))
     .map(pkg => {
       return [false, true].map(__PROD__ => {
-        const external = Object.keys(pkg.peerDependencies || [])
-        const globals = external.reduce((acc, dep) => {
-          acc[dep] = dep
-          return acc
-        }, {})
-        const basePath = path.relative(__dirname, pkg.location)
+        const basePath = pkg.basePath
         const input = path.join(basePath, 'src/index.ts')
         const output = {
           name: pkg.name,
           sourcemap: true,
-          file: path.join(basePath, pkg.get('main')),
+          file: path.join(basePath, pkg.main),
           format: 'umd',
-          globals,
+          globals: pkg.external.reduce((acc, it) => {
+            acc[it] = it
+            return acc
+          }, {}),
         }
 
         if (__PROD__) {
@@ -95,7 +99,7 @@ const main = async () => {
         return {
           input,
           output,
-          external,
+          external: pkg.external,
           plugins: getPlugins({ __PROD__ }),
         }
       })

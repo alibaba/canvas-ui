@@ -21,8 +21,8 @@
     "react": "16.8.6"
   },
   "dependencies": {
-    "@canvas-ui/assert": "^1.2.2-alpha.0",
-    "@canvas-ui/core": "^1.2.2-alpha.0",
+    "@canvas-ui/assert": "workspace:*",
+    "@canvas-ui/core": "workspace:*",
     "@types/react-reconciler": "0.18.0",
     "@types/scheduler": "0.12.1",
     "react-reconciler": "0.20.4",

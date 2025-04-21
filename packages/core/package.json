@@ -18,7 +18,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@canvas-ui/assert": "^1.2.2-alpha.0",
+    "@canvas-ui/assert": "workspace:*",
     "@mapbox/shelf-pack": "^3.2.0",
     "@types/mapbox__shelf-pack": "^3.0.0",
     "csstype": "3.0.8",
