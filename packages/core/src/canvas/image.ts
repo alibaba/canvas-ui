@@ -17,11 +17,11 @@ export interface Image {
 }
 
 export class Image extends NonConstructiable {
-  static fromXYWH (
+  static fromXYWH(
     source: CanvasImageSource,
     sx: number,
     sy: number,
-    sw: number, 
+    sw: number,
     sh: number,
   ) {
     return {
@@ -49,6 +49,14 @@ export class Image extends NonConstructiable {
         source,
         width,
         height,
+      }
+    }
+
+    if (source instanceof VideoFrame) {
+      return {
+        source,
+        width: source.displayWidth,
+        height: source.displayHeight,
       }
     }
 

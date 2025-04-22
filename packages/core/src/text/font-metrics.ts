@@ -34,13 +34,10 @@ export class FontMetrics extends NonConstructiable {
       width: 3,
       height: 3,
     }
-    const canvas = PlatformAdapter.supportOffscreenCanvas
-      ? PlatformAdapter.createOffscreenCanvas(options.width, options.height)
-      : PlatformAdapter.createCanvas(options.width, options.height)
-    const context = canvas.getContext('2d')
+    const context = PlatformAdapter.createRenderingContext(options.width, options.height)
     assert(context)
     return FontMetrics._defaultMeasureOptions = {
-      canvas,
+      canvas: context.canvas,
       context,
       metricsString: '|ÉqÅM',
       baselineSymbol: 'M',

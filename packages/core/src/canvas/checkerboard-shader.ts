@@ -24,13 +24,10 @@ export const makeCheckerboardShader = () => {
   if (!shader) {
     const size = 24
     const w = 2
-    const el = PlatformAdapter.supportOffscreenCanvas
-      ? PlatformAdapter.createOffscreenCanvas(w, w)
-      : PlatformAdapter.createCanvas(w, w)
-    const context = el.getContext('2d')
+    const context = PlatformAdapter.createRenderingContext(w, w)
     assert(context)
     context.putImageData(makeCheckerboardImageData(), 0, 0)
-    const pattern = context.createPattern(el, 'repeat')
+    const pattern = context.createPattern(context.canvas, 'repeat')
     assert(pattern)
     pattern.setTransform(
       new DOMMatrix([

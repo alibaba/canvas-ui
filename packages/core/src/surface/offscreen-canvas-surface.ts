@@ -59,7 +59,7 @@ export class OffscreenCanvasSurface implements Surface {
       assert(this.el)
       const context = this.el.getContext('2d')
       assert(context)
-      this._context = context
+      this._context = context as OffscreenCanvasRenderingContext2D | CanvasRenderingContext2D
     }
     return this._context
   }

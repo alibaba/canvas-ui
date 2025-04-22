@@ -146,7 +146,7 @@ export class FontProps extends NonConstructiable {
 
     for (let i = 0; i < identifiers.length; i += 1) {
       if (/^(?:-?\d|--)/.test(identifiers[i]) ||
-        !/^(?:[_a-zA-Z0-9-]|[^\0-\237]|(?:\\[0-9a-f]{1,6}(?:\r\n|[ \n\r\t\f])?|\\[^\n\r\f0-9a-f]))+$/.test(identifiers[i])) {
+        !/^(?:[_a-zA-Z0-9-]|[^\0-\x9f]|(?:\\[0-9a-f]{1,6}(?:\r\n|[ \n\r\t\f])?|\\[^\n\r\f0-9a-f]))+$/.test(identifiers[i])) {
         return null
       }
     }
