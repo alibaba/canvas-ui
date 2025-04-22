@@ -14,11 +14,7 @@ export function makeWatermarkShader(text: string, bounds = WATERMARK_BOUNDS) {
 
   const options = { width: bounds.width, height: bounds.height }
 
-  const canvas = PlatformAdapter.supportOffscreenCanvas
-    ? PlatformAdapter.createOffscreenCanvas(options.width, options.height)
-    : PlatformAdapter.createCanvas(options.width, options.height)
-
-  const context = canvas.getContext('2d')
+  const context = PlatformAdapter.createRenderingContext(options.width, options.height)
   assert(context)
   context.beginPath()
   context.setLineDash([20, 3, 3, 3, 3, 3, 3, 3])
@@ -34,7 +30,7 @@ export function makeWatermarkShader(text: string, bounds = WATERMARK_BOUNDS) {
   context.textBaseline = 'middle'
   context.font = '16px Monospace'
   context.fillText(text, bounds.width / 2, bounds.height / 2)
-  const pattern = context.createPattern(canvas, 'repeat')
+  const pattern = context.createPattern(context.canvas, 'repeat')
   assert(pattern)
   return cache[text] = Shader.fromPattern(pattern)
 }

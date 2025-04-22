@@ -4,7 +4,7 @@
 import { ElementType, RenderText } from '@canvas-ui/core'
 import { assert } from '@canvas-ui/assert'
 
-export type UpdatePayload = any[]
+type UpdatePayload = any[]
 
 type StyleProps = Record<string, string | number | undefined>
 

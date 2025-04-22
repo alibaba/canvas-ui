@@ -89,8 +89,8 @@ export class PaintingContext {
     this.containerLayer.appendChild(layer)
   }
 
-  private pictureLayer?: PictureLayer;
-  private recorder?: PictureRecoder;
+  private pictureLayer?: PictureLayer
+  private recorder?: PictureRecoder
   private _canvas?: Canvas
 
   get canvas() {

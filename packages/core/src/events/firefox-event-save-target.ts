@@ -15,6 +15,14 @@ export class WheelEventSaveTarget implements WheelEvent {
   constructor(readonly original: WheelEvent) {
   }
 
+  get layerX() {
+    return this.original.layerX
+  }
+
+  get layerY() {
+    return this.original.layerY
+  }
+
   get deltaMode() {
     return this.original.deltaMode
   }
@@ -223,6 +231,22 @@ export class PointerEventSaveTarget implements PointerEvent {
   readonly srcElement = this.original.srcElement
 
   constructor(readonly original: PointerEvent) {
+  }
+
+  get layerX() {
+    return this.original.layerX
+  }
+
+  get layerY() {
+    return this.original.layerY
+  }
+
+  get altitudeAngle() {
+    return this.original.altitudeAngle
+  }
+
+  get azimuthAngle() {
+    return this.original.azimuthAngle
   }
 
   get height() {
