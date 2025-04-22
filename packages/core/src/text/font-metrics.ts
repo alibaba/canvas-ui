@@ -23,7 +23,7 @@ type MeasureOptions = {
 
 export class FontMetrics extends NonConstructiable {
 
-  static readonly HEIGHT_MULTIPLIER = 2.0;
+  static readonly HEIGHT_MULTIPLIER = 2.0
 
   private static _defaultMeasureOptions?: MeasureOptions
   static get defaultMeasureOptions() {

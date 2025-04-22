@@ -62,7 +62,7 @@ const renderer = Reconciler<
     return null
   },
   getInstanceFromScope: () => {
-    throw new Error('Not yet implemented.');
+    throw new Error('Not yet implemented.')
   },
   maySuspendCommit: () => {
     return false
@@ -87,11 +87,11 @@ const renderer = Reconciler<
     if (currentUpdatePriority !== NoEventPriority) {
       return currentUpdatePriority
     }
-    const globalScope = (typeof self !== 'undefined' && self) || (typeof window !== 'undefined' && window);
+    const globalScope = (typeof self !== 'undefined' && self) || (typeof window !== 'undefined' && window)
     if (!globalScope) {
-      return DefaultEventPriority;
+      return DefaultEventPriority
     }
-    const eventType = globalScope.event?.type;
+    const eventType = globalScope.event?.type
     switch (eventType) {
       case 'click':
       case 'contextmenu':
@@ -99,16 +99,16 @@ const renderer = Reconciler<
       case 'pointercancel':
       case 'pointerdown':
       case 'pointerup':
-        return DiscreteEventPriority;
+        return DiscreteEventPriority
       case 'pointermove':
       case 'pointerout':
       case 'pointerover':
       case 'pointerenter':
       case 'pointerleave':
       case 'wheel':
-        return ContinuousEventPriority;
+        return ContinuousEventPriority
       default:
-        return DefaultEventPriority;
+        return DefaultEventPriority
     }
   },
   setCurrentUpdatePriority: (newPriority: number) => {

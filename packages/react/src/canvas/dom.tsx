@@ -108,7 +108,7 @@ function Binding({
     return () => {
       saveRoot(binding, false)
     }
-  }, [])
+  }, [binding])
 
   const dpr = useDprObserver()
 

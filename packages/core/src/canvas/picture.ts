@@ -50,7 +50,6 @@ export class Picture extends NonConstructiable {
     for (const { name, args } of ops) {
       const fn = canvas[name] as (...args: any[]) => void
       if (args) {
-        // eslint-disable-next-line prefer-spread
         fn.apply(canvas, args)
       } else {
         fn.apply(canvas)
