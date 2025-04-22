@@ -496,7 +496,6 @@ class Chunk<ChildType extends RenderObject<ChunkParentData<ChildType>>>
     const children: ChildType[] = []
     if (this._firstChild) {
       let child = this._firstChild
-      // eslint-disable-next-line no-constant-condition
       while (true) {
         children.push(child)
         if (child === this._lastChild) {

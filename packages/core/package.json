@@ -22,7 +22,7 @@
     "@mapbox/shelf-pack": "^3.2.0",
     "@types/mapbox__shelf-pack": "^3.0.0",
     "csstype": "3.0.8",
-    "eventemitter3": "4.0.7",
-    "yoga-layout-prebuilt-fork": "^1.10.4"
+    "eventemitter3": "5.0.1",
+    "yoga-layout-prebuilt-fork": "^1.10.6"
   }
 }

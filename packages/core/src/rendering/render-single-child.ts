@@ -140,11 +140,9 @@ export class RenderSingleChild<ChildType extends RenderObject> extends RenderBox
     assert(child === this._child)
     return undefined
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   insertAfter(child: ChildType, _after?: ChildType): void {
     this.child = child
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   insertBefore(child: ChildType, _before?: ChildType): void {
     this.child = child
   }

@@ -104,7 +104,6 @@ export type StyleProps =
   & RRectStyles
   & CircleStyles
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface StyleMap
   extends StyleProps, Record<string, string | number | undefined | ((...args: any[]) => any)> { }
 

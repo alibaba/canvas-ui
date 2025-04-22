@@ -729,6 +729,8 @@ export abstract class RenderObject<ParentDataType extends ParentData = ParentDat
       let relayoutBoundary: RenderObject | undefined
 
       if (!this.parent || !parentUsesSize) {
+
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
         relayoutBoundary = this
       } else {
         relayoutBoundary = this.parent._relayoutBoundary
@@ -1190,12 +1192,10 @@ export abstract class RenderObject<ParentDataType extends ParentData = ParentDat
     return false
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   protected hitTestSelf(_position: Point): boolean {
     return !this.hitTestSelfDisabled
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   protected hitTestChildren(_result: HitTestResult, _position: Point): boolean {
     return false
   }

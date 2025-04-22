@@ -1,0 +1,26 @@
+{
+  "name": "@canvas-ui/storybook",
+  "version": "2.0.0-next.1",
+  "description": "",
+  "scripts": {
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@canvas-ui/animation": "workspace:*",
+    "@canvas-ui/assert": "workspace:*",
+    "@canvas-ui/core": "workspace:*",
+    "@canvas-ui/react": "workspace:*",
+    "@storybook/addon-essentials": "^8.6.12",
+    "@storybook/addon-interactions": "^8.6.12",
+    "@storybook/blocks": "^8.6.12",
+    "@storybook/react": "^8.6.12",
+    "@storybook/react-vite": "^8.6.12",
+    "@storybook/test": "^8.6.12",
+    "prop-types": "^15.8.1",
+    "storybook": "^8.6.12"
+  }
+}

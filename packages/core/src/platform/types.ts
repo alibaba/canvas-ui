@@ -12,6 +12,7 @@ export interface IPlatformAdapter {
   onFrame(callback: FrameCallback): () => void
   createCanvas(width: number, height: number): CrossPlatformCanvasElement
   createOffscreenCanvas(width: number, height: number): CrossPlatformCanvasOrOffscreenCanvas
+  createRenderingContext(width: number, height: number): CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D | null
   resizeCanvas(
     el: CrossPlatformCanvasOrOffscreenCanvas,
     width: number, height: number
