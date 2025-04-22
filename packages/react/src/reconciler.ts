@@ -44,12 +44,13 @@ export function Reconciler<
   TextInstance,
   SuspenseInstance,
   HydratableInstance,
+  FormInstance,
   PublicInstance,
   HostContext,
-  UpdatePayload,
   ChildSet,
   TimeoutHandle,
   NoTimeout,
+  TransitionStatus,
 >
   (config: ReactReconciler.HostConfig<
     Type,
@@ -59,12 +60,13 @@ export function Reconciler<
     TextInstance,
     SuspenseInstance,
     HydratableInstance,
+    FormInstance,
     PublicInstance,
     HostContext,
-    UpdatePayload,
     ChildSet,
     TimeoutHandle,
-    NoTimeout
+    NoTimeout,
+    TransitionStatus
   >) {
 
   if (process.env.DEBUG_RECONCILER === 'true') {

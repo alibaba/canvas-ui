@@ -9,14 +9,13 @@ import {
 import { assert } from '@canvas-ui/assert'
 import type { ReactNode } from 'react'
 import type { FiberRoot } from 'react-reconciler'
-import { ConcurrentRoot, DefaultEventPriority } from 'react-reconciler/constants'
+import { ConcurrentRoot, ContinuousEventPriority, DefaultEventPriority, DiscreteEventPriority, NoEventPriority } from 'react-reconciler/constants'
 import { Reconciler } from './reconciler'
 import {
   AnyProps,
   diffProps,
   setInitialProps,
   setText,
-  UpdatePayload,
   updateProps
 } from './utils'
 
@@ -30,12 +29,13 @@ const renderer = Reconciler<
   RenderText, // TextInstance
   RenderObject, // SuspenseInstance
   never, // HydratableInstance
+  never, // FormInstance
   RenderObject, // PublicInstance
   Record<string, any>, // HostContext
-  UpdatePayload[], // UpdatePayload
   unknown, // ChildSet 暂时没有用到
   number, // setTimeout 的返回值
-  -1 // noTimeout 的返回值
+  -1, // noTimeout 的返回值
+  null // TransitionStatus
 >({
 
   isPrimaryRenderer: false,
@@ -44,6 +44,7 @@ const renderer = Reconciler<
   supportsHydration: false,
   supportsMutation: true,
   supportsPersistence: false,
+  supportsMicrotasks: true,
   warnsIfNotActing: false,
 
   afterActiveInstanceBlur: () => { },
@@ -83,7 +84,32 @@ const renderer = Reconciler<
     return currentUpdatePriority
   },
   resolveUpdatePriority: () => {
-    return DefaultEventPriority
+    if (currentUpdatePriority !== NoEventPriority) {
+      return currentUpdatePriority
+    }
+    const globalScope = (typeof self !== 'undefined' && self) || (typeof window !== 'undefined' && window);
+    if (!globalScope) {
+      return DefaultEventPriority;
+    }
+    const eventType = globalScope.event?.type;
+    switch (eventType) {
+      case 'click':
+      case 'contextmenu':
+      case 'dblclick':
+      case 'pointercancel':
+      case 'pointerdown':
+      case 'pointerup':
+        return DiscreteEventPriority;
+      case 'pointermove':
+      case 'pointerout':
+      case 'pointerover':
+      case 'pointerenter':
+      case 'pointerleave':
+      case 'wheel':
+        return ContinuousEventPriority;
+      default:
+        return DefaultEventPriority;
+    }
   },
   setCurrentUpdatePriority: (newPriority: number) => {
     currentUpdatePriority = newPriority
@@ -97,10 +123,6 @@ const renderer = Reconciler<
   waitForCommitToBeReady: () => {
     return null
   },
-  getCurrentEventPriority: () => {
-    return DefaultEventPriority
-  },
-
   createInstance(
     type,
     props,
@@ -136,17 +158,6 @@ const renderer = Reconciler<
     _hostContext,
   ) {
     return false
-  },
-
-  prepareUpdate: (
-    _instance,
-    _type,
-    oldProps,
-    newProps,
-    _rootContainer,
-    _hostContext
-  ) => {
-    return diffProps(oldProps, newProps)
   },
 
   shouldSetTextContent(type, _props) {
@@ -222,8 +233,11 @@ const renderer = Reconciler<
     // 所以该方法也永远不会被调用，故留空
   },
 
-  commitUpdate(instance, updatePayload, _type, _prevProps, _nextProps, _internalHandle) {
-    updateProps(instance, updatePayload)
+  commitUpdate(instance, _type, prevProps, nextProps, _internalHandle) {
+    const updatePayload = diffProps(prevProps, nextProps)
+    if (updatePayload) {
+      updateProps(instance, updatePayload)
+    }
   },
 
 })
