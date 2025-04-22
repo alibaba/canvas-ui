@@ -254,7 +254,6 @@ export class Canvas2DCanvas implements Canvas {
     this.context.clip()
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   clipRRect(x: number, y: number, w: number, h: number, rx: number, _ry: number): void {
     drawRRectPath(this.context, x, y, w, h, rx)
     this.context.clip()

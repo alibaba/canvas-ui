@@ -51,6 +51,13 @@ export class WebPlatformAdapter implements IPlatformAdapter {
     return new OffscreenCanvas(Math.round(width), Math.round(height))
   }
 
+  createRenderingContext(width: number, height: number): CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D | null {
+    if (this.supportOffscreenCanvas) {
+      return this.createOffscreenCanvas(width, height).getContext('2d')
+    }
+    return this.createCanvas(width, height).getContext('2d')
+  }
+
   resizeCanvas(el: CrossPlatformCanvasOrOffscreenCanvas, width: number, height: number): void {
     el.width = width
     el.height = height

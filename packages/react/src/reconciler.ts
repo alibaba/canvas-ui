@@ -16,7 +16,7 @@ function Log(target: any) {
       const val = fn(...args)
       const primitive = isPrimitive(val)
       if (primitive) {
-        console.groupCollapsed(`return ${val}`)
+        console.groupCollapsed(`return ${val?.toString()}`)
       } else {
         console.groupCollapsed('return')
       }
@@ -42,13 +42,15 @@ export function Reconciler<
   Container,
   Instance,
   TextInstance,
+  SuspenseInstance,
   HydratableInstance,
+  FormInstance,
   PublicInstance,
   HostContext,
-  UpdatePayload,
   ChildSet,
   TimeoutHandle,
-  NoTimeout
+  NoTimeout,
+  TransitionStatus,
 >
   (config: ReactReconciler.HostConfig<
     Type,
@@ -56,22 +58,26 @@ export function Reconciler<
     Container,
     Instance,
     TextInstance,
+    SuspenseInstance,
     HydratableInstance,
+    FormInstance,
     PublicInstance,
     HostContext,
-    UpdatePayload,
     ChildSet,
     TimeoutHandle,
-    NoTimeout
+    NoTimeout,
+    TransitionStatus
   >) {
 
-  if (process.env.DEBUG_RECONCILER === 'true') {
-    Log(config)
+  try {
+    if (process.env.DEBUG_RECONCILER === 'true') {
+      Log(config)
+    }
+  } catch {
+    // ignore
   }
 
-  // 补充必要但 @types/react-reconciler 缺少的定义
-  (config as any).schedulePassiveEffects = config.scheduleDeferredCallback
-    ; (config as any).cancelPassiveEffects = config.cancelDeferredCallback
+
 
   return ReactReconciler(config)
 }

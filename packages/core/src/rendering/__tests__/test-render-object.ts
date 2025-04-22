@@ -24,9 +24,7 @@ export class TestRenderObject extends RenderObject {
     return true
   }
 
-  paint(context: PaintingContext, offset: Point) {
-    context
-    offset
+  paint(_context: PaintingContext, _offset: Point) {
   }
 
 }

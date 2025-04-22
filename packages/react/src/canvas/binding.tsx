@@ -60,7 +60,7 @@ export function useBinding({
       }, [])
 
       // see https://github.com/DefinitelyTyped/DefinitelyTyped/issues/18051
-      return props.children as JSX.Element
+      return props.children as React.JSX.Element
     }
   })
 

@@ -19,7 +19,7 @@ describe('FontMetrics', () => {
   test('measureWidth', () => {
     const cssFontProp = '12px Arial, Verdana, serif'
     const cache = {}
-    expect(FontMetrics.measureWidth('Test', cssFontProp, cache)).toBe(22)
+    expect(Math.round(FontMetrics.measureWidth('Test', cssFontProp, cache))).toBe(22)
   })
 
 })

@@ -1,4 +1,12 @@
 import { DOMEventBinding, NativePointerEvents } from '..'
+global.window.PointerEvent = class MockPointerEvent extends MouseEvent {
+  declare pointerId?: number
+  constructor(type: string, eventInitDict: PointerEventInit) {
+    super(type, eventInitDict)
+    this.pointerId = eventInitDict.pointerId
+  }
+
+} as any
 
 describe('DOMEventBinding', () => {
   test('flushPointerEvents', () => {
@@ -22,7 +30,8 @@ describe('DOMEventBinding', () => {
     // 单个事件
     for (const [dispatcher, event, type] of testEvents) {
       dispatcher.dispatchEvent(event)
-      expect(binding.flushPointerEvents()).toEqual({
+      const events = binding.flushPointerEvents()
+      expect(events).toEqual({
         [pointerId]: { [type ?? event.type]: event }
       })
       // 第二次 flush 不会得到任何事件

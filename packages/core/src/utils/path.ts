@@ -321,11 +321,7 @@ export class Path extends NonConstructiable {
     }
 
     const size = 1
-    const canvas = PlatformAdapter.supportOffscreenCanvas
-      ? PlatformAdapter.createOffscreenCanvas(size, size)
-      : PlatformAdapter.createCanvas(size, size)
-
-    const context = canvas.getContext('2d')
+    const context = PlatformAdapter.createRenderingContext(size, size)
     assert(context)
     context.lineCap = 'round'
     return Path._testContext = context

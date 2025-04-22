@@ -9,20 +9,17 @@ import {
 import { assert } from '@canvas-ui/assert'
 import type { ReactNode } from 'react'
 import type { FiberRoot } from 'react-reconciler'
-import {
-  unstable_now as now,
-  unstable_scheduleCallback as scheduleDeferredCallback,
-  unstable_cancelCallback as cancelDeferredCallback,
-} from 'scheduler'
+import { ConcurrentRoot, ContinuousEventPriority, DefaultEventPriority, DiscreteEventPriority, NoEventPriority } from 'react-reconciler/constants'
 import { Reconciler } from './reconciler'
 import {
   AnyProps,
   diffProps,
   setInitialProps,
   setText,
-  UpdatePayload,
   updateProps
 } from './utils'
+
+let currentUpdatePriority = 0
 
 const renderer = Reconciler<
   ElementType,
@@ -30,25 +27,115 @@ const renderer = Reconciler<
   RenderView, // Container
   RenderObject, // Instance
   RenderText, // TextInstance
-  unknown, // HydratableInstance
+  RenderObject, // SuspenseInstance
+  never, // HydratableInstance
+  never, // FormInstance
   RenderObject, // PublicInstance
-  null, // HostContext
-  UpdatePayload[], // UpdatePayload
+  Record<string, any>, // HostContext
   unknown, // ChildSet 暂时没有用到
   number, // setTimeout 的返回值
-  -1 // noTimeout 的返回值
+  -1, // noTimeout 的返回值
+  null // TransitionStatus
 >({
-
+  isPrimaryRenderer: false,
+  noTimeout: -1,
+  NotPendingTransition: null,
+  HostTransitionContext: {
+    $$typeof: Symbol.for('react.context'),
+    Consumer: null as any,
+    Provider: null as any,
+    _currentValue: null,
+    _currentValue2: null,
+    _threadCount: 0
+  },
+  supportsHydration: false,
   supportsMutation: true,
-
   supportsPersistence: false,
+  supportsMicrotasks: true,
+  warnsIfNotActing: false,
 
+  afterActiveInstanceBlur: () => { },
+  beforeActiveInstanceBlur: () => { },
+  clearContainer: () => { },
+  hideTextInstance: () => {
+    throw new Error('Text instances are not yet supported. Please use a `<Text>` component.')
+  },
+  unhideTextInstance: () => {
+    throw new Error('Text instances are not yet supported. Please use a `<Text>` component.')
+  },
+  detachDeletedInstance: () => { },
+
+  getInstanceFromNode: () => {
+    return null
+  },
+  getInstanceFromScope: () => {
+    throw new Error('Not yet implemented.')
+  },
+  maySuspendCommit: () => {
+    return false
+  },
+  preloadInstance: () => {
+    return true
+  },
+  preparePortalMount: () => { },
+  prepareScopeUpdate: () => { },
+  requestPostPaintCallback: () => { },
+  resetFormInstance: () => { },
+  resolveEventTimeStamp: () => {
+    return -1.1
+  },
+  resolveEventType: () => {
+    return null
+  },
+  getCurrentUpdatePriority: () => {
+    return currentUpdatePriority
+  },
+  resolveUpdatePriority: () => {
+    if (currentUpdatePriority !== NoEventPriority) {
+      return currentUpdatePriority
+    }
+    const globalScope = (typeof self !== 'undefined' && self) || (typeof window !== 'undefined' && window)
+    if (!globalScope) {
+      return DefaultEventPriority
+    }
+    const eventType = globalScope.event?.type
+    switch (eventType) {
+      case 'click':
+      case 'contextmenu':
+      case 'dblclick':
+      case 'pointercancel':
+      case 'pointerdown':
+      case 'pointerup':
+        return DiscreteEventPriority
+      case 'pointermove':
+      case 'pointerout':
+      case 'pointerover':
+      case 'pointerenter':
+      case 'pointerleave':
+      case 'wheel':
+        return ContinuousEventPriority
+      default:
+        return DefaultEventPriority
+    }
+  },
+  setCurrentUpdatePriority: (newPriority: number) => {
+    currentUpdatePriority = newPriority
+  },
+  shouldAttemptEagerTransition: () => {
+    return false
+  },
+  startSuspendingCommit: () => { },
+  suspendInstance: () => { },
+  trackSchedulerEvent: () => { },
+  waitForCommitToBeReady: () => {
+    return null
+  },
   createInstance(
     type,
     props,
     _rootContainer,
     _hostContext,
-    _internalHandle,
+    _internalHandle
   ) {
     const instance = createElement(type)
     setInitialProps(type, instance, props)
@@ -59,11 +146,10 @@ const renderer = Reconciler<
     _text,
     _rootContainer,
     _hostContext,
-    _internalHandle,
+    _internalHandle
   ) {
     throw new Error('Not implemented')
   },
-
 
   appendInitialChild(parentInstance, child) {
     assert(parentInstance instanceof RenderView || parentInstance instanceof RenderSingleChild)
@@ -76,20 +162,9 @@ const renderer = Reconciler<
     _type,
     _props,
     _rootContainer,
-    _hostContext,
+    _hostContext
   ) {
     return false
-  },
-
-  prepareUpdate: (
-    _instance,
-    _type,
-    oldProps,
-    newProps,
-    _rootContainer,
-    _hostContext
-  ) => {
-    return diffProps(oldProps, newProps)
   },
 
   shouldSetTextContent(type, _props) {
@@ -97,7 +172,7 @@ const renderer = Reconciler<
   },
 
   getRootHostContext(_rootContainer) {
-    return null
+    return {}
   },
 
   getChildHostContext(parentHostContext, _type, _rootContainer) {
@@ -114,18 +189,10 @@ const renderer = Reconciler<
 
   resetAfterCommit(_containerInfo) { },
 
-  now,
+  scheduleTimeout: setTimeout,
+  cancelTimeout: clearTimeout,
 
-  setTimeout: setTimeout,
-
-  clearTimeout: clearTimeout,
-
-  noTimeout: -1,
-
-  scheduleDeferredCallback,
-  cancelDeferredCallback,
-
-  isPrimaryRenderer: false,
+  scheduleMicrotask: queueMicrotask,
 
   appendChild(parentInstance, child) {
     assert(parentInstance instanceof RenderSingleChild || parentInstance instanceof RenderView)
@@ -173,32 +240,27 @@ const renderer = Reconciler<
     // 所以该方法也永远不会被调用，故留空
   },
 
-  commitUpdate(instance, updatePayload, _type, _prevProps, _nextProps, _internalHandle) {
-    updateProps(instance, updatePayload)
+  commitUpdate(instance, _type, prevProps, nextProps, _internalHandle) {
+    const updatePayload = diffProps(prevProps, nextProps)
+    if (updatePayload) {
+      updateProps(instance, updatePayload)
+    }
   },
-
-  supportsHydration: false,
-
-  shouldDeprioritizeSubtree: () => {
-    return false
-  }
-
 })
 
-renderer.injectIntoDevTools({
-  bundleType: process.env.NODE_ENV === 'production' ? 0 : 1,
-  version: process.env.PKG_VERSION ?? '0.0.0', // 必须是 `x.y.z` 格式的 semver，否则不起作用 
-  rendererPackageName: '@canvas-ui/react',
-  findHostInstanceByFiber: renderer.findHostInstance,
-} as any)
+try {
+  renderer.injectIntoDevTools({
+    bundleType: process.env.NODE_ENV === 'production' ? 0 : 1,
+    version: process.env.PKG_VERSION ?? '0.0.0', // 必须是 `x.y.z` 格式的 semver，否则不起作用 
+    rendererPackageName: '@canvas-ui/react',
+    findHostInstanceByFiber: renderer.findHostInstance,
+  } as any)
+} catch {
+  // ignore
+}
+
 
 const roots = new Map<RenderView, FiberRoot>()
-
-export enum ReactRootTags {
-  LegacyRoot = 0,
-  BlockingRoot = 1,
-  ConcurrentRoot = 2,
-}
 
 export function render(
   element: ReactNode,
@@ -208,8 +270,13 @@ export function render(
   if (!root) {
     const newRoot = (root = renderer.createContainer(
       container,
-      false,
-      false,
+      ConcurrentRoot,
+      null, // hydration callbacks
+      false, // isStrictMode
+      null, // concurrentUpdatesByDefaultOverride
+      '', // identifierPrefix
+      console.error, // onRecoverableError
+      null, // transitionCallbacks
     ))
     roots.set(container, newRoot)
   }
