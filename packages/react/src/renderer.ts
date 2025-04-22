@@ -9,11 +9,7 @@ import {
 import { assert } from '@canvas-ui/assert'
 import type { ReactNode } from 'react'
 import type { FiberRoot } from 'react-reconciler'
-import {
-  unstable_now as now,
-  unstable_scheduleCallback as scheduleDeferredCallback,
-  unstable_cancelCallback as cancelDeferredCallback,
-} from 'scheduler'
+import { ConcurrentRoot, DefaultEventPriority } from 'react-reconciler/constants'
 import { Reconciler } from './reconciler'
 import {
   AnyProps,
@@ -24,24 +20,86 @@ import {
   updateProps
 } from './utils'
 
+let currentUpdatePriority = 0
+
 const renderer = Reconciler<
   ElementType,
   AnyProps,
   RenderView, // Container
   RenderObject, // Instance
   RenderText, // TextInstance
-  unknown, // HydratableInstance
+  RenderObject, // SuspenseInstance
+  never, // HydratableInstance
   RenderObject, // PublicInstance
-  null, // HostContext
+  Record<string, any>, // HostContext
   UpdatePayload[], // UpdatePayload
   unknown, // ChildSet 暂时没有用到
   number, // setTimeout 的返回值
   -1 // noTimeout 的返回值
 >({
 
+  isPrimaryRenderer: false,
+  noTimeout: -1,
+  NotPendingTransition: null,
+  supportsHydration: false,
   supportsMutation: true,
-
   supportsPersistence: false,
+  warnsIfNotActing: false,
+
+  afterActiveInstanceBlur: () => { },
+  beforeActiveInstanceBlur: () => { },
+  clearContainer: () => { },
+  hideTextInstance: () => {
+    throw new Error('Text instances are not yet supported. Please use a `<Text>` component.')
+  },
+  unhideTextInstance: () => {
+    throw new Error('Text instances are not yet supported. Please use a `<Text>` component.')
+  },
+  detachDeletedInstance: () => { },
+
+  getInstanceFromNode: () => {
+    return null
+  },
+  getInstanceFromScope: () => {
+    throw new Error('Not yet implemented.');
+  },
+  maySuspendCommit: () => {
+    return false
+  },
+  preloadInstance: () => {
+    return true
+  },
+  preparePortalMount: () => { },
+  prepareScopeUpdate: () => { },
+  requestPostPaintCallback: () => { },
+  resetFormInstance: () => { },
+  resolveEventTimeStamp: () => {
+    return -1.1
+  },
+  resolveEventType: () => {
+    return null
+  },
+  getCurrentUpdatePriority: () => {
+    return currentUpdatePriority
+  },
+  resolveUpdatePriority: () => {
+    return DefaultEventPriority
+  },
+  setCurrentUpdatePriority: (newPriority: number) => {
+    currentUpdatePriority = newPriority
+  },
+  shouldAttemptEagerTransition: () => {
+    return false
+  },
+  startSuspendingCommit: () => { },
+  suspendInstance: () => { },
+  trackSchedulerEvent: () => { },
+  waitForCommitToBeReady: () => {
+    return null
+  },
+  getCurrentEventPriority: () => {
+    return DefaultEventPriority
+  },
 
   createInstance(
     type,
@@ -63,7 +121,6 @@ const renderer = Reconciler<
   ) {
     throw new Error('Not implemented')
   },
-
 
   appendInitialChild(parentInstance, child) {
     assert(parentInstance instanceof RenderView || parentInstance instanceof RenderSingleChild)
@@ -97,7 +154,7 @@ const renderer = Reconciler<
   },
 
   getRootHostContext(_rootContainer) {
-    return null
+    return {}
   },
 
   getChildHostContext(parentHostContext, _type, _rootContainer) {
@@ -114,18 +171,10 @@ const renderer = Reconciler<
 
   resetAfterCommit(_containerInfo) { },
 
-  now,
+  scheduleTimeout: setTimeout,
+  cancelTimeout: clearTimeout,
 
-  setTimeout: setTimeout,
-
-  clearTimeout: clearTimeout,
-
-  noTimeout: -1,
-
-  scheduleDeferredCallback,
-  cancelDeferredCallback,
-
-  isPrimaryRenderer: false,
+  scheduleMicrotask: queueMicrotask,
 
   appendChild(parentInstance, child) {
     assert(parentInstance instanceof RenderSingleChild || parentInstance instanceof RenderView)
@@ -177,12 +226,6 @@ const renderer = Reconciler<
     updateProps(instance, updatePayload)
   },
 
-  supportsHydration: false,
-
-  shouldDeprioritizeSubtree: () => {
-    return false
-  }
-
 })
 
 renderer.injectIntoDevTools({
@@ -194,12 +237,6 @@ renderer.injectIntoDevTools({
 
 const roots = new Map<RenderView, FiberRoot>()
 
-export enum ReactRootTags {
-  LegacyRoot = 0,
-  BlockingRoot = 1,
-  ConcurrentRoot = 2,
-}
-
 export function render(
   element: ReactNode,
   container: RenderView,
@@ -208,8 +245,13 @@ export function render(
   if (!root) {
     const newRoot = (root = renderer.createContainer(
       container,
-      false,
-      false,
+      ConcurrentRoot,
+      null, // hydration callbacks
+      false, // isStrictMode
+      null, // concurrentUpdatesByDefaultOverride
+      '', // identifierPrefix
+      console.error, // onRecoverableError
+      null, // transitionCallbacks
     ))
     roots.set(container, newRoot)
   }

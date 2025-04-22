@@ -17,16 +17,13 @@
     "dev": "tsc --watch",
     "build": "tsc"
   },
-  "peerDependencies": {
-    "react": "16.8.6"
-  },
   "dependencies": {
     "@canvas-ui/assert": "workspace:*",
     "@canvas-ui/core": "workspace:*",
-    "@types/react-reconciler": "0.18.0",
+    "@types/react-reconciler": "0.31.0",
     "@types/scheduler": "0.12.1",
-    "react-reconciler": "0.20.4",
-    "react-use-measure": "2.0.4",
+    "react-reconciler": "0.32.0",
+    "react-use-measure": "2.1.7",
     "scheduler": "0.13.3"
   }
 }

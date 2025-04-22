@@ -94,7 +94,7 @@ function Binding({
   children,
 }: BindingProps) {
 
-  const bindingRef = useRef<RenderCanvas>()
+  const bindingRef = useRef<RenderCanvas>(null)
 
   const [binding] = useState(() => {
     const binding = createElement('Canvas')
@@ -147,7 +147,6 @@ type Store = {
 }
 
 function saveRoot(root: RenderCanvas, save: boolean) {
-  console.info('saveRoot', { root, save })
   const store = window as unknown as Store
   if (!store.canvasui) {
     store.canvasui = {

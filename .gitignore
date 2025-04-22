@@ -120,3 +120,5 @@ packages/**/dist/
 .DS_Store
 
 .rollup.cache
+
+*storybook.log

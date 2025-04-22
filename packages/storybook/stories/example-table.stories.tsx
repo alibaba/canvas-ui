@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { DebugFlags, Log, Point, Rect, ScrollAxis, StyleProps, SyntheticEvent, SyntheticPointerEvent } from '@canvas-ui/core'
 import { Canvas, Chunk, Flex, ScrollView, Text, useCanvasState, View } from '@canvas-ui/react'
-import type { Story } from '@storybook/react'
 import { assert } from '@canvas-ui/assert'
 import React, { createContext, FC, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { Movie, MovieFields, MovieRepo } from './movie.repo'
+import { StoryObj } from '@storybook/react/*'
 
 type ScrollSync = {
   vertical: VerticalScrollSync
@@ -65,7 +65,7 @@ class HorizontalScrollSync extends AbstractScrollSync {
   }
 }
 
-export const TableTest: Story = () => {
+export const TableTest: StoryObj<React.FC> = () => {
 
   useEffect(() => {
     // DebugFlags.set(DebugFlags.LayerBounds | DebugFlags.RasterCacheWaterMark)
@@ -136,7 +136,7 @@ const Left: FC<LeftProps> = ({ rows: data }) => {
   const { height } = useCanvasState()
   const scrollSync = useScrollSyncContext()
 
-  const ref = useRef<ScrollView>()
+  const ref = React.useRef<ScrollView>(null)
   const setRef = (node: ScrollView) => {
     if (ref.current) {
       scrollSync.vertical.remove(ref.current)
@@ -149,7 +149,7 @@ const Left: FC<LeftProps> = ({ rows: data }) => {
 
   const content = data.map((it, index) => {
     return (
-      <LeftRow seq={index} key={it.电影ID} row={it} />
+      <LeftRow seq={index} key={index} row={it} />
     )
   })
 
@@ -209,7 +209,7 @@ type RightProps = {
 const Right: FC<RightProps> = ({ rows }) => {
   const { width, height } = useCanvasState()
   const scrollSync = useScrollSyncContext()
-  const ref = useRef<ScrollView>()
+  const ref = React.useRef<ScrollView>(null)
   const setRef = (node: ScrollView) => {
     if (ref.current) {
       scrollSync.vertical.remove(ref.current)
@@ -224,7 +224,7 @@ const Right: FC<RightProps> = ({ rows }) => {
 
   const content = rows.map((it, index) => {
     return (
-      <RightRow key={it.电影ID} seq={index} row={it} />
+      <RightRow key={index} seq={index} row={it} />
     )
   })
 
@@ -289,7 +289,7 @@ const RightHead: FC = () => {
   const { width } = useCanvasState()
 
   const scrollSync = useScrollSyncContext()
-  const ref = useRef<ScrollView>()
+  const ref = React.useRef<ScrollView>(null)
   const setRef = (node: ScrollView) => {
     if (ref.current) {
       scrollSync.horizontal.remove(ref.current)
@@ -334,5 +334,5 @@ TableTest.storyName = 'Table'
 export default {
   title: 'example/Table',
   component: TableTest,
-  decorators: [(Story: Story) => <div style={{ backgroundColor: '#efefef', width: '100%', height: '100vh' }}><Story /></div>],
+  decorators: [(Story: React.ComponentType) => <div style={{ backgroundColor: '#efefef', width: '100%', height: '100vh' }}><Story /></div>],
 }
