@@ -1,6 +1,6 @@
 import { Point, ScrollAxis, ScrollBounds, SyntheticPointerEvent } from '@canvas-ui/core'
 import { Canvas, Flex, Rect, ScrollView } from '@canvas-ui/react'
-import type { Story } from '@storybook/react'
+import type { StoryObj } from '@storybook/react'
 import React from 'react'
 
 const List = () => {
@@ -41,7 +41,7 @@ const List = () => {
   )
 }
 
-export const ScrollViewTest: Story = () => {
+export const ScrollViewTest: StoryObj<React.FC> = () => {
   return (
     <Canvas>
       <ScrollView
@@ -61,5 +61,5 @@ ScrollViewTest.storyName = 'ScrollView'
 export default {
   title: 'react/ScrollView',
   component: ScrollViewTest,
-  decorators: [(Story: Story) => <div style={{ backgroundColor: '#efefef', width: '100%', height: '100vh' }}><Story /></div>],
+  decorators: [(Story: React.ComponentType) => <div style={{ backgroundColor: '#efefef', width: '100%', height: '100vh' }}><Story /></div>],
 }

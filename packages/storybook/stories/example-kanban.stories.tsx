@@ -1,6 +1,6 @@
 import { Log, ScrollAxis, ScrollBounds } from '@canvas-ui/core'
 import { Canvas, Flex, ScrollView, Text, useCanvasState } from '@canvas-ui/react'
-import type { Story } from '@storybook/react'
+import type { StoryObj } from '@storybook/react'
 import React, { FC, useCallback, useEffect, useState } from 'react'
 import { CardListSchema, CardSchema, data } from './example-kanban.data'
 
@@ -154,7 +154,7 @@ const Board: FC<BoardProps> = props => {
   )
 }
 
-export const KanbanTest: Story = () => {
+export const KanbanTest: StoryObj<React.FC> = () => {
   useEffect(() => {
     Log.disableAll = true
 
@@ -175,5 +175,5 @@ KanbanTest.storyName = 'Kanban'
 export default {
   title: 'example/Kanban',
   component: KanbanTest,
-  decorators: [(Story: Story) => <div style={{ backgroundColor: '#efefef', width: '100%', height: '100vh' }}><Story /></div>],
+  decorators: [(Story: React.ComponentType) => <div style={{ backgroundColor: '#efefef', width: '100%', height: '100vh' }}><Story /></div>],
 }

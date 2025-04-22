@@ -7,7 +7,7 @@ import {
   Text,
   usePopup
 } from '@canvas-ui/react'
-import type { Story } from '@storybook/react'
+import type { StoryObj } from '@storybook/react'
 import { assert } from '@canvas-ui/assert'
 import React, {
   CSSProperties,
@@ -22,7 +22,7 @@ const textStyle: StyleProps = {
   cursor: 'text',
 }
 
-export const UsePopupTest: Story = () => {
+export const UsePopupTest: StoryObj<React.FC> = () => {
 
   useEffect(() => {
     DebugFlags.set(0)
@@ -113,5 +113,5 @@ UsePopupTest.storyName = 'usePopup'
 export default {
   title: 'react',
   component: UsePopupTest,
-  decorators: [(Story: Story) => <div style={{ backgroundColor: '#efefef', width: '100%', height: '100vh' }}><Story /></div>],
+  decorators: [(Story: React.ComponentType) => <div style={{ backgroundColor: '#efefef', width: '100%', height: '100vh' }}><Story /></div>],
 }

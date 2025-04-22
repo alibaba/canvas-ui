@@ -1,12 +1,12 @@
 import { createElement, Size } from '@canvas-ui/core'
-import type { Story } from '@storybook/react'
+import type { StoryObj } from '@storybook/react'
 import React, { useEffect, useRef } from 'react'
 
 const LONG_WORD = `Honorificabilitudinitatibus califragilisticexpialidocious Taumatawhakatangihangakoauauotamateaturipukakapikimaungahoronukupokaiwhenuakitanatahu 次の単語グレートブリテンおよび北アイルランド連合王国で本当に大きな言葉。`
 
 const SHORT_WORD = `任务 0-0`.repeat(11)
 
-export const RenderTextTest: Story = () => {
+export const RenderTextTest: StoryObj<React.FC> = () => {
 
   const canvasElRef = useRef<HTMLCanvasElement | null>(null)
   const prevFrameButtonRef = useRef<HTMLButtonElement | null>(null)
@@ -174,5 +174,5 @@ RenderTextTest.storyName = 'RenderText'
 export default {
   title: 'core/rendering',
   component: RenderTextTest,
-  decorators: [(Story: Story) => <div style={{ backgroundColor: '#efefef', width: '100%', height: '100vh' }}><Story /></div>],
+  decorators: [(Story: React.ComponentType) => <div style={{ backgroundColor: '#efefef', width: '100%', height: '100vh' }}><Story /></div>],
 }

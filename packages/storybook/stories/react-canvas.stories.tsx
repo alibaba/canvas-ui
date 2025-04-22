@@ -1,11 +1,11 @@
 import { DebugFlags, Point, Size, Rect } from '@canvas-ui/core'
 import { Canvas, View, Path } from '@canvas-ui/react'
-import type { Story } from '@storybook/react'
+import type { StoryObj } from '@storybook/react'
 import React, { useEffect, useRef, useState } from 'react'
 
 const path = `M266.24 420.0448a30.8736 30.8736 0 0 1 52.736-21.8624L512 591.0016l192.9728-192.8192a30.8736 30.8736 0 1 1 43.7248 43.7248l-214.8352 214.6304a31.0272 31.0272 0 0 1-43.776 0L275.3024 441.9072a30.8736 30.8736 0 0 1-9.0624-21.8624z`
 
-export const CanvasTest: Story = () => {
+export const CanvasTest: StoryObj<React.FC> = () => {
 
   const prevFrameButtonRef = useRef<HTMLButtonElement | null>(null)
   const nextFrameButtonRef = useRef<HTMLButtonElement | null>(null)
@@ -84,5 +84,5 @@ CanvasTest.storyName = 'Canvas'
 export default {
   title: 'react/Canvas',
   component: CanvasTest,
-  decorators: [(Story: Story) => <div style={{ backgroundColor: '#efefef', width: '100%', height: '100vh' }}><Story /></div>],
+  decorators: [(Story: React.ComponentType) => <div style={{ backgroundColor: '#efefef', width: '100%', height: '100vh' }}><Story /></div>],
 }

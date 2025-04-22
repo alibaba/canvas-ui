@@ -1,8 +1,8 @@
 import { createElement, Size } from '@canvas-ui/core'
-import type { Story } from '@storybook/react'
+import type { StoryObj } from '@storybook/react'
 import React, { useEffect, useRef } from 'react'
 
-export const RenderCircleTest: Story = () => {
+export const RenderCircleTest: StoryObj<React.FC> = () => {
 
   const canvasElRef = useRef<HTMLCanvasElement | null>(null)
   const prevFrameButtonRef = useRef<HTMLButtonElement | null>(null)
@@ -112,5 +112,5 @@ RenderCircleTest.storyName = 'RenderCircle'
 export default {
   title: 'core/rendering',
   component: RenderCircleTest,
-  decorators: [(Story: Story) => <div style={{ backgroundColor: '#efefef', width: '100%', height: '100vh' }}><Story /></div>],
+  decorators: [(Story: React.ComponentType) => <div style={{ backgroundColor: '#efefef', width: '100%', height: '100vh' }}><Story /></div>],
 }

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { DebugFlags, Size, StyleProps, SyntheticPointerEvent } from '@canvas-ui/core'
 import { Canvas, Chunk, Flex, ScrollView, Text } from '@canvas-ui/react'
-import type { Story } from '@storybook/react'
+import type { StoryObj } from '@storybook/react'
 import React, { FC, useEffect, useState } from 'react'
 
 const rowSize = Size.fromWH(200, 24)
@@ -47,7 +47,7 @@ const Row: FC<RowProps> = ({
   )
 }
 
-export const ChunkTest: Story = () => {
+export const ChunkTest: StoryObj<React.FC> = () => {
 
   useEffect(() => {
     DebugFlags.set(
@@ -183,5 +183,5 @@ ChunkTest.storyName = 'Chunk'
 export default {
   title: 'react',
   component: ChunkTest,
-  decorators: [(Story: Story) => <div style={{ backgroundColor: '#efefef', width: '100%', height: '100vh' }}><Story /></div>],
+  decorators: [(Story: React.ComponentType) => <div style={{ backgroundColor: '#efefef', width: '100%', height: '100vh' }}><Story /></div>],
 }

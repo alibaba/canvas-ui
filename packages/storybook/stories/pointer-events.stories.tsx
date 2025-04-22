@@ -6,10 +6,10 @@ import {
   Size,
   SyntheticPointerEvent
 } from '@canvas-ui/core'
-import type { Story } from '@storybook/react'
+import type { StoryObj } from '@storybook/react'
 import React, { useEffect, useRef } from 'react'
 
-export const PointerEventsTest: Story = () => {
+export const PointerEventsTest: StoryObj<React.FC> = () => {
 
   const canvasElRef = useRef<HTMLCanvasElement | null>(null)
 
@@ -118,5 +118,5 @@ PointerEventsTest.storyName = 'PointerEvents'
 export default {
   title: 'core/events',
   component: PointerEventsTest,
-  decorators: [(Story: Story) => <div style={{ backgroundColor: '#efefef', width: '100%', height: '100vh' }}><Story /></div>],
+  decorators: [(Story: React.ComponentType) => <div style={{ backgroundColor: '#efefef', width: '100%', height: '100vh' }}><Story /></div>],
 }

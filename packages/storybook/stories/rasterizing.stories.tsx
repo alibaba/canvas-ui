@@ -11,10 +11,9 @@ import {
   Surface,
   TransformLayer
 } from '@canvas-ui/core'
-import type { Story } from '@storybook/react'
 import React, { useEffect, useRef } from 'react'
 
-export const Rasterizing: Story = () => {
+export const Rasterizing: React.FC = () => {
   const canvasElRef = useRef<HTMLCanvasElement | null>(null)
   const prevFrameButtonRef = useRef<HTMLButtonElement | null>(null)
   const nextFrameButtonRef = useRef<HTMLButtonElement | null>(null)
@@ -140,5 +139,5 @@ export const Rasterizing: Story = () => {
 export default {
   title: 'core/compositing',
   component: Rasterizing,
-  decorators: [(Story: Story) => <div style={{ backgroundColor: '#efefef', width: '100%', height: '100vh' }}><Story /></div>],
+  decorators: [(Story: React.ComponentType) => <div style={{ backgroundColor: '#efefef', width: '100%', height: '100vh' }}><Story /></div>],
 }

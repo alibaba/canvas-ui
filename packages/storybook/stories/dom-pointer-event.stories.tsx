@@ -1,7 +1,6 @@
-import type { Story } from '@storybook/react'
 import React, { useEffect, useRef } from 'react'
 
-export const DOMPointerEvent: Story = () => {
+export const DOMPointerEvent: React.FC = () => {
 
   const ref = useRef<HTMLDivElement | null>(null)
 
@@ -68,5 +67,5 @@ export const DOMPointerEvent: Story = () => {
 export default {
   title: 'core/dom',
   component: DOMPointerEvent,
-  decorators: [(Story: Story) => <div style={{ backgroundColor: '#efefef', width: '100%', height: '100vh' }}><Story /></div>],
+  decorators: [(Story: React.ComponentType) => <div style={{ backgroundColor: '#efefef', width: '100%', height: '100vh' }}><Story /></div>],
 }

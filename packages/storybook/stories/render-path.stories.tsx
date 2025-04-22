@@ -1,5 +1,5 @@
 import { createElement, DebugFlags, RenderPath, Size, SyntheticPointerEvent } from '@canvas-ui/core'
-import type { Story } from '@storybook/react'
+import type { StoryObj } from '@storybook/react'
 import React, { useEffect, useRef } from 'react'
 
 const PATH1 = `
@@ -23,7 +23,7 @@ M10 80 Q 52.5 10, 95 80 T 180 80
 `
 
 
-export const RenderPathTest: Story = () => {
+export const RenderPathTest: StoryObj<React.FC> = () => {
 
   const canvasElRef = useRef<HTMLCanvasElement | null>(null)
   const prevFrameButtonRef = useRef<HTMLButtonElement | null>(null)
@@ -160,5 +160,5 @@ RenderPathTest.storyName = 'RenderPath'
 export default {
   title: 'core/rendering',
   component: RenderPathTest,
-  decorators: [(Story: Story) => <div style={{ backgroundColor: '#efefef', width: '100%', height: '100vh' }}><Story /></div>],
+  decorators: [(Story: React.ComponentType) => <div style={{ backgroundColor: '#efefef', width: '100%', height: '100vh' }}><Story /></div>],
 }

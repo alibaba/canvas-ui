@@ -1,8 +1,8 @@
 import { createElement, Size } from '@canvas-ui/core'
-import type { Story } from '@storybook/react'
+import type { StoryObj } from '@storybook/react'
 import React, { useEffect, useRef } from 'react'
 
-export const RenderRRectTest: Story = () => {
+export const RenderRRectTest: StoryObj<React.FC> = () => {
 
   const canvasElRef = useRef<HTMLCanvasElement | null>(null)
   const prevFrameButtonRef = useRef<HTMLButtonElement | null>(null)
@@ -122,5 +122,5 @@ RenderRRectTest.storyName = 'RenderRRect'
 export default {
   title: 'core/rendering',
   component: RenderRRectTest,
-  decorators: [(Story: Story) => <div style={{ backgroundColor: '#efefef', width: '100%', height: '100vh' }}><Story /></div>],
+  decorators: [(Story: React.ComponentType) => <div style={{ backgroundColor: '#efefef', width: '100%', height: '100vh' }}><Story /></div>],
 }

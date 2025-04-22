@@ -1,8 +1,8 @@
 import { createElement, DebugFlags, Point, Shader, Size } from '@canvas-ui/core'
-import type { Story } from '@storybook/react'
+import type { StoryObj } from '@storybook/react'
 import React, { useEffect, useRef } from 'react'
 
-export const RenderFlexTest: Story = () => {
+export const RenderFlexTest: StoryObj<React.FC> = () => {
 
   const canvasElRef = useRef<HTMLCanvasElement | null>(null)
   const prevFrameButtonRef = useRef<HTMLButtonElement | null>(null)
@@ -179,5 +179,5 @@ RenderFlexTest.storyName = 'RenderFlex'
 export default {
   title: 'core/rendering',
   component: RenderFlexTest,
-  decorators: [(Story: Story) => <div style={{ backgroundColor: '#efefef', width: '100%', height: '100vh' }}><Story /></div>],
+  decorators: [(Story: React.ComponentType) => <div style={{ backgroundColor: '#efefef', width: '100%', height: '100vh' }}><Story /></div>],
 }

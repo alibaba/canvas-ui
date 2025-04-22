@@ -1,10 +1,10 @@
 import { SyntheticPointerEvent } from '@canvas-ui/core'
 import { Canvas, Text } from '@canvas-ui/react'
-import type { Story } from '@storybook/react'
+import type { StoryObj } from '@storybook/react'
 import { assert } from '@canvas-ui/assert'
 import React, { useState } from 'react'
 
-export const TextTest: Story = () => {
+export const TextTest: StoryObj<React.FC> = () => {
 
   const [style, setStyle] = useState({ cursor: 'pointer', top: 100, width: 80 })
 
@@ -45,5 +45,5 @@ TextTest.storyName = 'Text'
 export default {
   title: 'react',
   component: TextTest,
-  decorators: [(Story: Story) => <div style={{ backgroundColor: '#efefef', width: '100%', height: '100vh' }}><Story /></div>],
+  decorators: [(Story: React.ComponentType) => <div style={{ backgroundColor: '#efefef', width: '100%', height: '100vh' }}><Story /></div>],
 }
