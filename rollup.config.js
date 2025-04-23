@@ -71,8 +71,14 @@ const main = async () => {
     {
       name: '@canvas-ui/react',
       main: 'dist/umd/react.js',
-      external: ['react', '@canvas-ui/core'],
+      external: ['react', '@canvas-ui/core', '@canvas-ui/assert'],
       basePath: 'packages/react'
+    },
+    {
+      name: '@canvas-ui/animation',
+      main: 'dist/umd/animation.js',
+      external: ['react', '@canvas-ui/core', 'motion'],
+      basePath: 'packages/animation'
     }
   ]
 
