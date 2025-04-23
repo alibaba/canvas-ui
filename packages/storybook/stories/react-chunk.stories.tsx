@@ -41,7 +41,7 @@ const Row: FC<RowProps> = ({
   return (
     <Flex id={row.id} style={style} onPointerUp={handlePointerUp}>
       <Text id="insertAfter" style={{ cursor: 'pointer' }}>[+]</Text>
-      <Text style={{ marginLeft: 8, marginRight: 8, flexGrow: 1 }}>{row.content}</Text>
+      <Text id="CHUNK_DEBUG_ID" style={{ marginLeft: 8, marginRight: 8, flexGrow: 1 }}>{row.content}</Text>
       <Text id="remove" style={{ cursor: 'pointer' }}>[-]</Text>
     </Flex>
   )

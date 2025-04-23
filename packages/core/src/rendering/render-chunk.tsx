@@ -272,6 +272,18 @@ class ChunkContainer<ChildType extends RenderObject<ChunkParentData<ChildType>>>
       if (!child.offstage) {
         context.paintChild(child, Point.add3(child._offset, offset, viewportOffset))
       }
+      // } else {
+      //   const debugText: string[] = []
+      //   child.visitChildren((it: any) => {
+      //     it.visitChildren((jt: any) => {
+      //       if (jt.id === 'CHUNK_DEBUG_ID') {
+      //         debugText.push(jt.text)
+      //       }
+      //     })
+
+      //   })
+      //   console.info('[ChunkContainer]', 'skip paint offstage', debugText.join(','))
+      // }
       child = child.parentData!.nextSibling
     }
   }
