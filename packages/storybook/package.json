@@ -14,12 +14,14 @@
     "@canvas-ui/assert": "workspace:*",
     "@canvas-ui/core": "workspace:*",
     "@canvas-ui/react": "workspace:*",
+    "@canvas-ui/animation": "workspace:*",
     "@storybook/addon-essentials": "^8.6.12",
     "@storybook/addon-interactions": "^8.6.12",
     "@storybook/blocks": "^8.6.12",
     "@storybook/react": "^8.6.12",
     "@storybook/react-vite": "^8.6.12",
     "@storybook/test": "^8.6.12",
+    "motion": "^12.7.4",
     "prop-types": "^15.8.1",
     "storybook": "^8.6.12"
   }

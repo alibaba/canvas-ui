@@ -1,0 +1,27 @@
+{
+  "name": "@canvas-ui/animation",
+  "version": "2.0.0-next.1",
+  "description": "Canvas UI Animation",
+  "author": "Zhang Haocong <kakera@gmail.com>",
+  "license": "MIT",
+  "typedocMain": "src/index.ts",
+  "main": "dist/umd/animation.js",
+  "module": "dist/esm/index.js",
+  "files": [
+    "dist",
+    "*.d.ts"
+  ],
+  "types": "dist/esm/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "dev": "tsc --watch",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@canvas-ui/assert": "workspace:*",
+    "@canvas-ui/core": "workspace:*"
+  },
+  "peerDependencies": {
+    "motion": "^12.7.4"
+  }
+}
