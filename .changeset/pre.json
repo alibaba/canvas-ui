@@ -6,7 +6,9 @@
     "@canvas-ui/core": "1.2.2-alpha.0",
     "@canvas-ui/docs": "1.2.2-alpha.0",
     "@canvas-ui/examples": "1.2.2-alpha.0",
-    "@canvas-ui/react": "1.2.2-alpha.0"
+    "@canvas-ui/react": "1.2.2-alpha.0",
+    "@canvas-ui/animation": "2.0.0-next.1",
+    "@canvas-ui/storybook": "2.0.0-next.1"
   },
   "changesets": [
     "modern-owls-obey"
