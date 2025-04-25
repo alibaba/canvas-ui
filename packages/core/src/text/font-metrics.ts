@@ -34,7 +34,8 @@ export class FontMetrics extends NonConstructiable {
       width: 3,
       height: 3,
     }
-    const context = PlatformAdapter.createRenderingContext(options.width, options.height)
+    const canvas = PlatformAdapter.createCanvas(options.width, options.height)
+    const context = canvas.getContext('2d', { willReadFrequently: true })
     assert(context)
     return FontMetrics._defaultMeasureOptions = {
       canvas: context.canvas,
@@ -97,6 +98,7 @@ export class FontMetrics extends NonConstructiable {
 
     // 绘制测量用文本
     context.font = cssFontProp
+    context.textRendering = 'geometricPrecision'
     context.textBaseline = 'alphabetic'
     context.fillStyle = '#000'
     context.fillText(metricsString, 0, baseline)
