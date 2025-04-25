@@ -7,15 +7,19 @@ import React from 'react'
 
 const path = `M266.24 420.0448a30.8736 30.8736 0 0 1 52.736-21.8624L512 591.0016l192.9728-192.8192a30.8736 30.8736 0 1 1 43.7248 43.7248l-214.8352 214.6304a31.0272 31.0272 0 0 1-43.776 0L275.3024 441.9072a30.8736 30.8736 0 0 1-9.0624-21.8624z`
 
-DebugFlags.set(
-  0
-  | DebugFlags.NodeBounds
-  | DebugFlags.LayerBounds
-  | DebugFlags.RasterCacheWaterMark
-  | DebugFlags.PathBounds
-)
-
 export const AnimationBasic: StoryObj<React.FC> = () => {
+
+  React.useEffect(() => {
+
+    DebugFlags.set(
+      0
+      | DebugFlags.NodeBounds
+      | DebugFlags.LayerBounds
+      | DebugFlags.RasterCacheWaterMark
+      | DebugFlags.PathBounds
+    )
+
+  }, [])
 
   const viewRef = React.useRef<RenderView>(null)
 

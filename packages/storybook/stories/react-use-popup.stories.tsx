@@ -25,16 +25,23 @@ const textStyle: StyleProps = {
 export const UsePopupTest: StoryObj<React.FC> = () => {
 
   useEffect(() => {
-    DebugFlags.set(0)
+    DebugFlags.set(
+      0
+      | DebugFlags.NodeBounds
+      | DebugFlags.LayerBounds
+      | DebugFlags.RasterCacheWaterMark
+      | DebugFlags.TextLineBounds
+    )
+
   }, [])
 
   const [editor, setEditor] = useState<ReactNode | null>(null)
   const editorRef = useRef<HTMLTextAreaElement | null>(null)
 
-  const [value, setValue] = useState('3. 那只敏捷的棕毛🦊跃过了那只🐶\nThe quick brown 🦊 jumps over the lazy 🐶')
+  const [value, setValue] = useState('3. 那只敏捷的棕毛狐狸跃过了那只狗\nThe quick brown fox jumps over the lazy dog')
 
   const { handlePointerDown: handlePointerDown1, open } = usePopup<RenderText, CSSProperties>({
-    hideTriggerOnOpen: true,
+    hideTriggerOnOpen: false,
     onOpen(state) {
       const { bounds, target, payload } = state
       assert(target)
@@ -42,9 +49,8 @@ export const UsePopupTest: StoryObj<React.FC> = () => {
 
       const style: CSSProperties = {
         position: 'absolute',
-        left: 0,
-        top: 0,
-        transform: `translate(${bounds.left}px, ${bounds.top}px)`,
+        left: bounds.left,
+        top: bounds.top,
         width: bounds.width,
         height: bounds.height,
         background: 'transparent',
@@ -54,7 +60,9 @@ export const UsePopupTest: StoryObj<React.FC> = () => {
         outline: 'none',
         font: computedStyle.font,
         color: computedStyle.color,
-        lineHeight: `${computedStyle.lineHeight}px` // 不加 px 会被识别成按字体大小比例行高
+        lineHeight: `${computedStyle.lineHeight}px`, // 不加 px 会被识别成按字体大小比例行高
+        textRendering: 'geometricPrecision',
+        textDecoration: 'none',
       }
 
       const handleBlur = () => {
@@ -68,7 +76,7 @@ export const UsePopupTest: StoryObj<React.FC> = () => {
           onBlur={handleBlur}
           style={style}
           defaultValue={value}
-        />,
+        />
       )
     },
 
@@ -88,7 +96,7 @@ export const UsePopupTest: StoryObj<React.FC> = () => {
     assert(event.target)
 
     // 可以传递 payload
-    open(event.target, { border: '1px solid red' })
+    open(event.target)
   }
 
   return (

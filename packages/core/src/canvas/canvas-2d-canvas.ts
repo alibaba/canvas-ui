@@ -197,6 +197,7 @@ export class Canvas2DCanvas implements Canvas {
   @Log({ disabled: true })
   drawText(text: string, x: number, y: number, paint: Paint): void {
     this.context.save()
+    this.context.textRendering = 'geometricPrecision'
     const style = paintToStyle(paint, this.context)
 
     if (paint.font) {
