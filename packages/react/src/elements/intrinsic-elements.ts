@@ -86,8 +86,8 @@ export type PathProps = RenderObjectProps & ShapeProps & {
   hitTestStrokeWidth?: RenderPath['hitTestStrokeWidth']
   path?: RenderPath['path']
   pathBounds?: RenderPath['pathBounds']
-  unstable_rotation?: RenderPath['unstable_rotation']
-  unstable_transformOrigin?: RenderPath['unstable_transformOrigin']
+  rotation?: RenderPath['rotation']
+  transformOrigin?: RenderPath['transformOrigin']
 }
 
 export type ScrollViewProps = RenderObjectProps & {

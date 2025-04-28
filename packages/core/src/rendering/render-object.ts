@@ -790,12 +790,12 @@ export abstract class RenderObject<ParentDataType extends ParentData = ParentDat
   /**
    * 节点调度了 enterFrame 时调用
    */
-  unstable_enterFrame() { }
+  enterFrame() { }
 
   /**
    * 标记节点需要调度 enterFrame
    */
-  unstable_markEnterFrame() {
+  markEnterFrame() {
     this._owner?.addEnterFrame(this)
     this._owner?.requestVisualUpdate()
   }
