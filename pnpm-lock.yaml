@@ -7,7 +7,10 @@ settings:
 importers:
 
   .:
-    dependencies:
+    devDependencies:
+      '@changesets/cli':
+        specifier: ^2.29.2
+        version: 2.29.2
       '@eslint/compat':
         specifier: ^1.2.8
         version: 1.2.8(eslint@9.25.1(jiti@1.21.7))
@@ -17,10 +20,6 @@ importers:
       '@eslint/js':
         specifier: ^9.25.1
         version: 9.25.1
-    devDependencies:
-      '@changesets/cli':
-        specifier: ^2.29.2
-        version: 2.29.2
       '@rollup/plugin-commonjs':
         specifier: 19.0.0
         version: 19.0.0(rollup@2.52.7)
@@ -60,12 +59,6 @@ importers:
       canvas:
         specifier: 3.1.0
         version: 3.1.0
-      circular-dependency-plugin:
-        specifier: 5.2.2
-        version: 5.2.2(webpack@5.99.6)
-      cross-env:
-        specifier: 7.0.3
-        version: 7.0.3
       eslint:
         specifier: 9.25.1
         version: 9.25.1(jiti@1.21.7)
@@ -173,18 +166,12 @@ importers:
       '@types/react-reconciler':
         specifier: 0.31.0
         version: 0.31.0(@types/react@19.1.2)
-      '@types/scheduler':
-        specifier: 0.12.1
-        version: 0.12.1
       react-reconciler:
         specifier: 0.32.0
         version: 0.32.0(react@19.1.0)
       react-use-measure:
         specifier: 2.1.7
         version: 2.1.7(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      scheduler:
-        specifier: 0.13.3
-        version: 0.13.3
 
   packages/storybook:
     devDependencies:
@@ -2032,9 +2019,6 @@ packages:
   '@types/resolve@1.20.6':
     resolution: {integrity: sha512-A4STmOXPhMUtHH+S6ymgE2GiBSMqf4oTvcQZMcHzokuTLVYzXTB8ttjcgxOVaAp2lGwEdzZ0J+cRbbeevQj1UQ==}
 
-  '@types/scheduler@0.12.1':
-    resolution: {integrity: sha512-XyL0jqjNrtC5evlPzAx25XCUxyrP5PFgsWwbCNkj6CPlABEd9ikr1B3wGd9KiCad7wbLd7MpL3KKe2dGpLKnZw==}
-
   '@types/semver@7.7.0':
     resolution: {integrity: sha512-k107IF4+Xr7UHjwDc7Cfd6PRQfbdkiRabXGRjo07b4WyPahFBZCZ1sE+BNxYIJPPg73UkfOsVOLwqVc/6ETrIA==}
 
@@ -2583,12 +2567,6 @@ packages:
     resolution: {integrity: sha512-3Ek9H3X6pj5TgenXYtNWdaBon1tgYCaebd+XPg0keyjEbEfkD4KkmAxkQ/i1vYvxdcT5nscLBfq9VJRmCBcFSw==}
     engines: {node: '>= 0.10'}
 
-  circular-dependency-plugin@5.2.2:
-    resolution: {integrity: sha512-g38K9Cm5WRwlaH6g03B9OEz/0qRizI+2I7n+Gz+L5DxXJAPAiWQvwlYNm1V1jkdpUv95bOe/ASm2vfi/G560jQ==}
-    engines: {node: '>=6.0.0'}
-    peerDependencies:
-      webpack: '>=4.0.1'
-
   cjs-module-lexer@1.4.3:
     resolution: {integrity: sha512-9z8TZaGM1pfswYeXrUpzPrkx8UnWYdhJclsiYMm6x/w5+nN+8Tf/LnAgfLGQCm59qAOxU8WwHEq2vNwF6i4j+Q==}
 
@@ -2693,11 +2671,6 @@ packages:
   create-jest@29.7.0:
     resolution: {integrity: sha512-Adz2bdH0Vq3F53KEMJOoftQFutWCukm6J24wbPWRO4k1kMY7gS7ds/uoJkNuV8wDCtWWnuwGcJwpWcih+zEW1Q==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
-    hasBin: true
-
-  cross-env@7.0.3:
-    resolution: {integrity: sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==}
-    engines: {node: '>=10.14', npm: '>=6', yarn: '>=1'}
     hasBin: true
 
   cross-spawn@7.0.6:
@@ -4827,9 +4800,6 @@ packages:
   saxes@6.0.0:
     resolution: {integrity: sha512-xAg7SOnEhrm5zI3puOOKyy1OMcMlIJZYNJY7xLBwSze0UjhPLnWfj2GF2EpT0jmzaJKIWKHLsaSSajf35bcYnA==}
     engines: {node: '>=v12.22.7'}
-
-  scheduler@0.13.3:
-    resolution: {integrity: sha512-UxN5QRYWtpR1egNWzJcVLk8jlegxAugswQc984lD3kU7NuobsO37/sRfbpTdBjtnD5TBNFA2Q2oLV5+UmPSmEQ==}
 
   scheduler@0.26.0:
     resolution: {integrity: sha512-NlHwttCI/l5gCPR3D1nNXtWABUmBwvZpEQiD4IXSbIDq8BzLIK/7Ir5gTFSGZDUu37K5cMNp0hFtzO38sC7gWA==}
@@ -7696,8 +7666,6 @@ snapshots:
 
   '@types/resolve@1.20.6': {}
 
-  '@types/scheduler@0.12.1': {}
-
   '@types/semver@7.7.0': {}
 
   '@types/stack-utils@2.0.3': {}
@@ -8389,10 +8357,6 @@ snapshots:
       inherits: 2.0.4
       safe-buffer: 5.2.1
 
-  circular-dependency-plugin@5.2.2(webpack@5.99.6):
-    dependencies:
-      webpack: 5.99.6
-
   cjs-module-lexer@1.4.3: {}
 
   clean-css@5.3.3:
@@ -8514,10 +8478,6 @@ snapshots:
       - babel-plugin-macros
       - supports-color
       - ts-node
-
-  cross-env@7.0.3:
-    dependencies:
-      cross-spawn: 7.0.6
 
   cross-spawn@7.0.6:
     dependencies:
@@ -11060,11 +11020,6 @@ snapshots:
   saxes@6.0.0:
     dependencies:
       xmlchars: 2.2.0
-
-  scheduler@0.13.3:
-    dependencies:
-      loose-envify: 1.4.0
-      object-assign: 4.1.1
 
   scheduler@0.26.0: {}
 
