@@ -41,7 +41,7 @@ export const AnimationBasic: StoryObj<React.FC> = () => {
     })
 
     const pathEl = viewRef.current?.firstChild as RenderPath
-    pathEl.unstable_rotation = 0
+    pathEl.rotation = 0
     animate(pathEl, {
       rotation: 360 * Math.sign(delta),
     }, {
@@ -63,8 +63,8 @@ export const AnimationBasic: StoryObj<React.FC> = () => {
             path={path}
             style={{ left: 0, top: 0, width: 100, height: 100 }}
             pathBounds={Rect.fromLTWH(0, 0, 1024, 1024)}
-            unstable_rotation={0}
-            unstable_transformOrigin={Point.fromXY(0.5, 0.5)}
+            rotation={0}
+            transformOrigin={Point.fromXY(0.5, 0.5)}
           />
           <Text>
             Monkey 🐒

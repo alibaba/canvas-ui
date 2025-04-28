@@ -79,7 +79,7 @@ export class RenderPipeline {
     const n = enterFrameObjects.length
     for (let i = 0; i < n; i++) {
       const object = enterFrameObjects[i]
-      object.unstable_enterFrame()
+      object.enterFrame()
     }
   }
 
