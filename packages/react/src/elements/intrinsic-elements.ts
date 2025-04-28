@@ -67,6 +67,7 @@ export type ViewProps = RenderObjectProps
 
 export type ChunkProps = ViewProps & {
   isOffstage?: RenderChunk['isOffstage']
+  capacity?: RenderChunk['capacity']
 }
 
 export type FlexProps = RenderObjectProps
