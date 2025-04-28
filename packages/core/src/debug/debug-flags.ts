@@ -30,13 +30,20 @@ export class DebugFlags {
    */
   static PathBounds = 1 << 5
 
+  private static currentFlags = 0
+
   static set(flags: number) {
+    const prevFlags = DebugFlags.currentFlags
     DebugFlags.paintLayerBounds = (flags & DebugFlags.LayerBounds) !== 0
     DebugFlags.paintNodeBounds = (flags & DebugFlags.NodeBounds) !== 0
     DebugFlags.paintNodeId = (flags & DebugFlags.NodeId) !== 0
     DebugFlags.paintTextLineBounds = (flags & DebugFlags.TextLineBounds) !== 0
     DebugFlags.paintRasterCacheWaterMark = (flags & DebugFlags.RasterCacheWaterMark) !== 0
     DebugFlags.paintPathBounds = (flags & DebugFlags.PathBounds) !== 0
+    DebugFlags.currentFlags = flags
+    return () => {
+      DebugFlags.set(prevFlags)
+    }
   }
 
   /**
