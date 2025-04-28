@@ -17,7 +17,7 @@ export abstract class RenderScrollbar extends RenderSingleChild<RenderRRect> {
     strokeWidth: 1,
     stroke: 'rgba(255, 255, 255, 0.6)',
     fill: 'rgba(0, 0, 0, 0.2)',
-    cursor: 'grab',
+    cursor: 'default',
     minGripLength: 20,
   } as const
 
@@ -158,7 +158,17 @@ export abstract class RenderScrollbar extends RenderSingleChild<RenderRRect> {
   /**
    * 用户手动操作滚动条滚动时会调用该方法
    */
-  onScroll?: (value: number) => void
+  declare onScroll?: (value: number) => void
+
+  /**
+   * The event triggered when the user manually operates the scrollbar by pressing the mouse.
+   */
+  declare onPointerDownGrip?: (grip: RenderRRect) => void
+
+  /**
+   * The event triggered when the user manually operates the scrollbar by releasing the mouse.
+   */
+  declare onPointerUpGrip?: (grip: RenderRRect) => void
 
   private createGrip() {
     const grip = new RenderRRect()
@@ -175,6 +185,7 @@ export abstract class RenderScrollbar extends RenderSingleChild<RenderRRect> {
   protected handleGripPointerDown = (downEvent: SyntheticPointerEvent<RenderObject>) => {
     const rootNode = this.owner?.rootNode
     const downGripPosition = this.gripPosition
+    this.onPointerDownGrip?.(this.grip)
     const handlePointerMove = (moveEvent: SyntheticPointerEvent<RenderObject>) => {
       const moveDelta = this.computeMoveDelta(moveEvent, downEvent)
       let gripPosition = downGripPosition + moveDelta
@@ -189,8 +200,9 @@ export abstract class RenderScrollbar extends RenderSingleChild<RenderRRect> {
     }
     rootNode?.addEventListener('pointermove', handlePointerMove)
     document.addEventListener('pointerup', () => {
+      this.onPointerUpGrip?.(this.grip)
       rootNode?.removeEventListener('pointermove', handlePointerMove)
-    })
+    }, { once: true })
   }
 
   /**

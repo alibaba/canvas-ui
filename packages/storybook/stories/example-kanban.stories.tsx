@@ -1,4 +1,4 @@
-import { Log, ScrollAxis, ScrollBounds } from '@canvas-ui/core'
+import { DebugFlags, Log, ScrollAxis, ScrollBounds } from '@canvas-ui/core'
 import { Canvas, Flex, ScrollView, Text, useCanvasState } from '@canvas-ui/react'
 import type { StoryObj } from '@storybook/react'
 import React, { FC, useCallback, useEffect, useState } from 'react'
@@ -156,10 +156,12 @@ const Board: FC<BoardProps> = props => {
 
 export const KanbanTest: StoryObj<React.FC> = () => {
   useEffect(() => {
+    const restore = DebugFlags.set(0)
     Log.disableAll = true
 
     return () => {
       Log.disableAll = false
+      restore()
     }
   })
 
