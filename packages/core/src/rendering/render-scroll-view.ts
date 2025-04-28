@@ -29,6 +29,8 @@ export enum ScrollBounds {
 
 export class RenderScrollView extends RenderSingleChild<RenderObject> {
 
+  static readonly DEFAULT_SCROLLBAR_AUTO_HIDE_DELAY = 2000
+
   private hScrollbar = new RenderHScrollbar()
 
   private vScrollbar = new RenderVScrollbar()
@@ -42,12 +44,29 @@ export class RenderScrollView extends RenderSingleChild<RenderObject> {
     this.hScrollbar.onScroll = scrollPosition => {
       this.scrollLeft = scrollPosition
     }
+    this.hScrollbar.onPointerDownGrip = this.handlePointerDownGrip
+    this.hScrollbar.onPointerUpGrip = this.handlePointerUpGrip
     this.adoptChild(this.vScrollbar)
     this.vScrollbar.onScroll = scrollPosition => {
       this.scrollTop = scrollPosition
     }
+    this.vScrollbar.onPointerDownGrip = this.handlePointerDownGrip
+    this.vScrollbar.onPointerUpGrip = this.handlePointerUpGrip
 
-    this.scrollbarAutoHideDelay = 1000
+    this.scrollbarAutoHideDelay = RenderScrollView.DEFAULT_SCROLLBAR_AUTO_HIDE_DELAY
+  }
+
+
+  private handlePointerDownGrip = () => {
+    this.forcePaintScrollbar = true
+    this.markPaintDirty()
+  }
+
+  private handlePointerUpGrip = () => {
+    this.forcePaintScrollbar = false
+    this.markPaintDirty()
+    this._scrollOffsetUpdateFlag = this._scrollbarAutoHideDelayFrames
+    this.markEnterFrame()
   }
 
   private handleWheel = (event: SyntheticWheelEvent<RenderScrollView>) => {
@@ -114,7 +133,7 @@ export class RenderScrollView extends RenderSingleChild<RenderObject> {
 
 
   /**
-   * 滚动条自动消失的延迟 ms，默认 1000
+   * 滚动条自动消失的延迟 ms
    */
   get scrollbarAutoHideDelay() {
     return this._scrollbarAutoHideDelay
@@ -126,6 +145,7 @@ export class RenderScrollView extends RenderSingleChild<RenderObject> {
   private declare _scrollbarAutoHideDelay: number
   private declare _scrollbarAutoHideDelayFrames: number
   private _scrollOffsetUpdateFlag = 0
+  private forcePaintScrollbar = false
 
   /**
    * 滚动边界，修改该属性会导致 relayout，默认 ScrollBounds.Horizontal | ScrollBounds.Vertical
@@ -199,7 +219,7 @@ export class RenderScrollView extends RenderSingleChild<RenderObject> {
     if (this._child) {
       const viewportOffset = this.viewportOffset
 
-      if (this._scrollbarAutoHideDelay === 0 || this._scrollOffsetUpdateFlag > 0) {
+      if (this.forcePaintScrollbar || this._scrollbarAutoHideDelay === 0 || this._scrollOffsetUpdateFlag > 0) {
         // 绘制滚动条
         this.hScrollbar.offstage = this._child.viewport.width >= this.scrollSize.width
         if (!this.hScrollbar.offstage
@@ -426,14 +446,16 @@ export class RenderScrollView extends RenderSingleChild<RenderObject> {
     scrollbar: RenderObject,
     result: HitTestResult,
     position: Point): boolean {
-    return !scrollbar.offstage && result.addWithPaintOffset(
-      Point.add(scrollbar.offset, this.viewportOffset),
-      position,
-      (result, transformed) => {
-        assert(Point.eq(transformed, Point.add(position, Point.invert(Point.add(scrollbar.offset, this.viewportOffset)))))
-        return scrollbar.hitTest(result, transformed)
-      }
-    )
+    return !scrollbar.offstage
+      && this.forcePaintScrollbar || this._scrollbarAutoHideDelay === 0 || this._scrollOffsetUpdateFlag > 0
+      && result.addWithPaintOffset(
+        Point.add(scrollbar.offset, this.viewportOffset),
+        position,
+        (result, transformed) => {
+          assert(Point.eq(transformed, Point.add(position, Point.invert(Point.add(scrollbar.offset, this.viewportOffset)))))
+          return scrollbar.hitTest(result, transformed)
+        }
+      )
   }
 
   private dispatchScrollEvent() {
