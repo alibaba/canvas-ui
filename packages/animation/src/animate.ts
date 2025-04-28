@@ -12,7 +12,7 @@ type MotionProps = {
 type AnimatableProps = {
   offset?: RenderObject['offset']
   size?: RenderObject['size']
-  rotation?: RenderShape['unstable_rotation']
+  rotation?: RenderShape['rotation']
 }
 
 export function animate(
@@ -47,7 +47,7 @@ function applyMotionProps(object: RenderObject, props: MotionProps) {
     object.parent?.markPaintDirty()
   }
   if (props.rotation !== undefined && object instanceof RenderShape) {
-    object.unstable_rotation = props.rotation
+    object.rotation = props.rotation
   }
 }
 
@@ -67,7 +67,7 @@ function buildMotionProps(object: RenderObject, props: AnimatableProps) {
     targetProps.height = object.size.height
   }
   if (typeof props.rotation === 'number' && object instanceof RenderShape) {
-    initialProps.rotation = object.unstable_rotation
+    initialProps.rotation = object.rotation
     targetProps.rotation = props.rotation
   }
   return {

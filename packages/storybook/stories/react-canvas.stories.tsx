@@ -67,8 +67,8 @@ export const CanvasTest: StoryObj<React.FC> = () => {
                   path={path}
                   style={{ left: 50, top: 50, width: 22, height: 22 }}
                   pathBounds={Rect.fromLTWH(0, 0, 1024, 1024)}
-                  unstable_rotation={rotation}
-                  unstable_transformOrigin={Point.fromXY(0.5, 0.5)}
+                  rotation={rotation}
+                  transformOrigin={Point.fromXY(0.5, 0.5)}
                 />
               </View>
             ) : <></>
