@@ -179,18 +179,18 @@ export class RenderScrollView extends RenderSingleChild<RenderObject> {
 
       // 隐藏滚动条
       this._scrollOffsetUpdateFlag = this._scrollbarAutoHideDelayFrames
-      this.unstable_markEnterFrame()
+      this.markEnterFrame()
     }
     this.markPaintDirty()
     return true
   }
 
-  override unstable_enterFrame() {
+  override enterFrame() {
     if (this._scrollOffsetUpdateFlag === 0) {
       this.markPaintDirty()
     } else {
       this._scrollOffsetUpdateFlag--
-      this.unstable_markEnterFrame()
+      this.markEnterFrame()
     }
   }
 

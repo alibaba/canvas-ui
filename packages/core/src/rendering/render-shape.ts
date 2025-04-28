@@ -143,10 +143,10 @@ export abstract class RenderShape extends RenderObject {
     return this._fillPaint
   }
 
-  get unstable_rotation() {
+  get rotation() {
     return this._rotation
   }
-  set unstable_rotation(value) {
+  set rotation(value) {
     if (value === this._rotation) {
       return
     }
@@ -159,10 +159,10 @@ export abstract class RenderShape extends RenderObject {
   protected _angle = 0
 
 
-  get unstable_transformOrigin() {
+  get transformOrigin() {
     return this._transformOrigin
   }
-  set unstable_transformOrigin(value) {
+  set transformOrigin(value) {
     if (Point.eq(value, this._transformOrigin)) {
       return
     }
