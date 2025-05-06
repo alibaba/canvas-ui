@@ -37,10 +37,17 @@ const renderer = Reconciler<
   -1, // noTimeout 的返回值
   null // TransitionStatus
 >({
-
   isPrimaryRenderer: false,
   noTimeout: -1,
   NotPendingTransition: null,
+  HostTransitionContext: {
+    $$typeof: Symbol.for('react.context'),
+    Consumer: null as any,
+    Provider: null as any,
+    _currentValue: null,
+    _currentValue2: null,
+    _threadCount: 0
+  },
   supportsHydration: false,
   supportsMutation: true,
   supportsPersistence: false,
@@ -128,7 +135,7 @@ const renderer = Reconciler<
     props,
     _rootContainer,
     _hostContext,
-    _internalHandle,
+    _internalHandle
   ) {
     const instance = createElement(type)
     setInitialProps(type, instance, props)
@@ -139,7 +146,7 @@ const renderer = Reconciler<
     _text,
     _rootContainer,
     _hostContext,
-    _internalHandle,
+    _internalHandle
   ) {
     throw new Error('Not implemented')
   },
@@ -155,7 +162,7 @@ const renderer = Reconciler<
     _type,
     _props,
     _rootContainer,
-    _hostContext,
+    _hostContext
   ) {
     return false
   },
@@ -239,7 +246,6 @@ const renderer = Reconciler<
       updateProps(instance, updatePayload)
     }
   },
-
 })
 
 renderer.injectIntoDevTools({

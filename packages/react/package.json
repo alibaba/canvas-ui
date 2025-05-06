@@ -20,7 +20,7 @@
   "dependencies": {
     "@canvas-ui/assert": "workspace:*",
     "@canvas-ui/core": "workspace:*",
-    "@types/react-reconciler": "0.31.0",
+    "@types/react-reconciler": "0.32.0",
     "react-reconciler": "0.32.0",
     "react-use-measure": "2.1.7"
   }

@@ -152,8 +152,8 @@ importers:
         specifier: 5.0.1
         version: 5.0.1
       yoga-layout-prebuilt-fork:
-        specifier: ^1.10.4
-        version: 1.10.5
+        specifier: ^1.10.6
+        version: 1.10.6
 
   packages/react:
     dependencies:
@@ -164,8 +164,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@types/react-reconciler':
-        specifier: 0.31.0
-        version: 0.31.0(@types/react@19.1.2)
+        specifier: 0.32.0
+        version: 0.32.0(@types/react@19.1.2)
       react-reconciler:
         specifier: 0.32.0
         version: 0.32.0(react@19.1.0)
@@ -2005,8 +2005,8 @@ packages:
     peerDependencies:
       '@types/react': ^19.0.0
 
-  '@types/react-reconciler@0.31.0':
-    resolution: {integrity: sha512-wa1KtV3SHKnWeLHfZFg/7nrPSe/Ejdn+qbanNX4V6i9I7C3ECKPfBnC1KM3ef58KFWEohLmTvoTH5XuEIKGX2g==}
+  '@types/react-reconciler@0.32.0':
+    resolution: {integrity: sha512-+WHarFkJevhH1s655qeeSEf/yxFST0dVRsmSqUgxG8mMOKqycgYBv2wVpyubBY7MX8KiX5FQ03rNIwrxfm7Bmw==}
     peerDependencies:
       '@types/react': '*'
 
@@ -5497,8 +5497,8 @@ packages:
     resolution: {integrity: sha512-AyeEbWOu/TAXdxlV9wmGcR0+yh2j3vYPGOECcIj2S7MkrLyC7ne+oye2BKTItt0ii2PHk4cDy+95+LshzbXnGg==}
     engines: {node: '>=12.20'}
 
-  yoga-layout-prebuilt-fork@1.10.5:
-    resolution: {integrity: sha512-i8dPDKpibAnat1yhCxp2VcCjOPcSbm4Sp43/imEkRZIWw406Cz/+XQqJpS9iUEIuNhy1ihDtWj4ChUQauqkWfQ==}
+  yoga-layout-prebuilt-fork@1.10.6:
+    resolution: {integrity: sha512-0ICD+ZwSJGbNkXpIRJlU5VlxBNqptXysUFLOBaxXydSD/4tEN/bp8ZT7tN0j+ShpFLa2ay+B/HdXmmwZos5HQw==}
     engines: {node: '>=8'}
 
 snapshots:
@@ -7652,7 +7652,7 @@ snapshots:
     dependencies:
       '@types/react': 19.1.2
 
-  '@types/react-reconciler@0.31.0(@types/react@19.1.2)':
+  '@types/react-reconciler@0.32.0(@types/react@19.1.2)':
     dependencies:
       '@types/react': 19.1.2
 
@@ -11855,7 +11855,3 @@ snapshots:
   yocto-queue@0.1.0: {}
 
   yocto-queue@1.2.1: {}
-
-  yoga-layout-prebuilt-fork@1.10.5:
-    dependencies:
-      '@types/yoga-layout': 1.9.3
