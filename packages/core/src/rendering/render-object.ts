@@ -144,9 +144,9 @@ export abstract class RenderObject<ParentDataType extends ParentData = ParentDat
       if (!child.yogaNode) {
         const childYogaNode = Yoga.Node.create()
         child.yogaNode = childYogaNode
-        child.allocChildrenYogaNode()
       }
     }
+    child.allocChildrenYogaNode()
   }
 
   protected allocChildrenYogaNode() { }
