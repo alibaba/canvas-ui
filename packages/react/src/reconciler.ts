@@ -69,9 +69,15 @@ export function Reconciler<
     TransitionStatus
   >) {
 
-  if (process.env.DEBUG_RECONCILER === 'true') {
-    Log(config)
+  try {
+    if (process.env.DEBUG_RECONCILER === 'true') {
+      Log(config)
+    }
+  } catch {
+    // ignore
   }
+
+
 
   return ReactReconciler(config)
 }

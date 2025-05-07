@@ -248,12 +248,17 @@ const renderer = Reconciler<
   },
 })
 
-renderer.injectIntoDevTools({
-  bundleType: process.env.NODE_ENV === 'production' ? 0 : 1,
-  version: process.env.PKG_VERSION ?? '0.0.0', // 必须是 `x.y.z` 格式的 semver，否则不起作用 
-  rendererPackageName: '@canvas-ui/react',
-  findHostInstanceByFiber: renderer.findHostInstance,
-} as any)
+try {
+  renderer.injectIntoDevTools({
+    bundleType: process.env.NODE_ENV === 'production' ? 0 : 1,
+    version: process.env.PKG_VERSION ?? '0.0.0', // 必须是 `x.y.z` 格式的 semver，否则不起作用 
+    rendererPackageName: '@canvas-ui/react',
+    findHostInstanceByFiber: renderer.findHostInstance,
+  } as any)
+} catch {
+  // ignore
+}
+
 
 const roots = new Map<RenderView, FiberRoot>()
 
