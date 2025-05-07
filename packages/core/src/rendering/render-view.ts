@@ -333,7 +333,7 @@ export class RenderView<ChildType extends RenderObject<ViewParentData<ChildType>
     let index = 0
     while (child) {
       this.allocChildYogaNode(child)
-      if (this._yogaNode && child._yogaNode) {
+      if (this._yogaNode && child._yogaNode && !child._yogaNode.getParent()) {
         this._yogaNode.insertChild(child._yogaNode, index)
       }
       const childParentData = child.parentData!
