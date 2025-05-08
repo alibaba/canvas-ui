@@ -1,6 +1,6 @@
 {
   "name": "@canvas-ui/storybook",
-  "version": "2.0.0-next.1",
+  "version": "2.0.0",
   "description": "",
   "scripts": {
     "storybook": "storybook dev -p 6006",
