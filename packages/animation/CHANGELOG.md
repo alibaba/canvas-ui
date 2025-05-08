@@ -1,10 +1,6 @@
-# @canvas-ui/react
+# @canvas-ui/animation
 
 ## 2.0.0
-
-### Major Changes
-
-- feat(Chunk): add capacity props
 
 ### Patch Changes
 

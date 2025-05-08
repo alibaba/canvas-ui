@@ -1,7 +1,8 @@
 # @canvas-ui/assert
 
-## 2.0.0-next.1
+## 2.0.0
 
 ### Major Changes
 
-- Build target set to ES6
+- 2a24188: Build target set to ES6
+

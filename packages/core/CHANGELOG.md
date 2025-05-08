@@ -1,12 +1,17 @@
 # @canvas-ui/core
 
-## 2.0.0-next.1
+## 2.0.0
 
 ### Major Changes
 
-- Build target set to ES6
+ - fix: children YogaNode was not properly created
 
-### Patch Changes
+ - feat(RenderScrollbar): Optimize scrollbar auto-hide behavior
+ 
+ - chore: cleanup comments
 
-- Updated dependencies
-  - @canvas-ui/assert@2.0.0-next.1
+ - feat: remove unstable prefix
+ 
+ - feat(RenderText): use textRendering: geometricPrecision
+ 
+ - feat(Animations): Introduce animations
