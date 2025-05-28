@@ -1,12 +1,12 @@
 <img width="248" alt="canvas-ui-logo" src="https://user-images.githubusercontent.com/180445/147241118-4fb09f35-8bc0-449b-8ab1-045caa9eb726.png">
 
-Canvas UI 是一个运行在 HTML Canvas 上的通用 UI 渲染器。https://alibaba.github.io/canvas-ui/
+Canvas UI is a general UI renderer runs on HTML Canvas. https://alibaba.github.io/canvas-ui/
 
 <hr>
 
-他提供了一系列 React 组件，允许开发者利用已有知识快速构建基于 Canvas 的应用。
+It provides a series of React components, allowing developers to quickly build Canvas-based applications using their existing knowledge.
 
-同时也具备类似 DOM 的场景树，开发者可以像操作 DOM 一样操作 Canvas 中绘制的元素。
+It also features a DOM-like scene tree, enabling developers to manipulate elements drawn in Canvas just like they would manipulate DOM elements.
 
 ```tsx
 import React from 'react'
@@ -42,59 +42,57 @@ https://alibaba.github.io/canvas-ui/examples/task
 ![canvas-ui-kanban-demo](https://user-images.githubusercontent.com/180445/189369038-1a5b5c56-375b-4d5d-801a-9e06421f4a63.png)
 
 
-# 特性
+# Features
 
-- 像 DOM 一样操作在 Canvas 里的元素
+- Manipulate elements in Canvas just like DOM elements
 
-- 支持 React，无缝接入 ReactDOM 渲染的应用
+- Seamlessly integrating with React applications
 
-- 支持 Flex 布局
+- Flex layout
 
-- 支持基本的文本排版能力：自动换行，对齐，文本溢出等属性
+- Animation based on [motion](https://motion.dev/)
 
-- 支持通过 style 属性写入 CSS 样式
+- Basic text typography capabilities: automatic word wrapping, alignment, text overflow
 
-- 支持交互事件：PointerEvents 和 WheelEvent
+- CSS styles through the style attribute
 
-- 便利的分层能力
+- Interaction events: PointerEvents and WheelEvent
 
-- 完全使用 TypeScript 编写，类型完备
+- Convenient layering capabilities
 
-- 在 WebWorker 中渲染 (WIP)
+- Fully written in TypeScript with complete type definitions
 
+- Rendering in WebWorker (WIP)
 
-# 目录结构
+# Project Structure
 
 - packages/core
-渲染器的核心，提供了诸如 createElement，事件，渲染管线等能力。
+The core of the renderer, providing capabilities such as createElement, events, rendering pipeline, etc.
 
 - packages/react
-Canvas UI 的官方 React 绑定，提供 `<View />` `<Text />` 等组件
+Canvas UI's official React binding, providing components like `<View />`, `<Text />`, etc.
 
 - packages/examples
-基于 Storybook 的组件开发和测试环境
+Component development and testing environment based on Storybook
 
 - tools/
-一些脚本
+scripts
 
-# 开始开发
+# Development
 
 ```
-# 启动 core 和 react 的开发模式
-$ yarn dev
+# Start development mode for core and react
+$ pnpm dev
 
-# 启动 Storybook
-$ yarn dev:examples
+# Start Storybook
+$ pnpm dev:storybook
 
-# 运行单元测试
-$ yarn test
+# Run unit tests
+$ pnpm test
 
-# 构建 umd, esm 版本
-$ yarn build
+# Build umd, esm versions
+$ pnpm build
 
-# 打版本
-$ yarn lerna version
-
-# 发布
+# Publish
 $ sh ./tools/publish.sh
 ```
