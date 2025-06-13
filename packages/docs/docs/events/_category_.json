@@ -1,0 +1,8 @@
+{
+  "label": "Events",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "description": "Event handling and lifecycle management in the Canvas UI system."
+  }
+}

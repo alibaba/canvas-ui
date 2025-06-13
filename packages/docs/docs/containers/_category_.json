@@ -1,0 +1,8 @@
+{
+  "label": "Containers",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "Container components that provide layout structure and organize content within the Canvas UI."
+  }
+}
