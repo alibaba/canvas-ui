@@ -2,7 +2,6 @@ import type { ReactNode } from 'react'
 import clsx from 'clsx'
 import Heading from '@theme/Heading'
 import styles from './styles.module.css'
-import { HelloWorld } from './hello-world'
 
 type FeatureItem = {
   title: string;
@@ -61,7 +60,6 @@ export default function HomepageFeatures(): ReactNode {
   return (
     <section className={styles.features}>
       <div className="container">
-        <HelloWorld />
         <div className="row">
           {FeatureList.map((props, idx) => (
             <Feature key={idx} {...props} />

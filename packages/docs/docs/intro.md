@@ -1,22 +1,30 @@
 ```jsx live
-function Clock(props) {
-  const [date, setDate] = useState(new Date());
-  useEffect(() => {
-    const timerID = setInterval(() => tick(), 1000);
-
-    return function cleanup() {
-      clearInterval(timerID);
-    };
-  });
-
-  function tick() {
-    setDate(new Date());
+function HelloWorld () {
+  const containerStyle = {
+    width: 250,
+    flexDirection: 'column'
+  } as const
+  const textStyle = {
+    maxWidth: containerStyle.width,
+    maxLines: 1,
+    cursor: 'pointer',
+  } as const
+  const [text, setText] = React.useState('我能吞下玻璃而不伤身体。')
+  const textRef = React.useRef(null)
+  const handlePointerDown = () => {
+    setText('私はガラスを食べられます。それは私を傷つけません。')
   }
-
+  useEffect(() => {
+    console.info('可以通过 ref 得到底层的 RenderText 对象', textRef.current)
+  }, [])
   return (
-    <div>
-      <h2>It is {date.toLocaleTimeString()}.</h2>
+    <div style={{ height: '100px' }}>
+      <Canvas>
+        <Flex style={containerStyle}>
+          <Text ref={textRef} onPointerDown={handlePointerDown} style={textStyle}>{text}</Text>
+        </Flex>
+      </Canvas>
     </div>
-  );
+  )
 }
 ```
