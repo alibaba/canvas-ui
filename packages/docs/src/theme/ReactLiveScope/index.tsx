@@ -8,8 +8,8 @@ const ReactLiveScope: unknown = {
   React,
   ...React,
   ...CanvasUIReact,
-  ...CanvasUICore,
   ...CanvasUIAnimation,
+  CanvasUICore,
 }
 
 export default ReactLiveScope
