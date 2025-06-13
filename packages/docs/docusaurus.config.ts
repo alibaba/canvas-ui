@@ -70,12 +70,12 @@ const config: Config = {
       items: [
         {
           type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
+          sidebarId: 'docsSidebar',
           position: 'left',
-          label: 'Tutorial',
+          label: 'Docs',
         },
         {
-          href: 'https://github.com/facebook/docusaurus',
+          href: 'https://alibaba.github.io/canvas-ui/',
           label: 'GitHub',
           position: 'right',
         },
@@ -119,7 +119,7 @@ const config: Config = {
             },
             {
               label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
+              href: 'https://alibaba.github.io/canvas-ui/',
             },
           ],
         },
