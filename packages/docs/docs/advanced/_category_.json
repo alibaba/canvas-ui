@@ -1,0 +1,8 @@
+{
+  "label": "Advanced",
+  "position": 5,
+  "link": {
+    "type": "generated-index",
+    "description": "Advanced topics and features of the Canvas UI, including custom components, theming, and performance optimization."
+  }
+}
