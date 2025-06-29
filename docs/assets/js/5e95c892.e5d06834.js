@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_canvas_ui_docs=self.webpackChunk_canvas_ui_docs||[]).push([[647],{3368:(s,e,a)=>{a.r(e),a.d(e,{default:()=>i});a(4349);var c=a(851),r=a(6892),u=a(119),n=a(4914),d=a(3105),t=a(4489);function i(s){return(0,t.jsx)(r.e3,{className:(0,c.A)(u.G.wrapper.docsPages),children:(0,t.jsx)(d.A,{children:(0,n.v)(s.route.routes)})})}}}]);
