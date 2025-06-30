@@ -25,7 +25,6 @@ export default () => {
     <div style={{ height: '100px' }}>
       <Canvas>
         <Flex style={ containerStyle }>
-          <Text style={ textStyle }>我能吞下玻璃而不伤身体。</Text>
           <Text style={ textStyle }>私はガラスを食べられます。それは私を傷つけません。</Text>
           <Text style={ textStyle }>The quick brown fox jumps over the lazy dog.</Text>
         </Flex>
@@ -37,9 +36,9 @@ export default () => {
 
 # Demo
 
-https://alibaba.github.io/canvas-ui/examples/task
+https://stackblitz.com/github/alibaba/canvas-ui/tree/main/examples/kanban
 
-![canvas-ui-kanban-demo](https://user-images.githubusercontent.com/180445/189369038-1a5b5c56-375b-4d5d-801a-9e06421f4a63.png)
+![canvas-ui-kanban-demo](https://alibaba.github.io/canvas-ui/assets/images/stackblitz-aa46daf95c93384d7fee39a81805f909.png)
 
 
 # Features
@@ -93,6 +92,4 @@ $ pnpm test
 # Build umd, esm versions
 $ pnpm build
 
-# Publish
-$ sh ./tools/publish.sh
 ```
