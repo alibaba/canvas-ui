@@ -265,7 +265,7 @@ const roots = new Map<RenderView, FiberRoot>()
 export function render(
   element: ReactNode,
   container: RenderView,
-) {
+): ReturnType<typeof renderer.getPublicRootInstance> {
   let root = roots.get(container)
   if (!root) {
     const newRoot = (root = renderer.createContainer(
