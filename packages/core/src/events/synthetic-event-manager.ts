@@ -158,6 +158,7 @@ export class SyntheticEventManager {
         this.dispatchEvent(event)
 
         // 处理 out 和 leave
+        // pointerout/over fires when the direct target changes
         if (lastPath && lastPath[0] !== primaryPointerState.path[0]) {
           const lastState = {
             path: lastPath,
@@ -169,22 +170,51 @@ export class SyntheticEventManager {
             pointermove,
             lastState,
           ))
-          // todo(haocong): pointerleave 实现有误
-          this.dispatchEventAtTarget(this.createSyntheticPointerEvent(
-            'pointerleave',
-            pointermove,
-            lastState,
-          ))
           this.dispatchEvent(this.createSyntheticPointerEvent(
             'pointerover',
             pointermove,
             primaryPointerState,
           ))
-          this.dispatchEventAtTarget(this.createSyntheticPointerEvent(
-            'pointerenter',
-            pointermove,
-            primaryPointerState,
-          ))
+        }
+
+        // pointerenter/leave should only fire when crossing element boundaries
+        // Check which elements are in one path but not the other
+        if (lastPath) {
+          const currentPath = primaryPointerState.path
+
+          // Find elements that were left (in lastPath but not in currentPath)
+          const leftElements = lastPath.filter(el => !currentPath.includes(el))
+
+          // Find elements that were entered (in currentPath but not in lastPath)
+          const enteredElements = currentPath.filter(el => !lastPath.includes(el))
+
+          // Fire pointerleave for each element that was left
+          for (const element of leftElements) {
+            const leaveState = {
+              path: [element],
+              offset: primaryPointerState.offset,
+              position: primaryPointerState.position,
+            }
+            this.dispatchEventAtTarget(this.createSyntheticPointerEvent(
+              'pointerleave',
+              pointermove,
+              leaveState,
+            ))
+          }
+
+          // Fire pointerenter for each element that was entered
+          for (const element of enteredElements) {
+            const enterState = {
+              path: [element],
+              offset: primaryPointerState.offset,
+              position: primaryPointerState.position,
+            }
+            this.dispatchEventAtTarget(this.createSyntheticPointerEvent(
+              'pointerenter',
+              pointermove,
+              enterState,
+            ))
+          }
         }
       }
 
