@@ -8,7 +8,7 @@ import {
   SyntheticPointerEvent
 } from '../events'
 import { Matrix, MutableMatrix, Point, Size } from '../math'
-import type { CrossPlatformCanvasElement } from '../platform'
+import type { CrossPlatformCanvasElement, IFrameScheduler } from '../platform'
 import { PlatformAdapter } from '../platform'
 import { Surface } from '../surface'
 import { HitTestEntry, HitTestResult } from './hit-test'
@@ -34,26 +34,29 @@ export class RenderCanvas
 
   private nativeEventBinding: DOMEventBinding
 
+  private frameScheduler: IFrameScheduler
+
   private handleRequestVisualUpdate = () => {
     this.frameDirty = true
-    PlatformAdapter.scheduleFrame()
+    this.frameScheduler.scheduleFrame()
   }
 
   private frameDirty = false
 
-  constructor() {
+  constructor(frameScheduler: IFrameScheduler = PlatformAdapter) {
     super()
+    this.frameScheduler = frameScheduler
     this.pipeline = new RenderPipeline(this.handleRequestVisualUpdate)
     this.pipeline.rootNode = this
-    const clearHandleEvents = PlatformAdapter.onFrame(this.handleNativeEvents)
-    const clearDrawFrame = PlatformAdapter.onFrame(this.drawFrame)
+    const clearHandleEvents = this.frameScheduler.onFrame(this.handleNativeEvents)
+    const clearDrawFrame = this.frameScheduler.onFrame(this.drawFrame)
     this.clearOnFrame = () => {
       clearHandleEvents()
       clearDrawFrame()
     }
     this.nativeEventBinding = new DOMEventBinding()
     this.nativeEventBinding.onEvents = () => {
-      PlatformAdapter.scheduleFrame()
+      this.frameScheduler.scheduleFrame()
     }
     this.eventManager = new SyntheticEventManager()
     this.eventManager.rootNode = this
