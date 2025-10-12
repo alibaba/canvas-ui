@@ -46,6 +46,11 @@ export interface NativeEventBinding {
    * 检查当前绑定是否已绑定
    */
   readonly bound: boolean
+
+  /**
+   * Canvas element to bind events to
+   */
+  el?: HTMLElement | undefined
 }
 
 /**
