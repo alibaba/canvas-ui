@@ -23,6 +23,7 @@ import {
   RenderPath,
   RenderChunk,
 } from './rendering'
+import type { IFrameScheduler } from './platform'
 
 export type ElementType =
   | 'View'
@@ -40,7 +41,7 @@ export type ElementType =
 export function createElement(type: 'View'): RenderView
 export function createElement(type: 'Chunk'): RenderChunk
 export function createElement(type: 'Flex'): RenderFlex
-export function createElement(type: 'Canvas'): RenderCanvas
+export function createElement(type: 'Canvas', frameScheduler?: IFrameScheduler): RenderCanvas
 export function createElement(type: 'Rect'): RenderRect
 export function createElement(type: 'RRect'): RenderRRect
 export function createElement(type: 'Circle'): RenderCircle
@@ -53,7 +54,7 @@ export function createElement(type: 'Image'): RenderImage
 // see https://github.com/microsoft/TypeScript/issues/14107
 export function createElement(type: ElementType): RenderObject
 
-export function createElement(type: ElementType): RenderObject {
+export function createElement(type: ElementType, frameScheduler?: IFrameScheduler): RenderObject {
   if (type === 'View') {
     return new RenderView()
   } if (type === 'Chunk') {
@@ -61,7 +62,7 @@ export function createElement(type: ElementType): RenderObject {
   } else if (type === 'Flex') {
     return new RenderFlex()
   } else if (type === 'Canvas') {
-    return new RenderCanvas()
+    return new RenderCanvas(frameScheduler)
   } else if (type === 'Rect') {
     return new RenderRect()
   } else if (type === 'RRect') {
