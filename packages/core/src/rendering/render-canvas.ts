@@ -9,7 +9,7 @@ import {
   SyntheticPointerEvent
 } from '../events'
 import { Matrix, MutableMatrix, Point, Size } from '../math'
-import type { CrossPlatformCanvasElement, IFrameScheduler } from '../platform'
+import type { CrossPlatformCanvasOrOffscreenCanvas, IFrameScheduler } from '../platform'
 import { PlatformAdapter } from '../platform'
 import { Surface } from '../surface'
 import { HitTestEntry, HitTestResult } from './hit-test'
@@ -44,9 +44,16 @@ export class RenderCanvas
 
   private frameDirty = false
 
+  /**
+   * Creates a new RenderCanvas
+   * @param frameScheduler - Frame scheduler for coordinating frame rendering (defaults to PlatformAdapter)
+   * @param binding - Native event binding for handling user input (defaults to DOMEventBinding)
+   * @param canvas - Optional canvas element for rendering. Can be HTMLCanvasElement for DOM or OffscreenCanvas for WebXR/workers
+   */
   constructor(
     frameScheduler: IFrameScheduler = PlatformAdapter,
-    binding?: NativeEventBinding
+    binding?: NativeEventBinding,
+    canvas?: CrossPlatformCanvasOrOffscreenCanvas
   ) {
     super()
     this.frameScheduler = frameScheduler
@@ -66,22 +73,25 @@ export class RenderCanvas
     this.eventManager.rootNode = this
     this.eventManager.binding = this.nativeEventBinding
 
+    this._el = canvas
+
     this.addEventListener('pointerover', this.handlePointerOver)
   }
 
   private handlePointerOver = (event: SyntheticPointerEvent<RenderObject>) => {
     assert(event.target)
-    if (!this._el) {
+    const el = this._el
+    if (!(el instanceof HTMLCanvasElement)) {
       return
     }
     for (let i = 0; i < event.path.length; i++) {
       const cursor = event.path[i].style.cursor
       if (cursor) {
-        this._el.style.cursor = cursor
+        el.style.cursor = cursor
         return
       }
     }
-    this._el.style.cursor = ''
+    el.style.cursor = ''
   }
 
   get dpr() {
@@ -107,24 +117,25 @@ export class RenderCanvas
   private _rasterizer?: Rasterizer
 
   private get surface() {
-    if (!this.el) {
+    if (!this._el) {
       return undefined
     }
-    return this._surface ??= Surface.makeCanvasSurface({ el: this.el })
+    return this._surface ??= Surface.makeCanvasSurface({ el: this._el })
   }
   private _surface?: Surface
 
   get el() {
     return this._el
   }
-  set el(value) {
+  set el(value: CrossPlatformCanvasOrOffscreenCanvas | undefined) {
     if (value === this._el) {
       return
     }
 
     // el 变更时，要清理相关成员
     this._el = value
-    this.nativeEventBinding.el = value
+    // NativeEventBinding only supports HTMLElement (for DOM event listeners)
+    this.nativeEventBinding.el = value instanceof HTMLCanvasElement ? value : undefined
     this._surface = undefined
     this._rasterizer = undefined
 
@@ -133,9 +144,15 @@ export class RenderCanvas
     this.markPaintDirty()
   }
 
-  private _el?: CrossPlatformCanvasElement
+  private _el?: CrossPlatformCanvasOrOffscreenCanvas
 
-  private drawFrame = () => {
+  /**
+   * Executes a single render frame, processing layout, paint, and compositing.
+   *
+   * This method is automatically called by the frame scheduler, but can also be
+   * called manually for headless rendering or custom frame scheduling scenarios.
+   */
+  drawFrame = () => {
 
     // enterFrame 不受 frameDirty 控制
     this.pipeline.flushEnterFrame()

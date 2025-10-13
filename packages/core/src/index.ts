@@ -23,7 +23,7 @@ import {
   RenderPath,
   RenderChunk,
 } from './rendering'
-import type { IFrameScheduler } from './platform'
+import type { CrossPlatformCanvasOrOffscreenCanvas, IFrameScheduler } from './platform'
 import type { NativeEventBinding } from './events'
 
 export type ElementType =
@@ -42,7 +42,7 @@ export type ElementType =
 export function createElement(type: 'View'): RenderView
 export function createElement(type: 'Chunk'): RenderChunk
 export function createElement(type: 'Flex'): RenderFlex
-export function createElement(type: 'Canvas', frameScheduler?: IFrameScheduler, binding?: NativeEventBinding): RenderCanvas
+export function createElement(type: 'Canvas', frameScheduler?: IFrameScheduler, binding?: NativeEventBinding, canvas?: CrossPlatformCanvasOrOffscreenCanvas): RenderCanvas
 export function createElement(type: 'Rect'): RenderRect
 export function createElement(type: 'RRect'): RenderRRect
 export function createElement(type: 'Circle'): RenderCircle
@@ -55,7 +55,7 @@ export function createElement(type: 'Image'): RenderImage
 // see https://github.com/microsoft/TypeScript/issues/14107
 export function createElement(type: ElementType): RenderObject
 
-export function createElement(type: ElementType, frameScheduler?: IFrameScheduler, binding?: NativeEventBinding): RenderObject {
+export function createElement(type: ElementType, frameScheduler?: IFrameScheduler, binding?: NativeEventBinding, canvas?: CrossPlatformCanvasOrOffscreenCanvas): RenderObject {
   if (type === 'View') {
     return new RenderView()
   } if (type === 'Chunk') {
@@ -63,7 +63,7 @@ export function createElement(type: ElementType, frameScheduler?: IFrameSchedule
   } else if (type === 'Flex') {
     return new RenderFlex()
   } else if (type === 'Canvas') {
-    return new RenderCanvas(frameScheduler, binding)
+    return new RenderCanvas(frameScheduler, binding, canvas)
   } else if (type === 'Rect') {
     return new RenderRect()
   } else if (type === 'RRect') {
