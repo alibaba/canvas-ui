@@ -5,6 +5,7 @@ import type {
 } from '../canvas'
 import { DebugFlags } from '../debug'
 import { Matrix, Rect, Size } from '../math'
+import { PlatformAdapter } from '../platform'
 import { Surface } from '../surface'
 
 export type RasterCacheKey = string
@@ -53,7 +54,10 @@ class SurfacePool {
     if (this.nodes.length > 0) {
       return this.nodes.pop()!
     } else {
-      return Surface.makeOffscreenCanvasSurface()
+      // Create a 1x1 OffscreenCanvas as placeholder - will be resized by caller
+      return Surface.makeCanvasSurface({
+        el: PlatformAdapter.createOffscreenCanvas(1, 1)
+      })
     }
   }
 
