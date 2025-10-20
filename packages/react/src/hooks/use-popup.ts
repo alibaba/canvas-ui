@@ -22,9 +22,13 @@ class PopupState<T extends RenderObject, U extends any = any> {
 
   private readonly handleFrameEnd = () => {
     if (this.target && this._binding?.el && this.target.attached) {
-      const nodeBounds = this.target.getBoundingClientRect()
-      const elBounds = this._binding.el.getBoundingClientRect()
-      this.bounds = Rect.shift(nodeBounds, Point.fromXY(elBounds.left, elBounds.top))
+      // getBoundingClientRect only exists on HTMLCanvasElement, not OffscreenCanvas
+      // Skip positioning for OffscreenCanvas (which has no DOM position)
+      if (this._binding.el instanceof HTMLCanvasElement) {
+        const nodeBounds = this.target.getBoundingClientRect()
+        const elBounds = this._binding.el.getBoundingClientRect()
+        this.bounds = Rect.shift(nodeBounds, Point.fromXY(elBounds.left, elBounds.top))
+      }
     }
   }
 

@@ -1,3 +1,4 @@
+export * from './bridge-event-binding'
 export * from './dom-event-binding'
 export * from './synthetic-event'
 export * from './synthetic-event-manager'

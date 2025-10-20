@@ -1,33 +1,34 @@
 import { assert } from '@canvas-ui/assert'
 import { Canvas, Canvas2DCanvas, Image } from '../canvas'
 import { Size } from '../math'
-import { PlatformAdapter, CrossPlatformCanvasElement } from '../platform'
+import { CrossPlatformCanvasOrOffscreenCanvas } from '../platform'
 import { Surface } from './surface'
 import { SurfaceFrame } from './surface-frame'
 
 export type CanvasSurfaceOptions = {
-  el?: CrossPlatformCanvasElement
+  el?: CrossPlatformCanvasOrOffscreenCanvas
 }
 
 export class CanvasSurface implements Surface {
 
   private _canvas?: Canvas
 
-  private _context?: CanvasRenderingContext2D
+  private _context?: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D
 
-  private el?: CrossPlatformCanvasElement
+  private el: CrossPlatformCanvasOrOffscreenCanvas
 
   private prevFrame?: SurfaceFrame
 
   constructor({
     el,
-  }: CanvasSurfaceOptions | undefined = {}) {
+  }: CanvasSurfaceOptions = {}) {
+    assert(el, 'CanvasSurface requires a canvas element')
     this.el = el
   }
 
   acquireFrame(size: Size): SurfaceFrame {
 
-    this.createOrUpdateEl(size)
+    this.ensureCanvasSize(size)
 
     const frame = new SurfaceFrame(
       this.canvas,
@@ -45,27 +46,26 @@ export class CanvasSurface implements Surface {
     // canvas 2d 没有 present
   }
 
-  private createOrUpdateEl(size: Size) {
-    if (!this.el) {
-      this.el = PlatformAdapter.createCanvas(size.width, size.height)
-    } else {
-      const shouldResizeCanvas =
-        !this.prevFrame
-        || !Size.eq(this.prevFrame.size, size)
+  /**
+   * Ensures the canvas is sized correctly for the given size.
+   * Resizes the canvas only if the size has changed since the last frame.
+   */
+  private ensureCanvasSize(size: Size) {
+    const shouldResize =
+      !this.prevFrame
+      || !Size.eq(this.prevFrame.size, size)
 
-      if (shouldResizeCanvas) {
-        PlatformAdapter.resizeCanvas(this.el, size.width, size.height)
-      }
+    if (shouldResize) {
+      this.el.width = size.width
+      this.el.height = size.height
     }
-
   }
 
   get context() {
     if (!this._context) {
-      assert(this.el)
       const context = this.el.getContext('2d')
-      assert(context)
-      this._context = context
+      assert(context, 'Failed to get 2d context from canvas')
+      this._context = context as CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D
     }
     return this._context
   }
@@ -82,8 +82,7 @@ export class CanvasSurface implements Surface {
   }
 
   toImage(sx?: number, sy?: number, sw?: number, sh?: number) {
-    assert(this.el)
-    assert(this.prevFrame)
+    assert(this.prevFrame, 'Cannot create image before first frame')
 
     if (typeof sx !== 'number') {
       return Image.from(

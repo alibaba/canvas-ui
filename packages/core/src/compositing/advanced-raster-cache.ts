@@ -4,6 +4,7 @@ import type {
 } from '../canvas'
 import { DebugFlags } from '../debug'
 import { Matrix, Size } from '../math'
+import { PlatformAdapter } from '../platform'
 import { Surface } from '../surface'
 import { RasterCache, RasterCacheEntry, RasterCacheKey, RasterCacheResult } from './raster-cache'
 
@@ -11,7 +12,9 @@ class Page {
 
   private pack = new ShelfPack(this.width, this.height)
 
-  private surface = Surface.makeOffscreenCanvasSurface()
+  private surface = Surface.makeCanvasSurface({
+    el: PlatformAdapter.createOffscreenCanvas(this.width, this.height)
+  })
 
   constructor(
     readonly id: number,
