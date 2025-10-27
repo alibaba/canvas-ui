@@ -82,10 +82,17 @@ export class RenderScrollView extends RenderSingleChild<RenderObject> {
     )
 
     if (!Point.eq(scrollDelta, Point.zero)) {
-      this.scrollOffset = Point.add(
+      const newOffset = Point.add(
         this._scrollOffset ?? Point.zero,
         scrollDelta,
       )
+
+      // Only prevent default if we actually scrolled (not at bounds)
+      const didScroll = this._setScrollOffset(newOffset)
+      if (didScroll) {
+        event.preventDefault()
+        this.dispatchScrollEvent()
+      }
     }
   }
 

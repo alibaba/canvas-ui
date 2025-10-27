@@ -123,7 +123,7 @@ export class DOMEventBinding implements NativeEventBinding {
    * 将 WheelEvent 事件并写入缓冲区
    */
   handleWheelEvent = (event: WheelEvent) => {
-    event.preventDefault()
+    // Don't prevent default yet - let Canvas UI decide
     this.wheelEvent = !DOMEventBinding.isFirefox
       ? event
       : new WheelEventSaveTarget(event)

@@ -1,4 +1,4 @@
-import type { NativeEventBinding, NativePointerEvents } from '../events/types'
+import type { NativeEventBinding, NativePointerEvents, SyntheticEventTarget } from '../events/types'
 
 /**
  * BridgeEventBinding - A NativeEventBinding implementation for programmatic event injection.
@@ -40,12 +40,48 @@ export class BridgeEventBinding implements NativeEventBinding {
 
   /**
    * No-op element setter - BridgeEventBinding doesn't use DOM elements
+   * Returns a fake element for testing
    */
   get el() {
+    // If no element is set, create a fake one
+    if (!this._el) {
+      this._el = {
+        setPointerCapture: () => {},
+        releasePointerCapture: () => {},
+      } as any
+    }
     return this._el
   }
   set el(value) {
     this._el = value
+  }
+
+  /**
+   * Stub - pointer capture not implemented for BridgeEventBinding
+   */
+  registerPointerCapture(_target: SyntheticEventTarget, _pointerId: number): void {
+    // No-op stub
+  }
+
+  /**
+   * Stub - pointer capture not implemented for BridgeEventBinding
+   */
+  unregisterPointerCapture(_pointerId: number): void {
+    // No-op stub
+  }
+
+  /**
+   * Stub - pointer capture not implemented for BridgeEventBinding
+   */
+  getCapturedTarget(_pointerId: number): SyntheticEventTarget | undefined {
+    return undefined
+  }
+
+  /**
+   * Stub - pointer capture not implemented for BridgeEventBinding
+   */
+  isPointerCaptured(_pointerId: number): boolean {
+    return false
   }
 
   /**
@@ -113,7 +149,7 @@ export class BridgeEventBinding implements NativeEventBinding {
     deltaY: number,
     deltaMode: number = 0
   ) {
-    // Create a synthetic WheelEvent-like object
+    // Create a synthetic WheelEvent-like object with mock preventDefault
     this.wheelEvent = {
       type: 'wheel',
       offsetX: x,
@@ -125,6 +161,12 @@ export class BridgeEventBinding implements NativeEventBinding {
       bubbles: true,
       cancelable: true,
       timeStamp: performance.now(),
+      preventDefault: () => {
+        // Mock preventDefault for testing
+      },
+      stopPropagation: () => {
+        // Mock stopPropagation for testing
+      },
     } as WheelEvent
 
     // Notify that events are available

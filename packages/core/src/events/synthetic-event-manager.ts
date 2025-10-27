@@ -105,6 +105,13 @@ export class SyntheticEventManager {
       screenY: wheelState.position.y,
     })
     this.dispatchEvent(event)
+
+    // Only prevent default on the native event if a Canvas UI component
+    // actually handled it (called preventDefault on the synthetic event)
+    const prevented = event.isDefaultPrevented()
+    if (prevented) {
+      wheelEvent.preventDefault()
+    }
   }
 
   private handlePointerEvents(pointerEvents: NativePointerEvents) {
