@@ -18,8 +18,11 @@ export class RenderCircle extends RenderShape {
   protected handleRadiusChange(value: StyleMap['radius']) {
     if (value) {
       this.radius = value
+      // Set size to diameter so bounding box is correct and consistent with Rect/RRect
+      this.size = { width: value * 2, height: value * 2 }
     } else {
       this.radius = 0
+      this.size = { width: 0, height: 0 }
     }
   }
 
