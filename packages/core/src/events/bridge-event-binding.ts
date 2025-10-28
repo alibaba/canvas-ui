@@ -24,6 +24,7 @@ export class BridgeEventBinding implements NativeEventBinding {
   private pointerEventsBuffer: NativePointerEvents = {}
   private wheelEvent?: WheelEvent
   private _el?: HTMLElement
+  private capturedPointers: Map<number, SyntheticEventTarget> = new Map()
 
   /**
    * Callback invoked when events are added to the buffer.
@@ -39,16 +40,12 @@ export class BridgeEventBinding implements NativeEventBinding {
   }
 
   /**
-   * No-op element setter - BridgeEventBinding doesn't use DOM elements
-   * Returns a fake element for testing
+   * Returns a minimal fake element for compatibility.
+   * BridgeEventBinding doesn't interact with DOM elements.
    */
   get el() {
-    // If no element is set, create a fake one
     if (!this._el) {
-      this._el = {
-        setPointerCapture: () => {},
-        releasePointerCapture: () => {},
-      } as any
+      this._el = {} as any
     }
     return this._el
   }
@@ -57,31 +54,31 @@ export class BridgeEventBinding implements NativeEventBinding {
   }
 
   /**
-   * Stub - pointer capture not implemented for BridgeEventBinding
+   * Register a pointer capture for a specific component
    */
-  registerPointerCapture(_target: SyntheticEventTarget, _pointerId: number): void {
-    // No-op stub
+  registerPointerCapture(target: SyntheticEventTarget, pointerId: number): void {
+    this.capturedPointers.set(pointerId, target)
   }
 
   /**
-   * Stub - pointer capture not implemented for BridgeEventBinding
+   * Unregister a pointer capture
    */
-  unregisterPointerCapture(_pointerId: number): void {
-    // No-op stub
+  unregisterPointerCapture(pointerId: number): void {
+    this.capturedPointers.delete(pointerId)
   }
 
   /**
-   * Stub - pointer capture not implemented for BridgeEventBinding
+   * Get the component that has captured a pointer
    */
-  getCapturedTarget(_pointerId: number): SyntheticEventTarget | undefined {
-    return undefined
+  getCapturedTarget(pointerId: number): SyntheticEventTarget | undefined {
+    return this.capturedPointers.get(pointerId)
   }
 
   /**
-   * Stub - pointer capture not implemented for BridgeEventBinding
+   * Check if a pointer is captured
    */
-  isPointerCaptured(_pointerId: number): boolean {
-    return false
+  isPointerCaptured(pointerId: number): boolean {
+    return this.capturedPointers.has(pointerId)
   }
 
   /**

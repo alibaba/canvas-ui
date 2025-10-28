@@ -10,6 +10,9 @@ export interface SyntheticEventTarget {
   dispatchEvent(event: SyntheticEvent<SyntheticEventTarget, UIEvent>): boolean
   removeEventListener(type: string, listener: SyntheticEventListener, options?: boolean | EventListenerOptions): void
   getDispatcher(): SyntheticEventDispatcher | undefined
+  setPointerCapture(pointerId: number): void
+  releasePointerCapture(pointerId: number): void
+  hasPointerCapture(pointerId: number): boolean
 }
 
 export type NativePointerEvents = Record<number, {

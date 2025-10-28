@@ -503,6 +503,7 @@ export abstract class RenderObject<ParentDataType extends ParentData = ParentDat
   protected updateOffsetAndSizeFromYogaNode() {
     assert(this._yogaNode, 'updateOffsetAndSizeFromYogaNode: _yogaNode 不存在')
     const layout = this._yogaNode.getComputedLayout()
+
     this.size = Size.fromWH(layout.width, layout.height)
 
     // 如果自己是布局边界，则不更新 offset，因为 offset 受 parent (例如 View) 控制
@@ -1164,6 +1165,40 @@ export abstract class RenderObject<ParentDataType extends ParentData = ParentDat
 
   getDispatcher() {
     return this._dispatcher
+  }
+
+  setPointerCapture(pointerId: number): void {
+    const rootNode = this._owner?.rootNode as unknown as HitTestRoot
+    if (rootNode) {
+      const manager = SyntheticEventManager.findInstance(rootNode)
+      const binding = manager?.binding as any
+      if (binding && 'registerPointerCapture' in binding) {
+        binding.registerPointerCapture(this, pointerId)
+      }
+    }
+  }
+
+  releasePointerCapture(pointerId: number): void {
+    const rootNode = this._owner?.rootNode as unknown as HitTestRoot
+    if (rootNode) {
+      const manager = SyntheticEventManager.findInstance(rootNode)
+      const binding = manager?.binding as any
+      if (binding && 'unregisterPointerCapture' in binding) {
+        binding.unregisterPointerCapture(pointerId)
+      }
+    }
+  }
+
+  hasPointerCapture(pointerId: number): boolean {
+    const rootNode = this._owner?.rootNode as unknown as HitTestRoot
+    if (rootNode) {
+      const manager = SyntheticEventManager.findInstance(rootNode)
+      const binding = manager?.binding as any
+      if (binding && 'getCapturedTarget' in binding) {
+        return binding.getCapturedTarget(pointerId) === this
+      }
+    }
+    return false
   }
 
   hitTestDisabled = false

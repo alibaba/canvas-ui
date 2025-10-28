@@ -12,6 +12,7 @@ import type {
   NativePointerEvents,
   SyntheticEventTarget
 } from './types'
+import type { BridgeEventBinding } from './bridge-event-binding'
 
 class PointerState {
 
@@ -154,9 +155,25 @@ export class SyntheticEventManager {
 
         const lastPath = primaryPointerState.path
 
-        const result = this.rootNode.hitTestFromRoot(primaryPointerState.position)
-        primaryPointerState.path = result.path.map(it => it.target)
-        primaryPointerState.offset = result.path[0].position
+        // Check if pointer is captured
+        const capturedTarget = this.getCapturedTarget(Number(pointerId))
+
+        if (capturedTarget) {
+          // Pointer is captured - send events directly to capturing target
+          primaryPointerState.path = [capturedTarget]
+          // Calculate offset in captured component's local coordinates
+          if ('globalToLocal' in capturedTarget && typeof capturedTarget.globalToLocal === 'function') {
+            primaryPointerState.offset = capturedTarget.globalToLocal(primaryPointerState.position)
+          } else {
+            primaryPointerState.offset = Point.zero
+          }
+        } else {
+          // Normal hit testing
+          const result = this.rootNode.hitTestFromRoot(primaryPointerState.position)
+          primaryPointerState.path = result.path.map(it => it.target)
+          primaryPointerState.offset = result.path[0].position
+        }
+
         const event = this.createSyntheticPointerEvent(
           'pointermove',
           pointermove,
@@ -229,9 +246,26 @@ export class SyntheticEventManager {
         primaryPointerState.isPointerDown = true
         primaryPointerState.position = Point.fromXY(pointerdown.offsetX, pointerdown.offsetY)
         assert(this.rootNode)
-        const result = this.rootNode.hitTestFromRoot(primaryPointerState.position)
-        primaryPointerState.path = result.path.map(it => it.target)
-        primaryPointerState.offset = result.path[0].position
+
+        // Check if pointer is captured
+        const capturedTarget = this.getCapturedTarget(Number(pointerId))
+
+        if (capturedTarget) {
+          // Pointer is captured - send events directly to capturing target
+          primaryPointerState.path = [capturedTarget]
+          // Calculate offset in captured component's local coordinates
+          if ('globalToLocal' in capturedTarget && typeof capturedTarget.globalToLocal === 'function') {
+            primaryPointerState.offset = capturedTarget.globalToLocal(primaryPointerState.position)
+          } else {
+            primaryPointerState.offset = Point.zero
+          }
+        } else {
+          // Normal hit testing
+          const result = this.rootNode.hitTestFromRoot(primaryPointerState.position)
+          primaryPointerState.path = result.path.map(it => it.target)
+          primaryPointerState.offset = result.path[0].position
+        }
+
         const event = this.createSyntheticPointerEvent(
           'pointerdown',
           pointerdown,
@@ -244,9 +278,26 @@ export class SyntheticEventManager {
         primaryPointerState.isPointerDown = false
         primaryPointerState.position = Point.fromXY(pointerup.offsetX, pointerup.offsetY)
         assert(this.rootNode)
-        const result = this.rootNode.hitTestFromRoot(primaryPointerState.position)
-        primaryPointerState.path = result.path.map(it => it.target)
-        primaryPointerState.offset = result.path[0].position
+
+        // Check if pointer is captured
+        const capturedTarget = this.getCapturedTarget(Number(pointerId))
+
+        if (capturedTarget) {
+          // Pointer is captured - send events directly to capturing target
+          primaryPointerState.path = [capturedTarget]
+          // Calculate offset in captured component's local coordinates
+          if ('globalToLocal' in capturedTarget && typeof capturedTarget.globalToLocal === 'function') {
+            primaryPointerState.offset = capturedTarget.globalToLocal(primaryPointerState.position)
+          } else {
+            primaryPointerState.offset = Point.zero
+          }
+        } else {
+          // Normal hit testing
+          const result = this.rootNode.hitTestFromRoot(primaryPointerState.position)
+          primaryPointerState.path = result.path.map(it => it.target)
+          primaryPointerState.offset = result.path[0].position
+        }
+
         const event = this.createSyntheticPointerEvent(
           'pointerup',
           pointerup,
@@ -309,6 +360,17 @@ export class SyntheticEventManager {
 
   private shouldPropagate(event: Pick<SyntheticEvent<SyntheticEventTarget, Event>, 'isPropagationStopped' | 'isImmediatePropagationStopped'>) {
     return !(event.isPropagationStopped() || event.isImmediatePropagationStopped())
+  }
+
+  /**
+   * Check if a pointer is captured and return the capturing target
+   */
+  private getCapturedTarget(pointerId: number): SyntheticEventTarget | undefined {
+    const binding = this.binding as BridgeEventBinding
+    if (binding && 'getCapturedTarget' in binding) {
+      return binding.getCapturedTarget(pointerId)
+    }
+    return undefined
   }
 
   private createSyntheticPointerEvent(
