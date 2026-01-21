@@ -1,4 +1,4 @@
-import { Point, Rect, RenderCanvas, RenderObject, SyntheticPointerEvent } from '@canvas-ui/core'
+import { Point, Rect, RenderRoot, RenderObject, SyntheticPointerEvent } from '@canvas-ui/core'
 import { assert } from '@canvas-ui/assert'
 import { useEffect, useState } from 'react'
 
@@ -6,7 +6,7 @@ class PopupState<T extends RenderObject, U extends any = any> {
 
   hideTriggerOnOpen?: boolean
 
-  private set binding(value: RenderCanvas | undefined) {
+  private set binding(value: RenderRoot | undefined) {
     if (this._binding === value) {
       return
     }
@@ -18,7 +18,7 @@ class PopupState<T extends RenderObject, U extends any = any> {
       this._binding.addEventListener('frameEnd', this.handleFrameEnd)
     }
   }
-  private _binding?: RenderCanvas
+  private _binding?: RenderRoot
 
   private readonly handleFrameEnd = () => {
     if (this.target && this._binding?.el && this.target.attached) {
@@ -40,7 +40,7 @@ class PopupState<T extends RenderObject, U extends any = any> {
     }
     this._visible = value
     if (this._visible) {
-      this.binding = this.target?.owner?.rootNode as RenderCanvas | undefined
+      this.binding = this.target?.owner?.rootNode as RenderRoot | undefined
     }
     if (this.hideTriggerOnOpen) {
       assert(this.target)

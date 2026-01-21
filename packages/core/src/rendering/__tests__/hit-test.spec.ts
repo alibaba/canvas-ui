@@ -1,4 +1,4 @@
-import { HitTestResult, RenderCanvas, RenderSingleChild, RenderView } from '../'
+import { HitTestResult, RenderRoot, RenderSingleChild, RenderView } from '../'
 import { Point, Size, Rect } from '../../math'
 import { TestRenderObject } from './test-render-object'
 
@@ -8,20 +8,20 @@ describe('HitTest', () => {
     //
     // 构造结构
     //         (x, y, w, h)
-    //  canvas (0, 0, 0, 0) RenderCanvas
+    //  canvas (0, 0, 0, 0) RenderRoot
     //   \
     //    root (0, 0, 0, 0) 逻辑根节点
     //     \
     //      a (0, 100, 100, 100)
     //     / \
     //    b   c
-    //   
+    //
     //   其中
     //      b (0, 0, 100, 80)
     //      c (0, 70, 100, 80) - 与 b 在 y 轴有重叠
     //
 
-    const canvas = new RenderCanvas()
+    const canvas = new RenderRoot()
     canvas.prepareInitialFrame()
     canvas.offstage = false
     canvas.dpr = 2

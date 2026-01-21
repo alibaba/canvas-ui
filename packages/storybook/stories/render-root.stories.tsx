@@ -2,7 +2,7 @@ import { createElement, Point, Size } from '@canvas-ui/core'
 import type { StoryObj } from '@storybook/react'
 import React, { useEffect, useRef } from 'react'
 
-export const RenderCanvasTest: StoryObj<React.FC> = () => {
+export const RenderRootTest: StoryObj<React.FC> = () => {
 
   const canvasElRef = useRef<HTMLCanvasElement | null>(null)
   const prevFrameButtonRef = useRef<HTMLButtonElement | null>(null)
@@ -18,11 +18,11 @@ export const RenderCanvasTest: StoryObj<React.FC> = () => {
       const canvasRect = canvasElRef.current.getBoundingClientRect()
       const surfaceSize = Size.fromWH(canvasRect.width, canvasRect.height)
 
-      const canvas = createElement('Canvas')
-      canvas.prepareInitialFrame()
-      canvas.el = canvasElRef.current
-      canvas.size = surfaceSize
-      canvas.dpr = devicePixelRatio
+      const root = createElement('Canvas')
+      root.prepareInitialFrame()
+      root.el = canvasElRef.current
+      root.size = surfaceSize
+      root.dpr = devicePixelRatio
 
       //
       // 构造如下结构
@@ -52,7 +52,7 @@ export const RenderCanvasTest: StoryObj<React.FC> = () => {
         // 0: initial frame
         () => {
           a.offset = Point.zero
-          canvas.child = a
+          root.child = a
         },
         () => {
           a.offset = Point.fromXY(50, 50)
@@ -71,7 +71,7 @@ export const RenderCanvasTest: StoryObj<React.FC> = () => {
           d.repaintBoundary = true
         },
         () => {
-          canvas.child = undefined
+          root.child = undefined
         }
       ]
 
@@ -111,10 +111,10 @@ export const RenderCanvasTest: StoryObj<React.FC> = () => {
   )
 }
 
-RenderCanvasTest.storyName = 'RenderCanvas'
+RenderRootTest.storyName = 'RenderRoot'
 
 export default {
   title: 'core/rendering',
-  component: RenderCanvasTest,
+  component: RenderRootTest,
   decorators: [(Story: React.ComponentType) => <div style={{ backgroundColor: '#efefef', width: '100%', height: '100vh' }}><Story /></div>],
 }

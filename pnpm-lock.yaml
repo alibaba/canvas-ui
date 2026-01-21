@@ -185,58 +185,6 @@ importers:
         specifier: ^7.0.0
         version: 7.0.0(@types/node@16.0.0)(jiti@1.21.7)(terser@5.39.0)(yaml@2.7.1)
 
-  examples/vite-project:
-    dependencies:
-      '@canvas-ui/assert':
-        specifier: ^2.0.0
-        version: 2.0.0
-      '@canvas-ui/core':
-        specifier: ^2.0.0
-        version: 2.0.0
-      '@canvas-ui/react':
-        specifier: ^2.0.0
-        version: 2.0.0(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      react:
-        specifier: ^19.1.0
-        version: 19.1.0
-      react-dom:
-        specifier: ^19.1.0
-        version: 19.1.0(react@19.1.0)
-    devDependencies:
-      '@eslint/js':
-        specifier: ^9.29.0
-        version: 9.30.0
-      '@types/react':
-        specifier: ^19.1.8
-        version: 19.1.8
-      '@types/react-dom':
-        specifier: ^19.1.6
-        version: 19.1.6(@types/react@19.1.8)
-      '@vitejs/plugin-react':
-        specifier: ^4.5.2
-        version: 4.6.0(vite@7.0.0(@types/node@16.0.0)(jiti@1.21.7)(terser@5.39.0)(yaml@2.7.1))
-      eslint:
-        specifier: ^9.29.0
-        version: 9.30.0(jiti@1.21.7)
-      eslint-plugin-react-hooks:
-        specifier: ^5.2.0
-        version: 5.2.0(eslint@9.30.0(jiti@1.21.7))
-      eslint-plugin-react-refresh:
-        specifier: ^0.4.20
-        version: 0.4.20(eslint@9.30.0(jiti@1.21.7))
-      globals:
-        specifier: ^16.2.0
-        version: 16.2.0
-      typescript:
-        specifier: ~5.8.3
-        version: 5.8.3
-      typescript-eslint:
-        specifier: ^8.34.1
-        version: 8.35.0(eslint@9.30.0(jiti@1.21.7))(typescript@5.8.3)
-      vite:
-        specifier: ^7.0.0
-        version: 7.0.0(@types/node@16.0.0)(jiti@1.21.7)(terser@5.39.0)(yaml@2.7.1)
-
   packages/animation:
     dependencies:
       '@canvas-ui/assert':

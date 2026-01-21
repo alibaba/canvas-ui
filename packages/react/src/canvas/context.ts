@@ -1,4 +1,4 @@
-import type { RenderCanvas } from '@canvas-ui/core'
+import type { RenderRoot } from '@canvas-ui/core'
 import { createContext, useContext } from 'react'
 import type { View } from '..'
 
@@ -7,7 +7,7 @@ export type CanvasState = {
   top: number
   width: number
   height: number
-  binding: RenderCanvas
+  binding: RenderRoot
   rootView: View
 }
 

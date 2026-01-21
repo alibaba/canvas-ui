@@ -1,4 +1,4 @@
-import { RenderCanvas, RenderPipeline, RenderView } from '..'
+import { RenderRoot, RenderPipeline, RenderView } from '..'
 import { Rect } from '../../math'
 import { TestRenderObject } from './test-render-object'
 
@@ -8,9 +8,9 @@ import { TestRenderObject } from './test-render-object'
  *        a (root) - pipeline
  *       / \
  *      b   c
- *    /  \   \ 
+ *    /  \   \
  *   d    e   f (leaves)
- * 
+ *
  */
 const makeTestTree = (owner?: RenderPipeline) => {
 
@@ -194,7 +194,7 @@ describe('RenderView', () => {
   })
 
   test('能够消费 viewport', () => {
-    const root = new RenderCanvas()
+    const root = new RenderRoot()
     root.prepareInitialFrame()
     const a = new RenderView()
     root.child = a

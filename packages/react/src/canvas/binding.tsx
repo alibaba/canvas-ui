@@ -1,10 +1,10 @@
-import { createElement, RenderCanvas } from '@canvas-ui/core'
+import { createElement, RenderRoot } from '@canvas-ui/core'
 import React, { ReactNode, useEffect, useLayoutEffect, useMemo, useState } from 'react'
 import { render } from '../renderer'
 import { CanvasState, CanvasStateContext } from './context'
 
 export type UseBindingOptions = {
-  binding: RenderCanvas
+  binding: RenderRoot
   left: number
   top: number
   width: number

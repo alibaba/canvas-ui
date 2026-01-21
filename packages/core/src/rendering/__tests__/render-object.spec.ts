@@ -1,4 +1,4 @@
-import { RenderCanvas, RenderPipeline, RenderSingleChild } from '../'
+import { RenderRoot, RenderPipeline, RenderSingleChild } from '../'
 import { Point, Rect, Size } from '../../math'
 import { TestRenderObject } from './test-render-object'
 import { TestStyleRenderObject } from './test-style-render-object'
@@ -59,7 +59,7 @@ describe('RenderObject', () => {
     //
     // 构造结构
     //
-    //  canvas (0, 0) RenderCanvas
+    //  canvas (0, 0) RenderRoot
     //   \
     //    root (0, 0) 逻辑根节点
     //     \
@@ -69,7 +69,7 @@ describe('RenderObject', () => {
     //         \
     //          c (0, 0)
 
-    const canvas = new RenderCanvas()
+    const canvas = new RenderRoot()
     canvas.prepareInitialFrame()
     canvas.dpr = 2
 
@@ -119,7 +119,7 @@ describe('RenderObject', () => {
     //
     // 构造结构
     //
-    //  canvas (0, 0) RenderCanvas
+    //  canvas (0, 0) RenderRoot
     //   \
     //    root (0, 0) 逻辑根节点
     //     \
@@ -129,7 +129,7 @@ describe('RenderObject', () => {
     //         \
     //          c (0, 0)
 
-    const canvas = new RenderCanvas()
+    const canvas = new RenderRoot()
     canvas.prepareInitialFrame()
     canvas.dpr = 2
 
@@ -179,7 +179,7 @@ describe('RenderObject', () => {
     //
     // 构造结构
     //
-    //  canvas (0, 0) RenderCanvas
+    //  canvas (0, 0) RenderRoot
     //   \
     //    root (0, 0) 逻辑根节点
     //     \
@@ -189,7 +189,7 @@ describe('RenderObject', () => {
     //         \
     //          c (0, 0) size=(10, 10)
 
-    const canvas = new RenderCanvas()
+    const canvas = new RenderRoot()
     canvas.prepareInitialFrame()
     canvas.dpr = 2
 
@@ -222,7 +222,7 @@ describe('RenderObject', () => {
   })
 
   test('onPaint callback', () => {
-    const canvas = new RenderCanvas()
+    const canvas = new RenderRoot()
     canvas.prepareInitialFrame()
     canvas.dpr = 2
 

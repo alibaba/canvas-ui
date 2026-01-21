@@ -1,4 +1,4 @@
-import { RenderCanvas, RenderPipeline, RenderSingleChild } from '..'
+import { RenderRoot, RenderPipeline, RenderSingleChild } from '..'
 import { Rect } from '../../math'
 import { TestRenderObject } from './test-render-object'
 
@@ -10,7 +10,7 @@ import { TestRenderObject } from './test-render-object'
  *   b
  *    \
  *     c (leaf)
- * 
+ *
  */
 const makeTree = (owner?: RenderPipeline) => {
   const a = new RenderSingleChild()
@@ -192,7 +192,7 @@ describe('RenderSingleChild', () => {
   })
 
   test('能够消费 viewport', () => {
-    const root = new RenderCanvas()
+    const root = new RenderRoot()
     root.prepareInitialFrame()
     const a = new RenderSingleChild()
     root.child = a

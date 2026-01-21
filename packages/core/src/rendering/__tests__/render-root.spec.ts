@@ -1,11 +1,11 @@
-import { RenderSingleChild, RenderCanvas } from '..'
+import { RenderSingleChild, RenderRoot } from '..'
 
-describe('RenderCanvas', () => {
+describe('RenderRoot', () => {
 
-  let root: RenderCanvas
+  let root: RenderRoot
 
   beforeEach(() => {
-    root = new RenderCanvas()
+    root = new RenderRoot()
   })
 
   afterEach(() => {
@@ -13,7 +13,7 @@ describe('RenderCanvas', () => {
   })
 
   test('dispose', () => {
-    const c = new RenderCanvas()
+    const c = new RenderRoot()
     c.dispose()
     expect(c.attached).toBe(false)
   })
@@ -38,17 +38,17 @@ describe('RenderCanvas', () => {
   })
 
   test('prepareInitialFrame: 有 child', () => {
-    const canvas = new RenderCanvas()
+    const root = new RenderRoot()
     const child1 = new RenderSingleChild()
-    canvas.child = child1
-    canvas.prepareInitialFrame()
+    root.child = child1
+    root.prepareInitialFrame()
     expect(child1._layoutDirty).toBe(true)
-    expect(canvas.owner?.debugLayoutDirtyObjects[0]).toBe(canvas)
-    expect(canvas.owner?.debugLayoutDirtyObjects).toHaveLength(1)
+    expect(root.owner?.debugLayoutDirtyObjects[0]).toBe(root)
+    expect(root.owner?.debugLayoutDirtyObjects).toHaveLength(1)
     jest.runAllTimers()
-    expect(canvas._layoutDirty).toBe(false)
+    expect(root._layoutDirty).toBe(false)
     expect(child1._layoutDirty).toBe(false)
-    canvas.dispose()
+    root.dispose()
   })
 
   test('应只绘制一次', () => {

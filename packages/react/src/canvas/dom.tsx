@@ -1,4 +1,4 @@
-import { createElement, RenderCanvas, Size } from '@canvas-ui/core'
+import { createElement, RenderRoot, Size } from '@canvas-ui/core'
 import React, { CSSProperties, memo, ReactNode, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import useMeasure, { RectReadOnly } from 'react-use-measure'
 import type { ViewProps } from '../elements'
@@ -94,7 +94,7 @@ function Binding({
   children,
 }: BindingProps) {
 
-  const bindingRef = useRef<RenderCanvas>(null)
+  const bindingRef = useRef<RenderRoot>(null)
 
   const [binding] = useState(() => {
     const binding = createElement('Canvas')
@@ -142,11 +142,11 @@ function Binding({
 
 type Store = {
   canvasui?: {
-    roots: Set<RenderCanvas>
+    roots: Set<RenderRoot>
   }
 }
 
-function saveRoot(root: RenderCanvas, save: boolean) {
+function saveRoot(root: RenderRoot, save: boolean) {
   const store = window as unknown as Store
   if (!store.canvasui) {
     store.canvasui = {
