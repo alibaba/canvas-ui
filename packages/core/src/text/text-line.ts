@@ -25,7 +25,7 @@ export class TextLine {
   paint(canvas: Canvas, offset: Point) {
     const paintOffset = Point.add(this.offset, offset)
     const { textStrokeWidth, textStrokeColor } = this.owner.computedStyle
-    if (textStrokeWidth && textStrokeColor) {
+    if (textStrokeWidth !== undefined && textStrokeWidth > 0 && textStrokeColor) {
       const strokePaint: Paint = {
         style: PaintStyle.stroke,
         strokeWidth: textStrokeWidth,
