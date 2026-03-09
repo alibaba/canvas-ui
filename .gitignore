@@ -122,3 +122,10 @@ packages/**/dist/
 .rollup.cache
 
 *storybook.log
+
+# Storybook build output
+packages/storybook/storybook-static/
+
+# Playwright
+packages/storybook/vrt/test-results/
+packages/storybook/playwright-report/

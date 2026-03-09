@@ -8,6 +8,8 @@
     "dev:docs": "pushd packages/docs && pnpm dev; popd",
     "build:docs": "sh ./tools/build-docs.sh",
     "build:storybook": "pushd packages/storybook && pnpm build-storybook; popd",
+    "test:vrt": "pushd packages/storybook && pnpm test:vrt; popd",
+    "test:vrt:update": "pushd packages/storybook && pnpm test:vrt:update; popd",
     "build": "sh ./tools/build.sh",
     "build:api": "pnpm build && mkdir -p docs/api && typedoc --exclude \"dist/\" --out docs/api --entryPointStrategy packages .",
     "lint": "eslint --cache packages/core/src packages/react/src",
