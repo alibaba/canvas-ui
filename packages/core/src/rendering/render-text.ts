@@ -48,6 +48,9 @@ export class RenderText extends RenderBox {
     if (this.style.has('textAlign')) {
       builder.style.textAlign = this.style.textAlign
     }
+    if (this.style.has('textStroke')) {
+      builder.style.textStroke = this.style.textStroke
+    }
     if (this.style.has('textStrokeWidth')) {
       builder.style.textStrokeWidth = this.style.textStrokeWidth
     }
@@ -71,6 +74,7 @@ export class RenderText extends RenderBox {
     this.style.on('color', this.handleTextStyleChange, this)
     this.style.on('maxLines', this.handleTextStyleChange, this)
     this.style.on('textAlign', this.handleTextAlignChange, this)
+    this.style.on('textStroke', this.handleTextStyleChange, this)
     this.style.on('textStrokeWidth', this.handleTextStyleChange, this)
     this.style.on('textStrokeColor', this.handleTextStyleChange, this)
     this.style.on('maxWidth', this.handleMaxWidthChange, this) // 无论是否是 Flex 子节点，都支持 maxWidth

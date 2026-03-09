@@ -49,6 +49,7 @@ export class ParagraphStyle {
   textShadow?: Property.TextShadow
   maxLines?: number
   textAlign?: Property.TextAlign
+  textStroke?: string
   textStrokeWidth?: number
   textStrokeColor?: Property.Color
 
@@ -76,6 +77,19 @@ export class ParagraphStyle {
 
     const textAlign = this.textAlign ?? defaultStyle.textAlign
 
+    // Parse textStroke shorthand (e.g. "2px red"), individual properties take precedence
+    let textStrokeWidth = this.textStrokeWidth
+    let textStrokeColor: string | undefined = this.textStrokeColor
+    if (this.textStroke) {
+      const parsed = ParagraphStyle.parseTextStroke(this.textStroke)
+      if (textStrokeWidth === undefined) {
+        textStrokeWidth = parsed.width
+      }
+      if (textStrokeColor === undefined) {
+        textStrokeColor = parsed.color
+      }
+    }
+
     return {
       font,
       lineHeight,
@@ -83,9 +97,27 @@ export class ParagraphStyle {
       maxLines,
       textOverflow: defaultStyle.textOverflow,
       textAlign,
-      textStrokeWidth: this.textStrokeWidth,
-      textStrokeColor: this.textStrokeColor,
+      textStrokeWidth,
+      textStrokeColor,
     }
+  }
+
+  /**
+   * Parse a `-webkit-text-stroke` shorthand value into width and color.
+   * Format: `<line-width> <color>` e.g. "2px red", "1px #FF0000"
+   */
+  static parseTextStroke(value: string): { width?: number; color?: string } {
+    const parts = value.trim().split(/\s+/)
+    let width: number | undefined
+    let color: string | undefined
+    for (const part of parts) {
+      if (width === undefined && /^[\d.]+px$/.test(part)) {
+        width = parseFloat(part)
+      } else {
+        color = color ? `${color} ${part}` : part
+      }
+    }
+    return { width, color }
   }
 }
 

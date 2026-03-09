@@ -93,6 +93,58 @@ describe('ParagraphStyle', () => {
       expect(computed.textStrokeWidth).toBeUndefined()
       expect(computed.textStrokeColor).toBe('red')
     })
+
+    it('textStroke shorthand', () => {
+      const style = new ParagraphStyle()
+      style.textStroke = '2px red'
+      const computed = style.computedStyle
+      expect(computed.textStrokeWidth).toBe(2)
+      expect(computed.textStrokeColor).toBe('red')
+    })
+
+    it('textStroke shorthand with hex color', () => {
+      const style = new ParagraphStyle()
+      style.textStroke = '1px #FF0000'
+      const computed = style.computedStyle
+      expect(computed.textStrokeWidth).toBe(1)
+      expect(computed.textStrokeColor).toBe('#FF0000')
+    })
+
+    it('textStroke shorthand with fractional width', () => {
+      const style = new ParagraphStyle()
+      style.textStroke = '0.5px blue'
+      const computed = style.computedStyle
+      expect(computed.textStrokeWidth).toBe(0.5)
+      expect(computed.textStrokeColor).toBe('blue')
+    })
+
+    it('individual properties override textStroke shorthand', () => {
+      const style = new ParagraphStyle()
+      style.textStroke = '2px red'
+      style.textStrokeWidth = 5
+      style.textStrokeColor = 'blue'
+      const computed = style.computedStyle
+      expect(computed.textStrokeWidth).toBe(5)
+      expect(computed.textStrokeColor).toBe('blue')
+    })
+
+    it('textStrokeWidth overrides shorthand width only', () => {
+      const style = new ParagraphStyle()
+      style.textStroke = '2px red'
+      style.textStrokeWidth = 5
+      const computed = style.computedStyle
+      expect(computed.textStrokeWidth).toBe(5)
+      expect(computed.textStrokeColor).toBe('red')
+    })
+
+    it('textStrokeColor overrides shorthand color only', () => {
+      const style = new ParagraphStyle()
+      style.textStroke = '2px red'
+      style.textStrokeColor = 'blue'
+      const computed = style.computedStyle
+      expect(computed.textStrokeWidth).toBe(2)
+      expect(computed.textStrokeColor).toBe('blue')
+    })
   })
 })
 
