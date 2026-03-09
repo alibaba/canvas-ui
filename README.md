@@ -93,3 +93,39 @@ $ pnpm test
 $ pnpm build
 
 ```
+
+# Visual Regression Testing (VRT)
+
+This project uses [Playwright](https://playwright.dev/) for visual regression testing against Storybook stories, ensuring UI components maintain their visual appearance across changes.
+
+## Running VRT
+
+```bash
+# Build Storybook first (required before running VRT)
+$ pnpm build:storybook
+
+# Run VRT tests
+$ pnpm test:vrt
+
+# Update baseline screenshots (after intentional visual changes)
+$ pnpm test:vrt:update
+```
+
+## How It Works
+
+- VRT tests are located in `packages/storybook/vrt/`
+- Baseline screenshots are stored in `packages/storybook/vrt/__snapshots__/`
+- Tests automatically start a local HTTP server to serve the built Storybook
+- Each test navigates to a story's iframe URL, waits for canvas rendering, and compares a screenshot against the baseline
+- A `maxDiffPixelRatio` of `0.01` (1% of pixels) is used as the threshold — screenshots with more than 1% pixel differences will fail the test
+
+## Adding New VRT Cases
+
+To add a new story to VRT coverage, add an entry to the `stories` array in `packages/storybook/vrt/vrt.spec.ts`:
+
+```ts
+{ id: 'category--story-id', name: 'screenshot-name' }
+```
+
+The `id` must match the Storybook story ID (visible in Storybook's URL or `storybook-static/index.json`). Then run `pnpm test:vrt:update` to generate the baseline screenshot.
+

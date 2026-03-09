@@ -19,6 +19,7 @@ export default defineConfig({
     },
   ],
   webServer: {
+    // -s: silent mode, suppresses log output for cleaner test runs
     command: 'npx http-server storybook-static -p 6006 -s',
     url: 'http://localhost:6006',
     reuseExistingServer: !process.env.CI,

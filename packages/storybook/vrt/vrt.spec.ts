@@ -36,7 +36,8 @@ for (const story of stories) {
   test(`VRT: ${story.name}`, async ({ page }) => {
     await page.goto(`/iframe.html?id=${story.id}&viewMode=story`)
 
-    // Wait for canvas rendering to settle (stories use setTimeout 100ms internally)
+    // Stories use setTimeout(100ms) internally for canvas initialization;
+    // wait 500ms (5x) to ensure rendering fully settles across all stories
     await page.waitForTimeout(500)
 
     await expect(page).toHaveScreenshot(`${story.name}.png`, {
