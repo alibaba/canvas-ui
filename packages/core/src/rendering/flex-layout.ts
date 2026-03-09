@@ -180,7 +180,8 @@ export class FlexNode {
   private _alignContent: FlexAlign = ALIGN_FLEX_START
   private _alignSelf: FlexAlign = ALIGN_AUTO
   private _display: Display = DISPLAY_FLEX
-  // @ts-expect-error stored for potential future use (currently write-only)
+  // @ts-expect-error Property is set by setOverflow() but not yet read by the layout engine.
+  // Kept for API compatibility with Yoga; overflow behavior may be implemented in the future.
   private _overflow: Overflow = OVERFLOW_VISIBLE
   private _positionType: PositionType = POSITION_TYPE_RELATIVE
 
