@@ -63,6 +63,8 @@ type TextStyles = {
   color?: StandardProperties['color']
   maxLines?: number
   textAlign?: StandardProperties['textAlign']
+  textStrokeWidth?: number
+  textStrokeColor?: StandardProperties['color']
 }
 
 type BoxDecorationStyles = {

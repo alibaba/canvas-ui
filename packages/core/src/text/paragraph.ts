@@ -18,6 +18,8 @@ type ComputedParagraphStyle = {
   textOverflow: string
   textShadow?: Property.TextShadow
   textAlign: Property.TextAlign
+  textStrokeWidth?: number
+  textStrokeColor?: string
 }
 
 export class ParagraphStyle {
@@ -47,6 +49,8 @@ export class ParagraphStyle {
   textShadow?: Property.TextShadow
   maxLines?: number
   textAlign?: Property.TextAlign
+  textStrokeWidth?: number
+  textStrokeColor?: Property.Color
 
   get computedStyle(): ComputedParagraphStyle {
 
@@ -79,6 +83,8 @@ export class ParagraphStyle {
       maxLines,
       textOverflow: defaultStyle.textOverflow,
       textAlign,
+      textStrokeWidth: this.textStrokeWidth,
+      textStrokeColor: this.textStrokeColor,
     }
   }
 }
