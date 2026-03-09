@@ -4,7 +4,9 @@
   "description": "",
   "scripts": {
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "test:vrt": "playwright test",
+    "test:vrt:update": "playwright test --update-snapshots"
   },
   "keywords": [],
   "author": "",
@@ -14,12 +16,14 @@
     "@canvas-ui/assert": "workspace:*",
     "@canvas-ui/core": "workspace:*",
     "@canvas-ui/react": "workspace:*",
+    "@playwright/test": "^1.58.2",
     "@storybook/addon-essentials": "^8.6.12",
     "@storybook/addon-interactions": "^8.6.12",
     "@storybook/blocks": "^8.6.12",
     "@storybook/react": "^8.6.12",
     "@storybook/react-vite": "^8.6.12",
     "@storybook/test": "^8.6.12",
+    "http-server": "^14.1.1",
     "motion": "^12.7.4",
     "prop-types": "^15.8.1",
     "storybook": "^8.6.12"
