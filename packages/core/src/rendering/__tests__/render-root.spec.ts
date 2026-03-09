@@ -1,4 +1,4 @@
-import { RenderSingleChild, RenderRoot } from '..'
+import { RenderSingleChild, RenderRoot, RenderCanvas } from '..'
 
 describe('RenderRoot', () => {
 
@@ -53,6 +53,13 @@ describe('RenderRoot', () => {
 
   test('应只绘制一次', () => {
     //
+  })
+
+  test('deprecated RenderCanvas alias', () => {
+    expect(RenderCanvas).toBe(RenderRoot)
+    const instance = new RenderCanvas()
+    expect(instance).toBeInstanceOf(RenderRoot)
+    instance.dispose()
   })
 
 })

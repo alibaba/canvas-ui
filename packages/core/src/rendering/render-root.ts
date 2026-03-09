@@ -235,3 +235,13 @@ export class RenderRoot
   }
 
 }
+
+/**
+ * @deprecated Use {@link RenderRoot} instead
+ */
+export const RenderCanvas = RenderRoot
+
+/**
+ * @deprecated Use {@link RenderRoot} instead
+ */
+export type RenderCanvas = RenderRoot
