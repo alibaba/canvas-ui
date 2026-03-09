@@ -104,19 +104,20 @@ export class ParagraphStyle {
 
   /**
    * Parse a `-webkit-text-stroke` shorthand value into width and color.
-   * Format: `<line-width> <color>` e.g. "2px red", "1px #FF0000"
+   * Format: `<line-width> <color>` e.g. "2px red", "1px #FF0000", "red 2px"
    */
   static parseTextStroke(value: string): { width?: number; color?: string } {
     const parts = value.trim().split(/\s+/)
     let width: number | undefined
-    let color: string | undefined
+    const colorParts: string[] = []
     for (const part of parts) {
-      if (width === undefined && /^[\d.]+px$/.test(part)) {
+      if (width === undefined && /^\d+(\.\d+)?px$/.test(part)) {
         width = parseFloat(part)
       } else {
-        color = color ? `${color} ${part}` : part
+        colorParts.push(part)
       }
     }
+    const color = colorParts.length > 0 ? colorParts.join(' ') : undefined
     return { width, color }
   }
 }

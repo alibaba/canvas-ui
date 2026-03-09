@@ -118,6 +118,14 @@ describe('ParagraphStyle', () => {
       expect(computed.textStrokeColor).toBe('blue')
     })
 
+    it('textStroke shorthand with color before width', () => {
+      const style = new ParagraphStyle()
+      style.textStroke = 'red 2px'
+      const computed = style.computedStyle
+      expect(computed.textStrokeWidth).toBe(2)
+      expect(computed.textStrokeColor).toBe('red')
+    })
+
     it('individual properties override textStroke shorthand', () => {
       const style = new ParagraphStyle()
       style.textStroke = '2px red'
