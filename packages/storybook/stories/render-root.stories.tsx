@@ -2,7 +2,7 @@ import { createElement, Point, Size } from '@canvas-ui/core'
 import type { StoryObj } from '@storybook/react'
 import React, { useEffect, useRef } from 'react'
 
-export const RenderCanvasTest: StoryObj<React.FC> = () => {
+export const RenderRootTest: StoryObj<React.FC> = () => {
 
   const canvasElRef = useRef<HTMLCanvasElement | null>(null)
   const prevFrameButtonRef = useRef<HTMLButtonElement | null>(null)
@@ -111,10 +111,10 @@ export const RenderCanvasTest: StoryObj<React.FC> = () => {
   )
 }
 
-RenderCanvasTest.storyName = 'RenderCanvas'
+RenderRootTest.storyName = 'RenderRoot'
 
 export default {
   title: 'core/rendering',
-  component: RenderCanvasTest,
+  component: RenderRootTest,
   decorators: [(Story: React.ComponentType) => <div style={{ backgroundColor: '#efefef', width: '100%', height: '100vh' }}><Story /></div>],
 }

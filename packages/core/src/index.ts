@@ -10,7 +10,7 @@ export * from './rendering'
 export * from './surface'
 
 import {
-  RenderCanvas,
+  RenderRoot,
   RenderCircle,
   RenderFlex,
   RenderImage,
@@ -41,7 +41,7 @@ export type ElementType =
 export function createElement(type: 'View'): RenderView
 export function createElement(type: 'Chunk'): RenderChunk
 export function createElement(type: 'Flex'): RenderFlex
-export function createElement(type: 'Canvas', frameScheduler?: IFrameScheduler): RenderCanvas
+export function createElement(type: 'Canvas', frameScheduler?: IFrameScheduler): RenderRoot
 export function createElement(type: 'Rect'): RenderRect
 export function createElement(type: 'RRect'): RenderRRect
 export function createElement(type: 'Circle'): RenderCircle
@@ -62,7 +62,7 @@ export function createElement(type: ElementType, frameScheduler?: IFrameSchedule
   } else if (type === 'Flex') {
     return new RenderFlex()
   } else if (type === 'Canvas') {
-    return new RenderCanvas(frameScheduler)
+    return new RenderRoot(frameScheduler)
   } else if (type === 'Rect') {
     return new RenderRect()
   } else if (type === 'RRect') {

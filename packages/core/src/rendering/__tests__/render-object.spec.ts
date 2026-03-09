@@ -1,4 +1,4 @@
-import { RenderCanvas, RenderPipeline, RenderSingleChild } from '../'
+import { RenderRoot, RenderPipeline, RenderSingleChild } from '../'
 import { Point, Rect, Size } from '../../math'
 import { TestRenderObject } from './test-render-object'
 import { TestStyleRenderObject } from './test-style-render-object'
@@ -59,7 +59,7 @@ describe('RenderObject', () => {
     //
     // 构造结构
     //
-    //  canvas (0, 0) RenderCanvas
+    //  renderRoot (0, 0) RenderRoot
     //   \
     //    root (0, 0) 逻辑根节点
     //     \
@@ -69,12 +69,12 @@ describe('RenderObject', () => {
     //         \
     //          c (0, 0)
 
-    const canvas = new RenderCanvas()
-    canvas.prepareInitialFrame()
-    canvas.dpr = 2
+    const renderRoot = new RenderRoot()
+    renderRoot.prepareInitialFrame()
+    renderRoot.dpr = 2
 
     const root = new RenderSingleChild()
-    canvas.child = root
+    renderRoot.child = root
 
     const a = new RenderSingleChild()
     a.offset = Point.fromXY(10, 20)
@@ -105,11 +105,11 @@ describe('RenderObject', () => {
     // 相对于 parent.parent with local offset
     expect(c.localToGlobal(Point.fromXY(5, 5), c.parent!.parent)).toEqual(Point.fromXY(15, 25))
 
-    // 相对于 Canvas (为了得到物理像素)
-    expect(c.localToGlobal(Point.fromXY(0, 0), canvas)).toEqual(Point.fromXY(40, 80))
+    // 相对于 RenderRoot (为了得到物理像素)
+    expect(c.localToGlobal(Point.fromXY(0, 0), renderRoot)).toEqual(Point.fromXY(40, 80))
 
-    // 相对于 Canvas (为了得到物理像素) local offset
-    expect(c.localToGlobal(Point.fromXY(5, 10), canvas)).toEqual(Point.fromXY(50, 100))
+    // 相对于 RenderRoot (为了得到物理像素) local offset
+    expect(c.localToGlobal(Point.fromXY(5, 10), renderRoot)).toEqual(Point.fromXY(50, 100))
 
     // b 相对于其 parent 应等于自己 offset
     expect(b.localToGlobal(Point.fromXY(0, 0), b.parent)).toEqual(b.offset)
@@ -119,7 +119,7 @@ describe('RenderObject', () => {
     //
     // 构造结构
     //
-    //  canvas (0, 0) RenderCanvas
+    //  renderRoot (0, 0) RenderRoot
     //   \
     //    root (0, 0) 逻辑根节点
     //     \
@@ -129,12 +129,12 @@ describe('RenderObject', () => {
     //         \
     //          c (0, 0)
 
-    const canvas = new RenderCanvas()
-    canvas.prepareInitialFrame()
-    canvas.dpr = 2
+    const renderRoot = new RenderRoot()
+    renderRoot.prepareInitialFrame()
+    renderRoot.dpr = 2
 
     const root = new RenderSingleChild()
-    canvas.child = root
+    renderRoot.child = root
 
     const a = new RenderSingleChild()
     a.offset = Point.fromXY(10, 20)
@@ -165,11 +165,11 @@ describe('RenderObject', () => {
     // 相对于 parent.parent with local offset
     expect(c.globalToLocal(Point.fromXY(5, 5), c.parent!.parent)).toEqual(Point.fromXY(-5, -15))
 
-    // 相对于 Canvas (为了得到物理像素)
-    expect(c.globalToLocal(Point.fromXY(0, 0), canvas)).toEqual(Point.fromXY(-20, -40))
+    // 相对于 RenderRoot (为了得到物理像素)
+    expect(c.globalToLocal(Point.fromXY(0, 0), renderRoot)).toEqual(Point.fromXY(-20, -40))
 
-    // 相对于 Canvas (为了得到物理像素) local offset
-    expect(c.globalToLocal(Point.fromXY(5, 10), canvas)).toEqual(Point.fromXY(-17.5, -35))
+    // 相对于 RenderRoot (为了得到物理像素) local offset
+    expect(c.globalToLocal(Point.fromXY(5, 10), renderRoot)).toEqual(Point.fromXY(-17.5, -35))
 
     // b 相对于其 parent 应等于自己 -offset
     expect(b.globalToLocal(Point.fromXY(0, 0), b.parent)).toEqual(Point.invert(b.offset))
@@ -179,7 +179,7 @@ describe('RenderObject', () => {
     //
     // 构造结构
     //
-    //  canvas (0, 0) RenderCanvas
+    //  renderRoot (0, 0) RenderRoot
     //   \
     //    root (0, 0) 逻辑根节点
     //     \
@@ -189,12 +189,12 @@ describe('RenderObject', () => {
     //         \
     //          c (0, 0) size=(10, 10)
 
-    const canvas = new RenderCanvas()
-    canvas.prepareInitialFrame()
-    canvas.dpr = 2
+    const renderRoot = new RenderRoot()
+    renderRoot.prepareInitialFrame()
+    renderRoot.dpr = 2
 
     const root = new RenderSingleChild()
-    canvas.child = root
+    renderRoot.child = root
 
     const a = new RenderSingleChild()
     a.offset = Point.fromXY(10, 20)
@@ -217,19 +217,19 @@ describe('RenderObject', () => {
     // 相对于 parent.parent
     expect(c.getBoundingClientRect(c.parent!.parent)).toEqual(Rect.fromLTWH(10, 20, 10, 10))
 
-    // 相对于 Canvas (为了得到物理像素)
-    expect(c.getBoundingClientRect(canvas)).toEqual(Rect.fromLTWH(40, 80, 20, 20))
+    // 相对于 RenderRoot (为了得到物理像素)
+    expect(c.getBoundingClientRect(renderRoot)).toEqual(Rect.fromLTWH(40, 80, 20, 20))
   })
 
   test('onPaint callback', () => {
-    const canvas = new RenderCanvas()
-    canvas.prepareInitialFrame()
-    canvas.dpr = 2
+    const renderRoot = new RenderRoot()
+    renderRoot.prepareInitialFrame()
+    renderRoot.dpr = 2
 
     const root = new RenderSingleChild()
     const handlePaint = jest.fn()
     root.onPaint = handlePaint
-    canvas.child = root
+    renderRoot.child = root
     jest.runAllTimers()
     expect(handlePaint).toBeCalledWith(Point.fromXY(0, 0))
   })
