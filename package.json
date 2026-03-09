@@ -2,7 +2,6 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "preinstall": "npx only-allow pnpm",
     "distclean": "rimraf \"{packages,out}/*/{.tsbuildinfo,dist}\"",
     "dev": "sh ./tools/dev.sh",
     "dev:storybook": "pushd packages/storybook && pnpm storybook; popd",
