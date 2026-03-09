@@ -180,7 +180,7 @@ export class FlexNode {
   private _alignContent: FlexAlign = ALIGN_FLEX_START
   private _alignSelf: FlexAlign = ALIGN_AUTO
   private _display: Display = DISPLAY_FLEX
-  // @ts-ignore unused - stored for potential future use
+  // @ts-expect-error stored for potential future use (currently write-only)
   private _overflow: Overflow = OVERFLOW_VISIBLE
   private _positionType: PositionType = POSITION_TYPE_RELATIVE
 
@@ -206,6 +206,7 @@ export class FlexNode {
   setJustifyContent(value: FlexJustify): void { this._justifyContent = value; this._dirty = true }
   setAlignItems(value: FlexAlign): void { this._alignItems = value; this._dirty = true }
   setAlignContent(value: FlexAlign): void { this._alignContent = value; this._dirty = true }
+  setAlignSelf(value: FlexAlign): void { this._alignSelf = value; this._dirty = true }
   setDisplay(value: Display): void { this._display = value; this._dirty = true }
   setOverflow(value: Overflow): void { this._overflow = value; this._dirty = true }
   setPositionType(value: PositionType): void { this._positionType = value; this._dirty = true }
@@ -650,12 +651,21 @@ export class FlexNode {
             containerHeight ?? NaN,
           )
 
+          // Enforce the resolved main size from flex (grow/shrink)
+          if (childWidth !== undefined) {
+            child._layout.width = childWidth
+          }
+          if (childHeight !== undefined) {
+            child._layout.height = childHeight
+          }
+
           info.mainSize = isRow ? child._layout.width : child._layout.height
           info.crossSize = isRow ? child._layout.height : child._layout.width
         }
 
         // Track stretch flag for Phase 6
-        if (shouldStretch) {
+        // Don't stretch items with measure functions - their size is definite
+        if (shouldStretch && !child._measureFunc) {
           (info as any)._shouldStretch = true
         }
       }
@@ -730,6 +740,12 @@ export class FlexNode {
     const innerCrossSize = isRow
       ? finalHeight - paddingTop - paddingBottom
       : finalWidth - paddingLeft - paddingRight
+
+    // Per CSS spec: if single-line and container has definite cross size,
+    // the line's cross size is the container's inner cross size
+    if (lines.length === 1 && innerCrossSize > 0) {
+      lines[0].crossSize = Math.max(lines[0].crossSize, innerCrossSize)
+    }
 
     // Phase 6: Apply stretch to items that need it
     for (const line of lines) {
@@ -810,37 +826,74 @@ export class FlexNode {
       const freeMainSpace = Math.max(0, innerMainSize - usedMain)
 
       // Apply justifyContent
-      let mainOffset = isRow ? paddingLeft : paddingTop
+      let mainOffset: number
       let mainSpacing = 0
 
       const orderedItems = isReverse ? [...items].reverse() : items
 
-      switch (this._justifyContent) {
-        case JUSTIFY_FLEX_START:
-          break
-        case JUSTIFY_FLEX_END:
-          mainOffset += freeMainSpace
-          break
-        case JUSTIFY_CENTER:
-          mainOffset += freeMainSpace / 2
-          break
-        case JUSTIFY_SPACE_BETWEEN:
-          if (orderedItems.length > 1) {
-            mainSpacing = freeMainSpace / (orderedItems.length - 1)
-          }
-          break
-        case JUSTIFY_SPACE_AROUND:
-          if (orderedItems.length > 0) {
-            mainSpacing = freeMainSpace / orderedItems.length
-            mainOffset += mainSpacing / 2
-          }
-          break
-        case JUSTIFY_SPACE_EVENLY:
-          if (orderedItems.length > 0) {
-            mainSpacing = freeMainSpace / (orderedItems.length + 1)
-            mainOffset += mainSpacing
-          }
-          break
+      if (isReverse) {
+        // For reverse directions, start from the end
+        mainOffset = (isRow ? paddingLeft : paddingTop) + innerMainSize - usedMain
+
+        switch (this._justifyContent) {
+          case JUSTIFY_FLEX_START:
+            mainOffset = (isRow ? paddingLeft : paddingTop) + freeMainSpace
+            break
+          case JUSTIFY_FLEX_END:
+            mainOffset = isRow ? paddingLeft : paddingTop
+            break
+          case JUSTIFY_CENTER:
+            mainOffset = (isRow ? paddingLeft : paddingTop) + freeMainSpace / 2
+            break
+          case JUSTIFY_SPACE_BETWEEN:
+            if (orderedItems.length > 1) {
+              mainSpacing = freeMainSpace / (orderedItems.length - 1)
+            }
+            mainOffset = isRow ? paddingLeft : paddingTop
+            break
+          case JUSTIFY_SPACE_AROUND:
+            if (orderedItems.length > 0) {
+              mainSpacing = freeMainSpace / orderedItems.length
+              mainOffset = (isRow ? paddingLeft : paddingTop) + mainSpacing / 2
+            }
+            break
+          case JUSTIFY_SPACE_EVENLY:
+            if (orderedItems.length > 0) {
+              mainSpacing = freeMainSpace / (orderedItems.length + 1)
+              mainOffset = (isRow ? paddingLeft : paddingTop) + mainSpacing
+            }
+            break
+        }
+      } else {
+        mainOffset = isRow ? paddingLeft : paddingTop
+
+        switch (this._justifyContent) {
+          case JUSTIFY_FLEX_START:
+            break
+          case JUSTIFY_FLEX_END:
+            mainOffset += freeMainSpace
+            break
+          case JUSTIFY_CENTER:
+            mainOffset += freeMainSpace / 2
+            break
+          case JUSTIFY_SPACE_BETWEEN:
+            if (orderedItems.length > 1) {
+              mainSpacing = freeMainSpace / (orderedItems.length - 1)
+            }
+            break
+          case JUSTIFY_SPACE_AROUND:
+            if (orderedItems.length > 0) {
+              mainSpacing = freeMainSpace / orderedItems.length
+              mainOffset += mainSpacing / 2
+            }
+            break
+          case JUSTIFY_SPACE_EVENLY:
+            if (orderedItems.length > 0) {
+              mainSpacing = freeMainSpace / (orderedItems.length + 1)
+              mainOffset += mainSpacing
+            }
+            break
+        }
       }
 
       for (const info of orderedItems) {
