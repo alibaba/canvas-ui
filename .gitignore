@@ -122,4 +122,7 @@ packages/**/dist/
 .rollup.cache
 
 *storybook.log
+
+# Only pnpm is used — ignore other package manager lock files
 package-lock.json
+yarn.lock
