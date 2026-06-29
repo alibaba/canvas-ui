@@ -1,4 +1,4 @@
-import { RenderCanvas, RenderPipeline, RenderSingleChild } from '..'
+import { RenderRoot, RenderPipeline, RenderSingleChild } from '..'
 import { Rect } from '../../math'
 import { TestRenderObject } from './test-render-object'
 
@@ -192,10 +192,10 @@ describe('RenderSingleChild', () => {
   })
 
   test('能够消费 viewport', () => {
-    const root = new RenderCanvas()
-    root.prepareInitialFrame()
+    const renderRoot = new RenderRoot()
+    renderRoot.prepareInitialFrame()
     const a = new RenderSingleChild()
-    root.child = a
+    renderRoot.child = a
     const b = new TestRenderObject()
     a.child = b
 
@@ -213,13 +213,13 @@ describe('RenderSingleChild', () => {
     })
 
     // 导致 a.parent 被标记
-    expect(root._paintDirty).toBe(true)
+    expect(renderRoot._paintDirty).toBe(true)
 
     // 调度下一帧
     jest.runAllTimers()
 
 
-    root.dispose()
+    renderRoot.dispose()
   })
 
   test('RenderContainer APIs', () => {

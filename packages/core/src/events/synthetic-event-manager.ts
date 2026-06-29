@@ -261,7 +261,7 @@ export class SyntheticEventManager {
   dispatchEvent(event: SyntheticEvent<SyntheticEventTarget, Event>): boolean {
     assert(event.target, 'event.target 不能是 null')
 
-    // composedPath 的第一个节点等于 target，最后一个节点是根节点 (一般是 RenderCanvas)
+    // composedPath 的第一个节点等于 target，最后一个节点是根节点 (一般是 RenderRoot)
     const composedPath = event.composedPath()
     assert(composedPath[0] === event.target, 'event.composedPath()[0] !== event.target')
 

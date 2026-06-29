@@ -935,7 +935,7 @@ export abstract class RenderObject<ParentDataType extends ParentData = ParentDat
       // 逐级寻找 parent，到 repaintBoundary 为止
       this._parent.markPaintDirty(this)
     } else {
-      // 根节点，例如 RenderCanvas，此时已经被加入 Pipeline.paintDirtyObjects
+      // 根节点，例如 RenderRoot，此时已经被加入 Pipeline.paintDirtyObjects
       // 我们只需要 requestVisualUpdate 即可
       this.owner?.requestVisualUpdate()
     }

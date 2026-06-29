@@ -20,9 +20,9 @@ import { RenderSingleChild } from './render-single-child'
 /**
  * 渲染树的根节点，负责各类初始化和渲染管线工作
  * 
- * RenderCanvas 持有唯一子节点 RenderObject
+ * RenderRoot 持有唯一子节点 RenderObject
  */
-export class RenderCanvas
+export class RenderRoot
   extends RenderSingleChild<RenderObject>
   implements HitTestRoot {
 
@@ -235,3 +235,13 @@ export class RenderCanvas
   }
 
 }
+
+/**
+ * @deprecated Use {@link RenderRoot} instead
+ */
+export const RenderCanvas = RenderRoot
+
+/**
+ * @deprecated Use {@link RenderRoot} instead
+ */
+export type RenderCanvas = RenderRoot

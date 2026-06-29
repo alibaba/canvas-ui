@@ -1,6 +1,6 @@
 import {
   createElement,
-  RenderCanvas,
+  RenderRoot,
   RenderCircle,
   RenderFlex,
   RenderImage,
@@ -20,7 +20,7 @@ describe('createElement', () => {
     expect(createElement('Flex')).toBeInstanceOf(RenderFlex)
   })
   test('Canvas', () => {
-    expect(createElement('Canvas')).toBeInstanceOf(RenderCanvas)
+    expect(createElement('Canvas')).toBeInstanceOf(RenderRoot)
   })
   test('Rect', () => {
     expect(createElement('Rect')).toBeInstanceOf(RenderRect)

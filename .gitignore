@@ -122,3 +122,4 @@ packages/**/dist/
 .rollup.cache
 
 *storybook.log
+package-lock.json
