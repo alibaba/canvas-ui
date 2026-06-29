@@ -19,7 +19,7 @@ import { HitTestEntry, HitTestResult } from './hit-test'
 import { PaintingContext } from './painting-context'
 import { RenderPipeline } from './render-pipeline'
 import { StyleMap } from './style-map'
-import { Yoga, YogaMeasure } from './yoga'
+import { Yoga, YogaMeasure, YogaNode } from './yoga'
 
 /**
  * 储存所有由父对象管理的数据
@@ -191,7 +191,7 @@ export abstract class RenderObject<ParentDataType extends ParentData = ParentDat
       this.setupYogaNode()
     }
   }
-  _yogaNode?: Yoga.YogaNode
+  _yogaNode?: YogaNode
 
   /**
    * 节点是否总是持有 YogaNode

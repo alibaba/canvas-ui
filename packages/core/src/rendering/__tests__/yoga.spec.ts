@@ -1,4 +1,5 @@
-import Yoga, { FLEX_DIRECTION_ROW, YogaNode } from 'yoga-layout-prebuilt-fork'
+import { Yoga, YogaNode } from '../yoga'
+import { FLEX_DIRECTION_ROW } from '../flex-layout'
 
 function makeNodes(...parents: (YogaNode | null)[]) {
   return parents.map(parent => {

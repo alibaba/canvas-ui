@@ -94,23 +94,8 @@ describe('布局', () => {
 
 })
 
-type Bound = {
-  readonly __nbindFlags: number
-  readonly __nbindPtr: number
-  readonly __nbindState: number
-}
 function assertRefEqual(lhs: any, rhs: any) {
-  const _lhs = lhs as Bound
-  const _rhs = rhs as Bound
-  expect(_lhs).toBeDefined()
-  expect(_rhs).toBeDefined()
-  expect(typeof _lhs.__nbindFlags).toBe('number')
-  expect(typeof _rhs.__nbindFlags).toBe('number')
-  expect(_lhs.__nbindFlags).toBe(_rhs.__nbindFlags)
-  expect(typeof _lhs.__nbindPtr).toBe('number')
-  expect(typeof _rhs.__nbindPtr).toBe('number')
-  expect(_lhs.__nbindPtr).toBe(_rhs.__nbindPtr)
-  expect(typeof _lhs.__nbindState).toBe('number')
-  expect(typeof _rhs.__nbindState).toBe('number')
-  expect(_lhs.__nbindState).toBe(_rhs.__nbindState)
+  expect(lhs).toBeDefined()
+  expect(rhs).toBeDefined()
+  expect(lhs).toBe(rhs)
 }
