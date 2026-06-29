@@ -33,8 +33,7 @@ export const RenderCircleTest: StoryObj<React.FC> = () => {
       const a = createElement('Flex')
       canvas.child = a
       const b = createElement('Circle')
-      b.style.width = 100
-      b.style.height = 100
+      b.radius = 50 // Auto-sets width/height to 100x100
       b.repaintBoundary = true
       a.appendChild(b)
       const c = createElement('Circle')
@@ -51,7 +50,7 @@ export const RenderCircleTest: StoryObj<React.FC> = () => {
       const frameCallbacks: readonly FrameCallback[] = [
         // 0: initial frame
         () => {
-          b.style.height = 100
+          // b already has radius=50, so height is already 100
           b.fill = '#EFEFEF'
           b.style.boxShadow = '12px 12px 2px rgba(0, 0, 255, .2)'
 
@@ -66,7 +65,8 @@ export const RenderCircleTest: StoryObj<React.FC> = () => {
           d.radius = 0
         },
         () => {
-          b.style.height = undefined
+          // Test resetting b's radius to 0
+          b.radius = 0
           d.radius = 40
         }
       ]
